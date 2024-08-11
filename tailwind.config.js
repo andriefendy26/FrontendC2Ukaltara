@@ -19,7 +19,8 @@ module.exports = {
         "poppins": ["Poppins", "sans-serif"],
       },
       colors : {
-        "primary" : "#3B8DBC"
+        "primary" : "#3B8DBC",
+        "primaryhover" : "#6C9DBA"
       }
     },
   },
