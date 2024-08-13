@@ -2,14 +2,20 @@ import Navbar from "../../layout/Navbar";
 import Carousel from "../../layout/Carousl";
 import Kegiatan from "../../layout/Kegiatan";
 import Pesisir from "../../layout/Pesisir";
+import Galeri from "../../layout/Galeri";
+import Footer from "../../layout/Footer";
+import AboutUs from "../../layout/AboutUs";
 
 const Home = () => {
   return (
-    <div className="mb-[1000px]">
+    <div>
       <Navbar />
       <Carousel />
       <Kegiatan />
-      <Pesisir/>
+      <Pesisir />
+      <Galeri />
+      <AboutUs/>
+      <Footer />
     </div>
   );
 };

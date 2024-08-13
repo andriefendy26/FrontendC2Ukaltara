@@ -1,30 +1,29 @@
 /** @type {import('tailwindcss').Config} */
-const flowbite = require("flowbite-react/tailwind");
+const withMT = require("@material-tailwind/react/utils/withMT");
 
-module.exports = {
+module.exports = withMT({
+  darkMode: ["class"],
   content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-
-    // Or if using `src` directory:
-    "./src/**/*.{js,ts,jsx,tsx,mdx}",
-    flowbite.content(),
+    "./pages/**/*.{js,jsx}",
+    "./components/**/*.{js,jsx}",
+    "./app/**/*.{js,jsx}",
+    "./src/**/*.{js,jsx}",
   ],
+  prefix: "",
   theme: {
-    extend: {
-      fontFamily: {
-        "poppins": ["Poppins", "sans-serif"],
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
       },
-      colors : {
-        "primary" : "#3B8DBC",
-        "primaryhover" : "#6C9DBA"
-      }
+    },
+    extend: {
+      colors: {
+        primary: "#3B8DBC",
+        primaryhover: "#6C9DBA",
+      },
     },
   },
-  plugins: [
-    flowbite.plugin(),
-  ],
-};
+  plugins: [require("tailwindcss-animate")],
+});
