@@ -6,7 +6,7 @@ const DetailAbout = () => {
   return (
     <div>
       <Navbar></Navbar>
-      <div className="mx-10">
+      <div className="m-10">
         <div className="flex flex-col justify-center items-center">
           <h1 className="font-bold text-3xl">About Us</h1>
           <span className="block w-96 h-[1px] bg-black my-5"></span>
@@ -34,9 +34,15 @@ const DetailAbout = () => {
             <h1 className="text-lg border-y-[1px] border-black py-3 my-4 font-semibold">
               Manfaat RekaCipta Penanganan Limbah Laut
             </h1>
-            <div  t r sk assName="flex flex-col gap-5">
+            <div t r sk assName="flex flex-col gap-5">
               <div>
-                <h1 className="font-semibold text-center mb-2">Manfaat Umum</h1>
+                <div className="flex items-center justify-center">
+                  <div className="w-20 h-[1px] bg-black"></div>
+                  <h1 className="font-semibold mx-5 my-2 text-center">
+                    Manfaat Umum
+                  </h1>
+                  <div className="w-20 h-[1px]  bg-black"></div>
+                </div>
                 <p>
                   {" "}
                   - <span className="font-semibold">Masyarakat</span> :
@@ -53,13 +59,18 @@ const DetailAbout = () => {
                 </p>
               </div>
               <div>
-                <h1 className="font-semibold text-center mb-2">
-                  Manfaat khusus untuk 8 kelurahan Pesisir Kota Tarakan
-                </h1>
+                <div className="flex items-center justify-center">
+                  <div className="w-20 h-[1px] bg-black"></div>
+                  <h1 className="font-semibold mx-5 my-2 text-center">
+                    Manfaat khusus untuk 8 kelurahan Pesisir Kota Tarakan
+                  </h1>
+                  <div className="w-20 h-[1px]  bg-black"></div>
+                </div>
+
                 <div>
                   <p>
-                    -{" "}
-                    <span className="font-bold            lh">
+                    -
+                    <span className="font-semibold">
                       {" "}
                       Kesadaran dan Kesejahteraan
                     </span>
@@ -69,26 +80,38 @@ const DetailAbout = () => {
                 </div>
               </div>
               <div className="">
-                <h1 className="font-semibold text-center mb-2">
-                  Tujuan Reka Cipta
-                </h1>
+                <div className="flex items-center justify-center">
+                  <div className="w-20 h-[1px] bg-black"></div>
+                  <h1 className="font-semibold mx-5 my-2 text-center">
+                    Tujuan Reka Cipta
+                  </h1>
+                  <div className="w-20 h-[1px]  bg-black"></div>
+                </div>
+
                 <div>
                   <p>
-                    - Coastal Clean Up: Pengabdian masyarakat untuk membersihkan
-                    pesisir.
+                    - <span className="font-semibold">Coastal Clean Up</span> :
+                    Pengabdian masyarakat untuk membersihkan pesisir.
                   </p>
                   <p>
-                    - Bank Sampah/TPS-3R: Pemberdayaan fasilitas pengelolaan
-                    sampah
+                    - <span className="font-semibold">Bank Sampah/TPS-3R</span>{" "}
+                    : Pemberdayaan fasilitas pengelolaan sampah
                   </p>
                   <p>
-                    - Pengolahan dan Regulasi Sampah: Pendampingan dalam
-                    pengolahan dan pengelolaan limbah.
+                    -{" "}
+                    <span className="font-semibold">
+                      Pengolahan dan Regulasi Sampah
+                    </span>{" "}
+                    : Pendampingan dalam pengolahan dan pengelolaan limbah.
                   </p>
-                  <p>- Lestari Mangrove: Pelestarian ekosistem mangrove.</p>
                   <p>
-                    - Aplikasi C2U Tarakan: Implementasi program Coastal Clean
-                    Up di Tarakan.
+                    - <span className="font-semibold">Lestari Mangrove</span> :
+                    Pelestarian ekosistem mangrove.
+                  </p>
+                  <p>
+                    -{" "}
+                    <span className="font-semibold">Aplikasi C2U Tarakan</span>{" "}
+                    : Implementasi program Coastal Clean Up di Tarakan.
                   </p>
                 </div>
               </div>

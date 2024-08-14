@@ -16,14 +16,15 @@ const CarouselCom = () => {
           <div className="relative z-10 p-6 flex flex-col justify-center  items-start h-full">
             <h1 className="font-bold text-xl mb-2">Kegiatan Bersih Pantai</h1>
             <p className="text-sm my-2">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-              et condimentum nisl. Interdum et malesuada fames ac ante ipsum
-              primis in faucibus. Fusce varius, tortor ac sagittis dictum, dui
-              nulla finibus nisi, sed mattis velit ante nec massa. Morbi aliquam
-              dui arcu, sit amet tincidunt ante imperdiet eget. Vivamus mauris
-              mi, lobortis a cursus in, cursus ut justo.
+              Kegiatan pembersihan pantai merupakan upaya penting untuk menjaga
+              kebersihan dan kelestarian lingkungan pesisir kita. Dengan
+              partisipasi aktif dari masyarakat, kita dapat mengurangi dampak
+              sampah plastik dan limbah lainnya yang mencemari pantai, sehingga
+              ekosistem laut tetap sehat dan berfungsi dengan baik.{" "}
             </p>
-            <button className="bg-primary rounded-lg p-2 text-sm hover:bg-primaryhover hover:text-gray-100">Selengkapnya</button>
+            <button className="bg-primary rounded-lg p-2 text-sm hover:bg-primaryhover hover:text-gray-100">
+              Selengkapnya
+            </button>
           </div>
         </div>
       </Carousel>

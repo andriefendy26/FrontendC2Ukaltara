@@ -6,6 +6,7 @@ import "./index.css";
 import Home from "./pages/public/Home";
 import Navbar from "./layout/Navbar";
 import DetailAbout from "./pages/public/DetailAboutus";
+import DetailKegiatan from "./pages/public/DetailKegiatan";
 
 const router = createBrowserRouter([
   {
@@ -15,7 +16,10 @@ const router = createBrowserRouter([
   {
     path : "/aboutus",
     element : <DetailAbout/>
-
+  },
+  {
+    path : "/detailkegiatan",
+    element : <DetailKegiatan/>
   }
 ]);
 

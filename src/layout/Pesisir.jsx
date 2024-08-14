@@ -43,13 +43,13 @@ const Pesisir = () => {
         <h1 className="font-bold text-3xl">Pemberdayaan Pesisir</h1>
         <span className="block w-96 h-[1px] bg-black mt-8"></span>
         <p className="pt-5">
-          Est est ea adipisicing do. Ad qui ex eu mollit enim aute laboris Lorem
-          anim do id eu. Consequat enim ullamco anim ipsum irure quis. In
-          pariatur ex ipsum dolore qui incididunt dolor in quis minim voluptate
-          nisi excepteur tempor. Laborum duis ea qui tempor nisi mollit
-          exercitation nisi et sunt incididunt. Mollit fugiat proident ullamco
-          velit laboris velit dolore minim. Anim mollit aliquip reprehenderit
-          consectetur ut sunt in.
+          Pemberdayaan pesisir adalah upaya untuk meningkatkan kapasitas dan
+          kesejahteraan masyarakat yang tinggal di daerah pesisir, serta menjaga
+          dan memanfaatkan sumber daya pesisir secara berkelanjutan. Konsep ini
+          melibatkan berbagai aspek, termasuk ekonomi, sosial, dan lingkungan,
+          untuk memastikan bahwa masyarakat pesisir dapat mengelola sumber daya
+          alam mereka dengan efektif, mengurangi kemiskinan, dan meningkatkan
+          kualitas hidup mereka.
         </p>
       </div>
       <Headchart>
