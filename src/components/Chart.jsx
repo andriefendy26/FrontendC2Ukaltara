@@ -1,6 +1,6 @@
-const Chart = ({children}) => {
+const Chart = ({ children }) => {
   return (
-    <div className="border flex flex-col w-full items-center justify-center border-black mx-[100px]">
+    <div className="border flex flex-col w-full items-center justify-center border-black lg:w-1/2">
       <h1 className="text-white bg-primary w-full text-center">
         Total Sampah Keluarahan
       </h1>

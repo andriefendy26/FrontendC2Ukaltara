@@ -38,23 +38,27 @@ const Pesisir = () => {
   };
 
   return (
-    <div className="mt-10 flex flex-col items-center mx-10">
-      <div className="flex mb-5 flex-col items-center">
+    <div className="mt-10 flex flex-col items-center mx-10 lg:mx-24">
+      <div>
         <h1 className="font-bold text-3xl">Pemberdayaan Pesisir</h1>
         <span className="block w-96 h-[1px] bg-black mt-8"></span>
-        <p className="pt-5">
-          Pemberdayaan pesisir adalah upaya untuk meningkatkan kapasitas dan
-          kesejahteraan masyarakat yang tinggal di daerah pesisir, serta menjaga
-          dan memanfaatkan sumber daya pesisir secara berkelanjutan. Konsep ini
-          melibatkan berbagai aspek, termasuk ekonomi, sosial, dan lingkungan,
-          untuk memastikan bahwa masyarakat pesisir dapat mengelola sumber daya
-          alam mereka dengan efektif, mengurangi kemiskinan, dan meningkatkan
-          kualitas hidup mereka.
-        </p>
       </div>
-      <Headchart>
-        <Doughnut data={data} />
-      </Headchart>
+      <div className="lg:flex lg:flex-row mx-10 mt-10">
+        <div className="flex mb-5 flex-col items-center">
+          <p className="pt-5 lg:text-lg xl:text-xl">
+            Pemberdayaan pesisir adalah upaya untuk meningkatkan kapasitas dan
+            kesejahteraan masyarakat yang tinggal di daerah pesisir, serta
+            menjaga dan memanfaatkan sumber daya pesisir secara berkelanjutan.
+            Konsep ini melibatkan berbagai aspek, termasuk ekonomi, sosial, dan
+            lingkungan, untuk memastikan bahwa masyarakat pesisir dapat
+            mengelola sumber daya alam mereka dengan efektif, mengurangi
+            kemiskinan, dan meningkatkan kualitas hidup mereka.
+          </p>
+        </div>
+        <Headchart>
+          <Doughnut data={data} />
+        </Headchart>
+      </div>
       <button className="bg-primary w-full rounded-lg p-2 px-5 mt-2 text-white text-sm hover:bg-primaryhover hover:text-gray-100">
         Selengkapnya
       </button>

@@ -28,10 +28,15 @@ const DetailAbout = () => {
               menekankan kolaborasi dan kontribusi terukur sebagai solusi
               komprehensif dan berkelanjutan
             </p>
-            <img src={gambar1}></img>
+            <div className="flex w-full items-center justify-center">
+              <img
+                className="object-cover lg:w-1/2 border border-black"
+                src={gambar1}
+              ></img>
+            </div>
           </div>
           <div>
-            <h1 className="text-lg border-y-[1px] border-black py-3 my-4 font-semibold">
+            <h1 className="text-lg text-center border-y-[1px] border-black py-3 my-4 font-semibold">
               Manfaat RekaCipta Penanganan Limbah Laut
             </h1>
             <div t r sk assName="flex flex-col gap-5">

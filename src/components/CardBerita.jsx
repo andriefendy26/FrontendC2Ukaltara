@@ -1,25 +1,27 @@
 import { Link } from "react-router-dom";
 import gambar1 from "../assests/1.jpg";
 
-const CardBerita = () => {
+const CardBerita = ({ judul, gambar, waktu }) => {
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex gap-5 my-8">
       <div>
         <img
           src={gambar1}
-          className=" rounded-2xl border-2 border-black"
+          className="w-64 lg:w-96 rounded-2xl border-2 border-black"
         ></img>
-        <p>Rabu, 06 Mei 2024</p>
-        <p>Gunung Lingkas</p>
-        <Link className="text-primary bg-[#D9D9D9] p-1 px-2 rounded-lg">
-          Selengkapnya
-        </Link>
+        <div className="text-sm flex-wrap lg:text-lg lg:flex lg:gap-2  my-2 items-center">
+          <p>Rabu, 06 Mei 2024</p>
+          <p className="my-1 lg:m-0">Gunung Lingkas</p>
+          <Link className="text-primary ">
+            Selengkapnya
+          </Link>
+        </div>
       </div>
       <div>
-        <h1 className="font-semibold">
+        <h1 className="font-semibold lg:text-xl xl:text-2xl">
           AKSI COASTAL CLEAN UP DI KAWASAN WISATA BAHARI
         </h1>
-        <p>
+        <p className="xl:text-lg">
           Ad aliquip sunt irure irure do magna cupidatat consequat laborum.
           Commodo do incididunt eiusmod sint in mollit do. Elit veniam ullamco
           nisi culpa adipisicing.

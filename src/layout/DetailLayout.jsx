@@ -1,26 +1,17 @@
 import CardBerita from "../components/CardBerita";
 
-const DetailLayout = () => {
+const DetailLayout = ({ judul, desc, children }) => {
   return (
-    <div className="mx-10">
+    <div className="mx-10 md:mx-20 lg:mx-32 lg:my-10">
       <div className="">
-        <h1 className="text-2xl font-bold">Pengabdian Pesisir</h1>
-        <div className="w-96 h-[1px] my-5 bg-black"></div>
-        <p>
-          Aute incididunt quis dolore elit sint anim eu non enim amet. Eiusmod
-          deserunt commodo quis sit sint eu. Cillum aliquip aliquip magna ea
-          deserunt ad duis id ea commodo nisi ullamco qui id. Esse fugiat
-          laborum veniam ut cillum culpa. Nisi sit mollit fugiat nisi nostrud
-          aliqua do adipisicing incididunt non dolore aute. Laborum voluptate
-          nostrud sint ipsum culpa ullamco velit amet elit officia. Dolore Lorem
-          ipsum eu cupidatat nostrud pariatur ad incididunt occaecat occaecat
-          aute. Mollit et aute in ex ut.
-        </p>
+        <h1 className="text-2xl font-bold lg:text-3xl">{judul}</h1>
+        <div className="w-80 h-[1px] mb-5 bg-black"></div>
+        <p className="lg:text-xl">{desc}</p>
       </div>
       <div className="mt-5">
-        <h1 className="text-2xl font-bold">BERITA</h1>
-        <div className="w-96 h-[1px] my-5 bg-black"></div>
-        <CardBerita/>
+        <h1 className="text-2xl font-bold lg:text-3xl">BERITA</h1>
+        <div className="w-44 h-[1px] mb-5 bg-black"></div>
+        <div className="lg:grid lg:grid-rows-2 lg:grid-flow-col lg:gap-8 ">{children}</div>
       </div>
     </div>
   );

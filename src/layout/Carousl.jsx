@@ -4,7 +4,7 @@ import gambar2 from "../assests/2.jpg";
 
 const CarouselCom = () => {
   return (
-    <div className="h-80">
+    <div className="h-96 md:h-[500px] lg:h-[550px] xl:h-[600px]">
       <Carousel>
         <div
           className="h-full w-full bg-cover bg-center text-white"
@@ -13,9 +13,9 @@ const CarouselCom = () => {
           {/* Dark overlay */}
           <div className="absolute inset-0 bg-black opacity-40"></div>
           {/* Content */}
-          <div className="relative z-10 p-6 flex flex-col justify-center  items-start h-full">
-            <h1 className="font-bold text-xl mb-2">Kegiatan Bersih Pantai</h1>
-            <p className="text-sm my-2">
+          <div className="relative z-10 p-6 flex flex-col justify-center  items-start h-full md:p-14 lg:p-24 xl:p-32">
+            <h1 className="font-bold text-xl mb-2 md:text-2xl lg:text-3xl xl:text-4xl">Kegiatan Bersih Pantai</h1>
+            <p className="text-sm my-2 xl:text-lg">
               Kegiatan pembersihan pantai merupakan upaya penting untuk menjaga
               kebersihan dan kelestarian lingkungan pesisir kita. Dengan
               partisipasi aktif dari masyarakat, kita dapat mengurangi dampak
