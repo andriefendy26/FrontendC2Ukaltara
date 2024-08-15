@@ -29,7 +29,7 @@ const Footers = () => {
             <div>
               <Footer.Title title="about" />
               <Footer.LinkGroup col>
-                <Footer.Link href="#">Developer</Footer.Link>
+                <Footer.Link href="https://portofolio-six-snowy.vercel.app/">Developer</Footer.Link>
                 <Footer.Link href="#">Tailwind CSS</Footer.Link>
               </Footer.LinkGroup>
             </div>

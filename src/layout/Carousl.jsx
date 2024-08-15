@@ -1,13 +1,13 @@
 import { Button, Carousel } from "flowbite-react";
-import gambar1 from "../assests/banner/1.png";
-import gambar2 from "../assests/banner/2.png";
-import gambar3 from "../assests/banner/3.png";
-import gambar4 from "../assests/banner/4.png";
-import gambar5 from "../assests/banner/5.png";
-import gambar6 from "../assests/banner/6.png";
-import gambar7 from "../assests/banner/7.png";
-import gambar8 from "../assests/banner/8.png";
-import gambar9 from "../assests/banner/9.png";
+import gambar1 from "../assests/banner/1.jpg";
+import gambar2 from "../assests/banner/2.jpg";
+import gambar3 from "../assests/banner/3.jpg";
+import gambar4 from "../assests/banner/4.jpg";
+import gambar5 from "../assests/banner/5.jpg";
+import gambar6 from "../assests/banner/6.jpg";
+import gambar7 from "../assests/banner/7.jpg";
+import gambar8 from "../assests/banner/8.jpg";
+import gambar9 from "../assests/banner/9.jpg";
 
 const CarouselCom = () => {
   const data = [

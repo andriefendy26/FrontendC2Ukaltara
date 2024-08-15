@@ -1,6 +1,9 @@
 const Chart = ({ children }) => {
   return (
-    <div className="border lg:w-1/2 flex flex-col items-center justify-center border-black" >
+    <div
+      className="border lg:w-1/2 flex flex-col items-center justify-center border-black"
+      data-aos="fade-left"
+    >
       <h1 className="text-white bg-primary w-full text-center">
         Total Sampah Keluarahan
       </h1>
