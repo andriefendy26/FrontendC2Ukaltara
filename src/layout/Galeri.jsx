@@ -1,4 +1,5 @@
 import { Button } from "@material-tailwind/react";
+import HeaderJudul from "../components/HeaderJudul";
 
 const Galeri = () => {
   const data = [
@@ -26,27 +27,12 @@ const Galeri = () => {
       imageLink:
         "https://4.bp.blogspot.com/-XwMkRznW_WE/V9aX46nrwWI/AAAAAAAABwI/jd__V9yuuuoAsZeTq7wfu6OIz3FNi59PACLcB/s1600/Pleasant%2BWhite%2BSand%2BBeach%2Binfront%2Bof%2Bthe%2Bcafe%2Band%2Brestauran%2Bat%2BKedonganan%2BBeach.jpg",
     },
-    {
-      imageLink:
-        "https://demos.creative-tim.com/material-kit-pro/assets/img/examples/blog5.jpg",
-    },
-    {
-      imageLink:
-        "https://material-taillwind-pro-ct-tailwind-team.vercel.app/img/content2.jpg",
-    },
-    {
-      imageLink:
-        "https://images.unsplash.com/photo-1620064916958-605375619af8?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1493&q=80",
-    },
   ];
 
   return (
-    <div className="mx-10 mt-10">
-      <div className="flex mb-5 flex-col items-center">
-        <h1 className="font-bold text-3xl">GALERI</h1>
-        <span className="block w-96 h-[1px] bg-black mt-8"></span>
-      </div>
-      <div className="lg:grid lg:grid-rows-3 xl:grid-rows-2 lg:grid-flow-col lg:gap-8">
+    <div className="mx-10 mt-10 xl:mx-60">
+     <HeaderJudul title="GALERI"/>
+      <div className="lg:grid lg:grid-rows-3 xl:grid-rows-2 lg:grid-flow-col lg:gap-8" data-aos="fade-left">
         {data.map(({ imageLink }, index) => (
           <div className="my-2" key={index}>
             <img

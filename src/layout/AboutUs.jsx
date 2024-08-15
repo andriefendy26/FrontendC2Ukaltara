@@ -1,14 +1,14 @@
 import gambar1 from "../assests/aboutus.jpeg";
 import { Link } from "react-router-dom";
+import HeaderJudul from "../components/HeaderJudul";
 
 const AboutUs = () => {
   return (
-    <div className="mx-10 mt-10">
+    <div className="mx-10 mt-10 xl:mx-60" id="aboutus">
       <div className="flex mb-5 flex-col items-center">
-        <h1 className="font-bold text-3xl">About Us</h1>
-        <span className="block w-96 h-[1px] bg-black mt-8 mb-5"></span>
-        <div className="lg:flex lg:p-10 lg:gap-2">
-          <p className="lg:text-xl">
+        <HeaderJudul title="About Us" />
+        <div className="lg:flex lg:p-10 lg:gap-2 xl:p-0 lg:mb-5">
+          <p className="lg:text-sm" data-aos="fade-left">
             Pencemaran limbah laut, seperti sampah plastik dari budidaya rumput
             laut, mengancam bio-fisiologis dan fungsi ekologis wilayah pesisir,
             berdampak negatif pada biota dan lingkungan perairan, serta
@@ -24,10 +24,14 @@ const AboutUs = () => {
             Reduction Acceleration Forum), yang menekankan kolaborasi dan
             kontribusi terukur sebagai solusi komprehensif dan berkelanjutan
           </p>
-          <img className="object-cover lg:w-1/2 border border-black" src={gambar1}></img>
+          <img
+            data-aos="fade-left"
+            className="object-cover lg:w-1/2 border border-black"
+            src={gambar1}
+          ></img>
         </div>
         <Link to="/aboutus">
-          <button className="bg-primary w-full rounded-lg p-2 text-sm hover:bg-primaryhover hover:text-gray-100 text-white">
+          <button data-aos="fade-up" className="bg-primary w-full my-5 rounded-lg p-2 text-sm hover:bg-primaryhover hover:text-gray-100 text-white">
             Selengkapnya
           </button>
         </Link>
