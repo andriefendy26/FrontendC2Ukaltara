@@ -67,8 +67,11 @@ const CarouselCom = () => {
     },
   ];
   return (
-    <div className="h-60 md:h-[550px] lg:h-[550px] xl:h-[1000px]" data-aos="fade-down" >
-      <Carousel slide={false}>
+    <div
+      className="h-60 md:h-[550px] lg:h-[550px] xl:h-[1000px]"
+      data-aos="fade-down"
+    >
+      <Carousel>
         {data.map((item, i) => (
           <div
             key={i}
