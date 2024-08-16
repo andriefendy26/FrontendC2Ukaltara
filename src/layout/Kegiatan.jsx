@@ -49,7 +49,7 @@ const Kegiatan = () => {
           <Card
             key={index}
             title={item.title}
-            desc={item.desc.substring(0, 155) + "....."}
+            desc={item.desc}
             gambar={item.image}
             too={item.link}
             aos={item.animation}

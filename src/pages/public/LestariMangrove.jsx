@@ -1,6 +1,7 @@
 import Navbar from "../../layout/Navbar";
 import DetailLayout from "../../layout/DetailLayout";
 import CardBerita from "../../components/CardBerita";
+import Footers from "../../layout/Footer";
 
 const LestariMangrove = () => {
   const dataHeader = {
@@ -15,6 +16,7 @@ const LestariMangrove = () => {
         {/* <CardBerita /> */}
         <h1 className="text-2xl text-gray-400 text-center mt-10">Belum ada berita</h1>
       </DetailLayout>
+      <Footers></Footers>
     </>
   );
 };

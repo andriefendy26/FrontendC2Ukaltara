@@ -1,6 +1,7 @@
 import Navbar from "../../layout/Navbar";
 import DetailLayout from "../../layout/DetailLayout";
 import CardBerita from "../../components/CardBerita";
+import Footers from "../../layout/Footer";
 
 const SosialisasiPesisir = () => {
   const dataHeader = {
@@ -17,6 +18,7 @@ const SosialisasiPesisir = () => {
           Belum ada berita
         </h1>
       </DetailLayout>
+      <Footers />
     </>
   );
 };

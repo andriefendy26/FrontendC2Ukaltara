@@ -10,7 +10,7 @@ const Navbar = () => {
   return (
     <div
       className="py-6 px-12 lg:py-3 md:px-12 font-poppins border-b lg:flex lg:px-32 xl:px-40 lg:justify-between lg:items-center fixed top-0 z-50 w-full bg-white"
-      // data-aos="fade-down"
+      data-aos="fade-down"
     >
       <div className="flex justify-between">
         <h1 className="font-bold flex text-3xl xl:text-4xl">
@@ -31,13 +31,13 @@ const Navbar = () => {
       >
         <ul className={`lg:flex lg:items-center lg:gap-3`}>
           <li className="my-2 hover:bg-gray-200 p-1 px-2 rounded-xl">
-            <Link to="#home">Home</Link>
+            <Link to="/">Home</Link>
           </li>
           <li className="my-2 hover:bg-gray-200 p-1 px-2 rounded-xl">
-            <Link>Rekapitulasi</Link>
+            <Link to="">Rekapitulasi</Link>
           </li>
-          <li to="#aboutus" className="my-2 hover:bg-gray-200 p-1 px-2 rounded-xl">
-            <Link>About Us</Link>
+          <li className="my-2 hover:bg-gray-200 p-1 px-2 rounded-xl">
+            <Link to="aboutus">About Us</Link>
           </li>
         </ul>
         <Button size="sm">Login</Button>

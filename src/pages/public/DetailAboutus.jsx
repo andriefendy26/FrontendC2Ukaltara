@@ -6,7 +6,7 @@ const DetailAbout = () => {
   return (
     <div>
       <Navbar></Navbar>
-      <div className="m-10">
+      <div className="mt-24">
         <div className="flex flex-col justify-center items-center">
           <h1 className="font-bold text-3xl">About Us</h1>
           <span className="block w-96 h-[1px] bg-black my-5"></span>

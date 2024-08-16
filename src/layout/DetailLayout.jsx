@@ -2,7 +2,7 @@ import CardBerita from "../components/CardBerita";
 
 const DetailLayout = ({ judul, desc, children }) => {
   return (
-    <div className="mx-10 md:mx-20 lg:mx-32 lg:my-10 mt-28">
+    <div className="mx-10 md:mx-20 lg:mx-32 lg:my-10 pt-20">
       <div className="">
         <h1 className="text-2xl font-bold lg:text-3xl" data-aos="fade-right">{judul}</h1>
         <div className="w-80 h-[1px] mb-5 bg-black" data-aos="fade-right"></div>
