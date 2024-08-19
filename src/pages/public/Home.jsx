@@ -21,7 +21,6 @@ const Home = () => {
 
   return (
     <div className="pt-20">
-      <Navbar />
       <Carousel />
       <Kegiatan />
       <Pesisir />

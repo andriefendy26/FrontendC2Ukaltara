@@ -40,7 +40,9 @@ const Navbar = () => {
             <Link to="aboutus">About Us</Link>
           </li>
         </ul>
-        <Button size="sm">Login</Button>
+        <Link to="/login">
+          <Button size="sm">Login</Button>
+        </Link>
       </div>
     </div>
   );

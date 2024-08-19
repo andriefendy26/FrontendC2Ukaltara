@@ -25,6 +25,7 @@ module.exports = withMT({
         primary: "#3B8DBC",
         primaryhover: "#6C9DBA",
       },
+      
     },
   },
   plugins: [require("tailwindcss-animate"), flowbite.plugin()],
