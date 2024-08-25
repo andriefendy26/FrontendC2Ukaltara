@@ -9,11 +9,13 @@ export default function Card(props) {
     >
       <img src={props.gambar} className="w-full h-52 object-cover"></img>
       <div className="p-5 flex flex-col items-center">
-        <h1 className="font-bold text-xl">{props.title}</h1>
-        <div className="w-[50%] h-1 rounded-xl bg-white"></div>
-        <p className=" my-3 text-gray-200">
-          {props.desc.substring(0, 120) + "....."}
-        </p>
+        <div className="flex flex-col items-center">
+          <h1 className="font-bold text-xl">{props.title}</h1>
+          <div className="w-[50%] h-1 rounded-xl bg-white"></div>
+          <p className=" my-3 text-gray-200">
+            {props.desc.substring(0, 120) + "....."}
+          </p>
+        </div>
         <Link
           to={props.too}
           className="text-gray-700 bg-[#D9D9D9] p-1 px-2 rounded-lg"

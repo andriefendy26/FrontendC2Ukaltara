@@ -39,7 +39,7 @@ const Pesisir = () => {
   };
 
   return (
-    <div className="mt-10 flex flex-col items-center mx-10 lg:mx-24 xl:mx-60">
+    <div className="mt-10 flex flex-col items-center mx-10 lg:mx-24 xl:mx-60 overflow-hidden">
       <HeaderJudul title="Pemberdayaan Pesisir" />
       <div className="lg:flex lg:flex-row my-5" >
         <div className="flex mb-5 flex-col items-center lg:w-1/2" data-aos="fade-right">

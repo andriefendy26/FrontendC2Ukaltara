@@ -5,7 +5,7 @@ import Footer from "../../layout/Footer";
 const DetailAbout = () => {
   return (
     <div>
-      <div className="mt-24">
+      <div className="mx-10 my-24">
         <div className="flex flex-col justify-center items-center">
           <h1 className="font-bold text-3xl">About Us</h1>
           <span className="block w-96 h-[1px] bg-black my-5"></span>

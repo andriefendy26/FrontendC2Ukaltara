@@ -12,7 +12,7 @@ import gambarlogo from "../assests/logo.png";
 const Footers = () => {
   return (
     <Footer container>
-      <div className="w-full border-t border-black lg:px-20" data-aos="fade-down">
+      <div className="w-full border-t border-black lg:px-20 " data-aos="fade-down">
         <div className="grid w-full justify-between sm:flex sm:justify-between md:flex md:grid-cols-1">
           {/* <div>
             <Footer.Brand

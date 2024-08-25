@@ -68,7 +68,7 @@ const CarouselCom = () => {
   ];
   return (
     <div
-      className="h-60 md:h-[550px] lg:h-[550px] xl:h-[700px]"
+      className="h-60 md:h-[400px] lg:h-[500px] xl:h-[600px] mt-2 md:mt-0 overflow-hidden"
       data-aos="fade-down"
     >
       <Carousel>

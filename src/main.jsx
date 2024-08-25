@@ -14,6 +14,13 @@ import Layout from "./pages/Layout";
 
 //halaman untuk admin
 import Login from "./pages/Login";
+import Dashboard from "./pages/dashboard/Dashboard";
+import DashboardView from "./pages/dashboard/DashboarView";
+import UserView from "./pages/dashboard/UserView";
+import BeritaView from "./pages/dashboard/BeritaView";
+import DataView from "./pages/dashboard/DataView";
+import SettingView from "./pages/dashboard/SettingView";
+import HelpView from "./pages/dashboard/HelpView";
 
 const router = createBrowserRouter([
   {
@@ -25,30 +32,60 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/aboutus",
+        path: "aboutus",
         element: <DetailAbout />,
       },
       {
-        path: "/pendampinganpesisir",
+        path: "pendampinganpesisir",
         element: <Pendampinganpesisir />,
       },
       {
-        path: "/lestarimangrove",
+        path: "lestarimangrove",
         element: <LestariMangrove />,
       },
       {
-        path: "/pengabdianpesisir",
+        path: "pengabdianpesisir",
         element: <PengabdianPesisir />,
       },
       {
-        path: "/sosialisasipesisir",
+        path: "sosialisasipesisir",
         element: <SosialisasiPesisir />,
       },
     ],
   },
   {
-    path: "/login",
+    path: "login",
     element: <Login />,
+  },
+  {
+    path: "/",
+    element: <Dashboard />,
+    children: [
+      {
+        path: "dashboard",
+        element: <DashboardView />,
+      },
+      {
+        path: "users",
+        element: <UserView />,
+      },
+      {
+        path: "berita",
+        element: <p>Ini Berita Managemen</p>,
+      },
+      {
+        path: "datasampah",
+        element: <p>Ini Berita Managemen</p>,
+      },
+      {
+        path: "setting",
+        element: <p>Ini Berita Managemen</p>,
+      },
+      {
+        path: "help",
+        element: <p>Ini Berita Managemen</p>,
+      },
+    ],
   },
 ]);
 

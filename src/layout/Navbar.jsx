@@ -9,7 +9,7 @@ const Navbar = () => {
 
   return (
     <div
-      className="py-6 px-12 lg:py-3 md:px-12 font-poppins border-b lg:flex lg:px-32 xl:px-40 lg:justify-between lg:items-center fixed top-0 z-50 w-full bg-white"
+      className="py-6 px-12 lg:py-3 md:px-12 font-poppins border-b lg:flex lg:px-32 xl:px-40 lg:justify-between lg:items-center fixed top-0 z-50 w-full bg-white "
       data-aos="fade-down"
     >
       <div className="flex justify-between">
@@ -34,7 +34,7 @@ const Navbar = () => {
             <Link to="/">Home</Link>
           </li>
           <li className="my-2 hover:bg-gray-200 p-1 px-2 rounded-xl">
-            <Link to="">Rekapitulasi</Link>
+            <Link to="">Logbook</Link>
           </li>
           <li className="my-2 hover:bg-gray-200 p-1 px-2 rounded-xl">
             <Link to="aboutus">About Us</Link>

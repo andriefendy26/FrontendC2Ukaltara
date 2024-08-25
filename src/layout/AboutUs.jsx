@@ -4,7 +4,7 @@ import HeaderJudul from "../components/HeaderJudul";
 
 const AboutUs = () => {
   return (
-    <div className="mx-10 mt-10 xl:mx-60" id="aboutus">
+    <div className="mx-10 mt-10 xl:mx-60 " id="aboutus">
       <div className="flex mb-5 flex-col items-center">
         <HeaderJudul title="About Us" />
         <div className="lg:flex lg:p-10 lg:gap-2 xl:p-0 lg:mb-5">

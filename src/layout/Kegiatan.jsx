@@ -42,7 +42,7 @@ const Kegiatan = () => {
   ];
 
   return (
-    <div className="flex flex-col items-center mt-10 " data-aos="fade-up">
+    <div className="flex flex-col items-center mt-10 overflow-hidden" data-aos="fade-up">
       <HeaderJudul title="Kegiatan" />
       <div className="md:grid md:grid-rows-2 md:grid-flow-col md:gap-3 lg:grid-rows-1">
         {data.map((item, index) => (
