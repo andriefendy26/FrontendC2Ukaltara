@@ -10,8 +10,21 @@ import { FaRegNewspaper } from "react-icons/fa6";
 import { FaDatabase } from "react-icons/fa";
 import { MdOutlineLiveHelp } from "react-icons/md";
 import { IoMdSettings } from "react-icons/io";
+import { MdExitToApp } from "react-icons/md";
+
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { Logout, reset } from "../../features/AuthSlice";
 
 const Sidebar = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const LogoutAct = () => {
+    dispatch(Logout());
+    dispatch(reset());
+    navigate("/login");
+  };
+
   return (
     <SidebarHead>
       <SideBarItem
@@ -43,6 +56,12 @@ const Sidebar = () => {
         nama="Help"
         to="/help"
         icon={<MdOutlineLiveHelp size={20}></MdOutlineLiveHelp>}
+      />
+      <SideBarItem
+        nama="Logout"
+        // to="/help"
+        onClick={() => LogoutAct()}
+        icon={<MdExitToApp size={20}></MdExitToApp>}
       />
     </SidebarHead>
   );

@@ -13,20 +13,14 @@ import 'aos/dist/aos.css';
 
 const Home = () => {
 
-  useEffect(() => {
-    AOS.init({
-      duration : 2000
-    });
-  }, []);
-
+ 
   return (
-    <div className="pt-20">
+    <div className="">
       <Carousel />
       <Kegiatan />
       <Pesisir />
       <Galeri />
       <AboutUs />
-      <Footer />
     </div>
   );
 };

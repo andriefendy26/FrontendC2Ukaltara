@@ -42,9 +42,9 @@ const Kegiatan = () => {
   ];
 
   return (
-    <div className="flex flex-col items-center mt-10 overflow-hidden" data-aos="fade-up">
+    <div className="flex flex-col items-center mx-12 my-10 overflow-hidden" data-aos="fade-up">
       <HeaderJudul title="Kegiatan" />
-      <div className="md:grid md:grid-rows-2 md:grid-flow-col md:gap-3 lg:grid-rows-1">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:mx-44">
         {data.map((item, index) => (
           <Card
             key={index}
@@ -56,6 +56,18 @@ const Kegiatan = () => {
           ></Card>
         ))}
       </div>
+      {/* <div className="md:grid md:grid-rows-2 md:grid-flow-col md:gap-3 lg:grid-rows-1">
+        {data.map((item, index) => (
+          <Card
+            key={index}
+            title={item.title}
+            desc={item.desc}
+            gambar={item.image}
+            too={item.link}
+            aos={item.animation}
+          ></Card>
+        ))}
+      </div> */}
     </div>
   );
 };

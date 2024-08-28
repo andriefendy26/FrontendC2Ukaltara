@@ -2,6 +2,10 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
+import { Provider } from "react-redux";
+import { store } from "./store";
+import axios from "axios";
+axios.defaults.withCredentials = true;
 
 //halaman untuk pengunjung
 import Home from "./pages/public/Home";
@@ -21,6 +25,8 @@ import BeritaView from "./pages/dashboard/BeritaView";
 import DataView from "./pages/dashboard/DataView";
 import SettingView from "./pages/dashboard/SettingView";
 import HelpView from "./pages/dashboard/HelpView";
+import Logbook from "./pages/public/LogbookPage/Logbook";
+import LogbookDetail from "./pages/public/LogbookPage/LogbookDetail";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +57,14 @@ const router = createBrowserRouter([
         path: "sosialisasipesisir",
         element: <SosialisasiPesisir />,
       },
+      {
+        path: "logbook",
+        element: <Logbook />,
+      },
+      {
+        path: "logbook/:id",
+        element: <LogbookDetail />,
+      },
     ],
   },
   {
@@ -71,19 +85,19 @@ const router = createBrowserRouter([
       },
       {
         path: "berita",
-        element: <p>Ini Berita Managemen</p>,
+        element: <BeritaView />,
       },
       {
         path: "datasampah",
-        element: <p>Ini Berita Managemen</p>,
+        element: <DataView />,
       },
       {
         path: "setting",
-        element: <p>Ini Berita Managemen</p>,
+        element: <SettingView />,
       },
       {
         path: "help",
-        element: <p>Ini Berita Managemen</p>,
+        element: <HelpView />,
       },
     ],
   },
@@ -91,6 +105,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </StrictMode>
 );

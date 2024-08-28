@@ -4,11 +4,11 @@ import HeaderJudul from "../components/HeaderJudul";
 
 const AboutUs = () => {
   return (
-    <div className="mx-10 mt-10 xl:mx-60 " id="aboutus">
+    <div className="mx-10 xl:mx-60 my-10" id="aboutus">
       <div className="flex mb-5 flex-col items-center">
         <HeaderJudul title="About Us" />
         <div className="lg:flex lg:p-10 lg:gap-2 xl:p-0 lg:mb-5">
-          <p className="lg:text-sm" data-aos="fade-left">
+          <p className="lg:text-lg xl:text-xl" data-aos="fade-left">
             Pencemaran limbah laut, seperti sampah plastik dari budidaya rumput
             laut, mengancam bio-fisiologis dan fungsi ekologis wilayah pesisir,
             berdampak negatif pada biota dan lingkungan perairan, serta
@@ -31,7 +31,10 @@ const AboutUs = () => {
           ></img>
         </div>
         <Link to="/aboutus">
-          <button data-aos="fade-up" className="bg-primary w-full my-5 rounded-lg p-2 text-sm hover:bg-primaryhover hover:text-gray-100 text-white">
+          <button
+            data-aos="fade-up"
+            className="bg-primary w-full my-5 rounded-lg p-2 text-sm hover:bg-primaryhover hover:text-gray-100 text-white"
+          >
             Selengkapnya
           </button>
         </Link>

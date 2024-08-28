@@ -17,7 +17,6 @@ const SosialisasiPesisir = () => {
           Belum ada berita
         </h1>
       </DetailLayout>
-      <Footers />
     </>
   );
 };

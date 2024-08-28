@@ -9,11 +9,11 @@ const Navbar = () => {
 
   return (
     <div
-      className="py-6 px-12 lg:py-3 md:px-12 font-poppins border-b lg:flex lg:px-32 xl:px-40 lg:justify-between lg:items-center fixed top-0 z-50 w-full bg-white "
+      className="py-6 px-12 lg:py-3 md:px-12 shadow-xl font-poppins border-b lg:flex lg:px-32 xl:px-40 lg:justify-between lg:items-center sticky top-0 z-50 w-full bg-white "
       data-aos="fade-down"
     >
       <div className="flex justify-between">
-        <h1 className="font-bold flex text-3xl xl:text-4xl">
+        <h1 className="font-bold flex text-xl lg:text-2xl xl:text-3xl">
           <p className="text-primary">C2U</p>Kaltara
         </h1>
         <button className="lg:hidden" onClick={() => SetIsOpen(!isOpen)}>
@@ -27,14 +27,14 @@ const Navbar = () => {
       <div
         className={`${
           isOpen ? "mt-5" : "hidden"
-        } lg:flex lg:justify-between lg:items-center lg:gap-12`}
+        } lg:flex lg:justify-between lg:items-center lg:gap-12 transition-all duration-200`}
       >
         <ul className={`lg:flex lg:items-center lg:gap-3`}>
           <li className="my-2 hover:bg-gray-200 p-1 px-2 rounded-xl">
             <Link to="/">Home</Link>
           </li>
           <li className="my-2 hover:bg-gray-200 p-1 px-2 rounded-xl">
-            <Link to="">Logbook</Link>
+            <Link to="logbook">Logbook</Link>
           </li>
           <li className="my-2 hover:bg-gray-200 p-1 px-2 rounded-xl">
             <Link to="aboutus">About Us</Link>

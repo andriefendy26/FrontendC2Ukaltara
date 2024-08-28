@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   Card,
@@ -8,7 +8,33 @@ import {
   Typography,
 } from "@material-tailwind/react";
 
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { LoginUser, reset } from "../features/AuthSlice";
+
 export default function Login() {
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user, isError, isSuccess, isLoading, message } = useSelector(
+    (state) => state.auth
+  );
+  useEffect(() => {
+    if (user || isSuccess) {
+      navigate("/dashboard");
+    }
+    dispatch(reset());
+  }, [user, isSuccess, dispatch, navigate]);
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    dispatch(LoginUser(data));
+  };
+
   return (
     <div className="flex h-screen items-center justify-center">
       <Card color="transparent" shadow={false}>
@@ -35,6 +61,12 @@ export default function Login() {
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
+              onChange={(e) =>
+                setData((prevData) => ({
+                  ...prevData,
+                  email: e.target.value,
+                }))
+              }
             />
             <Typography variant="h6" color="blue-gray" className="-mb-3">
               Password
@@ -47,12 +79,26 @@ export default function Login() {
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
+              onChange={(e) =>
+                setData((prevData) => ({
+                  ...prevData,
+                  password: e.target.value,
+                }))
+              }
             />
           </div>
-
-          <button className="bg-primary w-full rounded-lg p-2 px-5 mt-5 text-white text-lg hover:bg-primaryhover hover:text-gray-100">
+          {isError && (
+            <Typography variant="h6" color="red" className="mt-3">
+              {message}
+            </Typography>
+          )}
+          <Button
+            loading={isLoading}
+            onClick={(e) => handleLogin(e)}
+            className="w-full mt-5"
+          >
             Login
-          </button>
+          </Button>
         </form>
       </Card>
     </div>

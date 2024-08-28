@@ -56,12 +56,13 @@ const SidebarHead = ({ children }) => {
   );
 };
 
-const SideBarItem = ({ nama, icon, to }) => {
+const SideBarItem = ({ nama, icon, to, onClick }) => {
   const { isOpen } = useContext(SideContext);
 
   return (
     <NavLink
-      to={to}
+      to={to ? to : ""}
+      onClick={onClick}
       className={({ isActive, isPending }) =>
         `flex p-3 items-center rounded-lg my-1 hover:bg-gray-300 hover:text-black ${
           isPending ? "" : isActive ? "bg-primary text-white" : ""

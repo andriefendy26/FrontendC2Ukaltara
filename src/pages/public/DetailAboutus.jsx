@@ -1,16 +1,32 @@
 import Navbar from "../../layout/Navbar";
 import gambar1 from "../../assests/aboutus.jpeg";
 import Footer from "../../layout/Footer";
+import {
+  Card,
+  CardBody,
+  CardFooter,
+  Typography,
+  Button,
+} from "@material-tailwind/react";
+import { IoIosArrowForward } from "react-icons/io";
 
 const DetailAbout = () => {
   return (
     <div>
-      <div className="mx-10 my-24">
-        <div className="flex flex-col justify-center items-center">
-          <h1 className="font-bold text-3xl">About Us</h1>
-          <span className="block w-96 h-[1px] bg-black my-5"></span>
-          <div>
-            <p>
+      <div className="m-10 lg:mx-20">
+        <div className="">
+          <div className="flex flex-col items-center">
+            <h1 className="font-bold text-2xl xl:text-3xl">About Us</h1>
+            <div
+              className="w-52 h-[1px] mb-5 bg-black mt-3"
+              data-aos="fade-right"
+            ></div>
+          </div>
+          <div className="">
+            <Typography
+              variant="paragraph"
+              className="text-sm md:text-lg lg:text-lg"
+            >
               Pencemaran limbah laut, seperti sampah plastik dari budidaya
               rumput laut, mengancam bio-fisiologis dan fungsi ekologis wilayah
               pesisir, berdampak negatif pada biota dan lingkungan perairan,
@@ -26,7 +42,7 @@ const DetailAbout = () => {
               KALTARA (Coastal Waste Reduction Acceleration Forum), yang
               menekankan kolaborasi dan kontribusi terukur sebagai solusi
               komprehensif dan berkelanjutan
-            </p>
+            </Typography>
             <div className="flex w-full items-center justify-center">
               <img
                 className="object-cover lg:w-1/2 border border-black"
@@ -35,95 +51,106 @@ const DetailAbout = () => {
             </div>
           </div>
           <div>
-            <h1 className="text-lg text-center border-y-[1px] border-black py-3 my-4 font-semibold">
-              Manfaat RekaCipta Penanganan Limbah Laut
-            </h1>
-            <div t r sk assName="flex flex-col gap-5">
+            <div className="flex items-center flex-col">
+              <Typography
+                variant="h6"
+                className="text-lg lg:text-2xl text-center my-5"
+              >
+                Manfaat <span className="text-primary">RekaCipta</span>{" "}
+                Penanganan Limbah Laut
+              </Typography>
+              <div
+                className="w-[50%] h-[1px] mb-5 bg-black"
+                data-aos="fade-right"
+              ></div>
+            </div>
+            <div className="">
               <div>
                 <div className="flex items-center justify-center">
-                  <div className="w-20 h-[1px] bg-black"></div>
-                  <h1 className="font-semibold mx-5 my-2 text-center">
+                  <Typography variant="h6" className="text-xl ">
                     Manfaat Umum
-                  </h1>
-                  <div className="w-20 h-[1px]  bg-black"></div>
+                  </Typography>
                 </div>
-                <p>
-                  {" "}
-                  - <span className="font-semibold">Masyarakat</span> :
-                  Peningkatan kualitas hidup melalui pengelolaan limbah laut
+                <div className="grid lg:grid-cols-2 gap-4">
+                  <CardComp judul="Masyarakat">
+                    <CardItem
+                      text=" Peningkatan kualitas hidup melalui pengelolaan limbah laut
                   yang efektif, serta kesadaran dan kepedulian dalam pelestarian
-                  pesisir.
-                </p>
-                <p>
-                  {" "}
-                  - <span className="font-semibold">Civitas Akademika</span>:
-                  Penerapan merdeka belajar, dukungan capaian Indikator Kinerja
-                  Utama (IKU) Universitas, dan peningkatan kompetensi dalam
-                  tri-dharma perguruan tinggi.
-                </p>
+                  pesisir."
+                    ></CardItem>
+                  </CardComp>
+                  <CardComp judul="Civitas Akademika">
+                    <CardItem
+                      text="Penerapan merdeka belajar, dukungan capaian Indikator Kinerja
+                    Utama (IKU) Universitas, dan peningkatan kompetensi dalam
+                    tri-dharma perguruan tinggi."
+                    ></CardItem>
+                  </CardComp>
+                </div>
               </div>
               <div>
-                <div className="flex items-center justify-center">
-                  <div className="w-20 h-[1px] bg-black"></div>
-                  <h1 className="font-semibold mx-5 my-2 text-center">
+                <div className="flex items-center justify-center my-5 ">
+                  <Typography variant="h6" className="text-xl text-center">
                     Manfaat khusus untuk 8 kelurahan Pesisir Kota Tarakan
-                  </h1>
-                  <div className="w-20 h-[1px]  bg-black"></div>
+                  </Typography>
                 </div>
-
-                <div>
-                  <p>
-                    -
-                    <span className="font-semibold">
-                      {" "}
-                      Kesadaran dan Kesejahteraan
-                    </span>
-                    : Peningkatan kepedulian terhadap kelestarian pesisir dan
-                    peningkatan kesejahteraan masyarakat.
-                  </p>
-                </div>
+                <CardComp judul="Kesadaran dan Kesejahteraan">
+                  <CardItem
+                    text="Peningkatan kepedulian terhadap kelestarian pesisir dan
+                    peningkatan kesejahteraan masyarakat."
+                  ></CardItem>
+                </CardComp>
               </div>
               <div className="">
-                <div className="flex items-center justify-center">
-                  <div className="w-20 h-[1px] bg-black"></div>
-                  <h1 className="font-semibold mx-5 my-2 text-center">
+                <div className="flex items-center justify-center my-5 ">
+                  <Typography variant="h6" className="text-xl ">
                     Tujuan Reka Cipta
-                  </h1>
-                  <div className="w-20 h-[1px]  bg-black"></div>
+                  </Typography>
                 </div>
-
-                <div>
-                  <p>
-                    - <span className="font-semibold">Coastal Clean Up</span> :
-                    Pengabdian masyarakat untuk membersihkan pesisir.
-                  </p>
-                  <p>
-                    - <span className="font-semibold">Bank Sampah/TPS-3R</span>{" "}
-                    : Pemberdayaan fasilitas pengelolaan sampah
-                  </p>
-                  <p>
-                    -{" "}
-                    <span className="font-semibold">
-                      Pengolahan dan Regulasi Sampah
-                    </span>{" "}
-                    : Pendampingan dalam pengolahan dan pengelolaan limbah.
-                  </p>
-                  <p>
-                    - <span className="font-semibold">Lestari Mangrove</span> :
-                    Pelestarian ekosistem mangrove.
-                  </p>
-                  <p>
-                    -{" "}
-                    <span className="font-semibold">Aplikasi C2U Tarakan</span>{" "}
-                    : Implementasi program Coastal Clean Up di Tarakan.
-                  </p>
+                <div className="grid lg:grid-cols-2 gap-4">
+                  <CardComp judul="Coastal Clean Up">
+                    <CardItem text="Pengabdian masyarakat untuk membersihkan pesisir."></CardItem>
+                  </CardComp>
+                  <CardComp judul="Bank Sampah/TPS-3R">
+                    <CardItem text="Pemberdayaan fasilitas pengelolaan sampah."></CardItem>
+                  </CardComp>
+                  <CardComp judul="Pengolahan dan Regulasi Sampah">
+                    <CardItem text="Pendampingan dalam pengolahan dan pengelolaan limbah."></CardItem>
+                  </CardComp>
+                  <CardComp judul="Lestari Mangrove">
+                    <CardItem text="Pelestarian ekosistem mangrove."></CardItem>
+                  </CardComp>
+                  <CardComp judul="Aplikasi C2U Tarakan">
+                    <CardItem text="Implementasi program Coastal Clean Up di Tarakan."></CardItem>
+                  </CardComp>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <Footer />
+    </div>
+  );
+};
+
+const CardComp = ({ judul, children }) => {
+  return (
+    <Card className="mt-6 shadow-lg border border-gray-200">
+      <CardBody>
+        <Typography variant="h5" color="blue-gray" className="mb-2 text-lg">
+          {judul}
+        </Typography>
+        {children}
+      </CardBody>
+    </Card>
+  );
+};
+
+const CardItem = ({ text }) => {
+  return (
+    <div className="flex items-center">
+      {/* <IoIosArrowForward></IoIosArrowForward> */}
+      <Typography variant="paragraph">{text}</Typography>
     </div>
   );
 };
