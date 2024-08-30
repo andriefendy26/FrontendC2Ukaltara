@@ -44,7 +44,7 @@ const Kegiatan = () => {
   return (
     <div className="flex flex-col items-center mx-12 my-10 overflow-hidden" data-aos="fade-up">
       <HeaderJudul title="Kegiatan" />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:mx-44">
+      <div className="grid grid-cols-1 gap-10 md:grid-cols-2 xl:grid-cols-4 lg:32 xl:mx-44">
         {data.map((item, index) => (
           <Card
             key={index}

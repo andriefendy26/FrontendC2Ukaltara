@@ -1,4 +1,5 @@
 import axios from "axios";
+import API_URL from "./Api";
 
 export const getAllData = async (
   tanggal_start,
@@ -9,7 +10,7 @@ export const getAllData = async (
 ) => {
   try {
     const response = await axios.get(
-      `http://localhost:3000/data?tanggal_start=${tanggal_start}&tanggal_end=${tanggal_end}&kelurahan_id=${kelurahan_id}&page=${page}&limit=${limit}`
+      `${API_URL}/data?tanggal_start=${tanggal_start}&tanggal_end=${tanggal_end}&kelurahan_id=${kelurahan_id}&page=${page}&limit=${limit}`
     );
     return response.data;
   } catch (error) {
@@ -19,7 +20,7 @@ export const getAllData = async (
 
 export const createData = async (data) => {
   try {
-    const response = await axios.post("http://localhost:3000/data", data);
+    const response = await axios.post(`${API_URL}/data`, data);
     return response;
   } catch (error) {
     return error;
@@ -28,20 +29,15 @@ export const createData = async (data) => {
 
 export const updateData = async (data) => {
   try {
-    const response = await axios.patch(
-      `http://localhost:3000/data/${data.id}`,
-      data
-    );
+    const response = await axios.patch(`${API_URL}/data/${data.id}`, data);
     return response;
   } catch (error) {
     return error;
   }
 };
-export const deleteData = async (id) => {
+export const deleteData = async (data) => {
   try {
-    const response = await axios.delete(
-      `http://localhost:3000/data/${id}`
-    );
+    const response = await axios.delete(`${API_URL}/data/${id}`);
     return response;
   } catch (error) {
     return error;

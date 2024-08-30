@@ -9,6 +9,7 @@ import { useEffect } from "react";
 
 import AOS from "aos";
 import 'aos/dist/aos.css';
+import LogbookLay from "../../layout/Logbook";
 
 
 const Home = () => {
@@ -19,6 +20,7 @@ const Home = () => {
       <Carousel />
       <Kegiatan />
       <Pesisir />
+      <LogbookLay></LogbookLay>
       <Galeri />
       <AboutUs />
     </div>

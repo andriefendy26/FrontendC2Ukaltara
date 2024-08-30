@@ -58,7 +58,7 @@ const Pesisir = () => {
             kemiskinan, dan meningkatkan kualitas hidup mereka.
           </p>
         </div>
-        <div className="flex justify-center rounded-3xl bg-cyan-100" data-aos="fade-right">
+        <div className="flex justify-center rounded-3xl rounded-bl-full rounded-tr-full bg-primary" data-aos="fade-right">
           <img src={teamPres}  className="w-96 lg:w-80 object-cover"></img>
         </div>
       </div>

@@ -1,8 +1,9 @@
 import axios from "axios";
+import API_URL from "./Api";
 
 export const getAllLogbook = async () => {
   try {
-    const response = await axios.get("http://localhost:3000/logbook");
+    const response = await axios.get(`${API_URL}/logbook`);
     return response.data.data;
   } catch (error) {
     return error;
@@ -19,7 +20,7 @@ export const getAllLogbookByKelID = async (
 ) => {
   try {
     const response = await axios.get(
-      `http://localhost:3000/logbook/kelurahan/${id}?page=${page}&limit=${limit}&tanggal_start=${tanggal_start}&tanggal_end=${tanggal_end}&search_query=${search_query}`
+      `${API_URL}/logbook/kelurahan/${id}?page=${page}&limit=${limit}&tanggal_start=${tanggal_start}&tanggal_end=${tanggal_end}&search_query=${search_query}`
     );
     return response.data;
   } catch (error) {
@@ -29,7 +30,7 @@ export const getAllLogbookByKelID = async (
 
 export const createLogbook = async (data) => {
   try {
-    const response = await axios.post("http://localhost:3000/logbook", data);
+    const response = await axios.post(`${API_URL}/logbook`, data);
     return response.data;
   } catch (error) {
     return error;

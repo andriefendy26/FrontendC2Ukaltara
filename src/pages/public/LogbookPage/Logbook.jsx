@@ -12,11 +12,13 @@ import { Link } from "react-router-dom";
 import { IoEnter } from "react-icons/io5";
 
 const Logbook = () => {
+  const [isLoading, setIsLoading] = React.useState();
   const [kelurahan, setKelurahan] = React.useState();
   useEffect(() => {
-    // console.log(kelurahan);
+    console.log(kelurahan);
     getData();
   }, []);
+
   const getData = async () => {
     const data = await getAllKelurahan();
     // setKelurahan(data)
@@ -32,7 +34,7 @@ const Logbook = () => {
           Untuk para peserta MBKM silahkan untuk mengisi logbook sesuai
           penempatan masing masing
         </Typography>
-        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4 ">
+        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4x">
           {kelurahan &&
             kelurahan.map((i, index) => (
               <CardComp
@@ -40,11 +42,10 @@ const Logbook = () => {
                 to={`/logbook/${i.id}`}
                 state={{ namaKelurahan: i.namaKelurahan }}
                 nama={i.namaKelurahan}
+                isLoading={isLoading}
               ></CardComp>
             ))}
         </div>
-
-        {/* <CardComp></CardComp> */}
       </div>
       <div className="mt-10">
         <Typography variant="h3" className="mb-3">
@@ -58,9 +59,9 @@ const Logbook = () => {
   );
 };
 
-const CardComp = ({ nama, to, state }) => {
+const CardComp = ({ nama, to, state , isLoading}) => {
   return (
-    <Card className="mt-6 border border-black shadow-xl">
+    <Card className={`mt-6 border border-black shadow-xl'}`}>
       <CardBody>
         <Typography variant="h5" color="blue-gray" className="mb-2">
           {nama}

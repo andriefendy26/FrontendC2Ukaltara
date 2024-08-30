@@ -72,6 +72,7 @@ const UserView = () => {
 
   const getUser = async () => {
     const data = await getAlltUser(keyword, page, limit);
+    console.log(data)
     setData(data.data);
     setPage(data.page);
     setTotalPage(data.totalPages);
@@ -142,12 +143,19 @@ const UserView = () => {
     }));
   };
 
+  const handleSelect = (e, name) => {
+    // console.log(e);
+    setForm((prev) => ({
+      ...prev,
+      [name]: Number(e),
+    }));
+  };
+
   const handleOpenDelete = (id) =>
     setOpenDel({
       isOpen: !openDel.isOpen,
       id: id,
     });
-
   const handleDelete = async () => {
     const api = await deleteUser(openDel.id);
     // console.log(api);

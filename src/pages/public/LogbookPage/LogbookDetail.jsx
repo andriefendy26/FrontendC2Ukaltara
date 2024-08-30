@@ -38,6 +38,7 @@ import {
 import ReactPaginate from "react-paginate";
 import { DayPicker } from "react-day-picker";
 import { format } from "date-fns";
+import { FileInput, Label } from "flowbite-react";
 
 // const TABS = [
 //   {
@@ -54,7 +55,7 @@ import { format } from "date-fns";
 //   },
 // ];
 
-const TABLE_HEAD = ["Nama", "NPM", "Jurusan", "Tanggal", "Kegiatan"];
+const TABLE_HEAD = ["Nama", "NPM", "Jurusan", "Tanggal", "Kegiatan", "Gambar"];
 
 const LogbookDetail = () => {
   let { id } = useParams();
@@ -64,17 +65,18 @@ const LogbookDetail = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
     setOpen((cur) => !cur);
+    setPreview("");
   };
 
   const [kelurahan, setKelurahan] = React.useState();
   const [startDate, setStartDate] = React.useState("");
   const [endDate, setEndDate] = React.useState("");
   const [page, setPage] = React.useState();
-  const [totalPage, setTotalPage] = React.useState(0);
   const [rows, setRows] = React.useState(0);
   const [limit, setLimit] = React.useState(5);
+  const [totalPage, setTotalPage] = React.useState(0);
   const [keyword, setKeyword] = React.useState("");
-  const [query, setQuery] = React.useState();
+  const [query, setQuery] = React.useState("");
 
   useEffect(() => {
     getData();
@@ -115,8 +117,9 @@ const LogbookDetail = () => {
   };
 
   //handle add data
-  const [isError, setIsError] = React.useState();
-  const [isSuccess, setIsSuccess] = React.useState();
+  const [file, setFile] = React.useState("");
+  const [preview, setPreview] = React.useState("");
+  const [isLoading, setIsloading] = React.useState(false);
   const [form, setForm] = React.useState({
     nama: "",
     npm: "",
@@ -125,6 +128,9 @@ const LogbookDetail = () => {
     kelurahanID: id,
   });
 
+
+  const [isError, setIsError] = React.useState();
+  const [isSuccess, setIsSuccess] = React.useState();
   const handleChange = (e) => {
     setForm((curr) => ({
       ...curr,
@@ -138,34 +144,64 @@ const LogbookDetail = () => {
       jurusan: e,
     }));
   };
+
+  const Loadimage = (e) => {
+    const image = e.target.files[0];
+    console.log(image);
+    setFile(image);
+    setPreview(URL.createObjectURL(image));
+  };
+
   const handleCreateData = async () => {
-    console.log(form);
+    // console.log(form);
+    setIsloading(true)
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("nama", form.nama);
+    formData.append("npm", form.npm);
+    formData.append("jurusan", form.jurusan);
+    formData.append("kegiatan", form.kegiatan);
+    formData.append("kelurahanID", id);
+
     try {
-      const responseApi = await createLogbook(form);
+      const responseApi = await createLogbook(formData);
       // console.log(responseApi);
       if (responseApi.status == 401) {
         const message = responseApi.response.data.msg;
-        // console.log(responseApi);
         setIsError(message);
+        setIsloading(false)
         setTimeout(() => {
           setIsError(null); // Hide error message after 4 seconds
         }, 4000);
+      } else if (responseApi.status == 422) {
+        const message = responseApi.response.data.msg;
+        setIsError(message);
+        setIsloading(false)
+        setTimeout(() => {
+          setIsError(null); // Hide error message after 4 seconds
+        }, 4000);
+      } else {
+        setForm({
+          nama: "",
+          npm: "",
+          jurusan: "",
+          kegiatan: "",
+        });
+        setFile("");
+        setPreview("");
+        setIsloading(false)
+        setOpen((cur) => !cur);
+        setIsError(null);
+        setIsSuccess(responseApi.msg);
+        // console.log(responseApi);
+        setTimeout(() => {
+          setIsSuccess(null); // Hide error message after 4 seconds
+        }, 4000);
+        getData();
       }
-      setForm({
-        nama: "",
-        npm: "",
-        jurusan: "",
-        kegiatan: "",
-      });
-      setOpen((cur) => !cur);
-      setIsError(null);
-      setIsSuccess(responseApi.msg);
-      // console.log(responseApi);
-      setTimeout(() => {
-        setIsSuccess(null); // Hide error message after 4 seconds
-      }, 4000);
       getData();
     } catch (error) {
+      setIsloading(false)
       setIsError(error.message);
     }
   };
@@ -186,6 +222,9 @@ const LogbookDetail = () => {
         handleSelect={handleSelect}
         isError={isError}
         isSuccess={isSuccess}
+        isLoading={isLoading}
+        onChangeImage={Loadimage}
+        preview={preview}
       />
       <div>
         <Typography variant="h3">{kelurahanName}</Typography>
@@ -203,6 +242,8 @@ const LogbookDetail = () => {
                   size="sm"
                   onClick={() => {
                     // setKelurahanIDFilter(null);
+                    setQuery("");
+                    setKeyword("");
                     setPage(0);
                     setStartDate("");
                     setEndDate("");
@@ -279,7 +320,7 @@ const LogbookDetail = () => {
               <tbody>
                 {kelurahan &&
                   kelurahan.map(
-                    ({ nama, npm, jurusan, tanggal, kegiatan }, index) => {
+                    ({ nama, npm, jurusan, tanggal, kegiatan, url }, index) => {
                       const isLast = index === kelurahan.length - 1;
                       const classes = isLast
                         ? "p-4"
@@ -321,7 +362,7 @@ const LogbookDetail = () => {
                               color="blue-gray"
                               className="font-normal"
                             >
-                              {tanggal}
+                              {converFormatDate(tanggal)}
                             </Typography>
                           </td>
 
@@ -333,6 +374,13 @@ const LogbookDetail = () => {
                             >
                               {kegiatan}
                             </Typography>
+                          </td>
+                          <td className={classes}>
+                            <img
+                              className="h-36  rounded-lg object-cover object-center"
+                              src={url}
+                              alt="gambar kamu"
+                            />
                           </td>
                         </tr>
                       );
@@ -361,7 +409,7 @@ const LogbookDetail = () => {
                     Previous
                   </Button>
                 }
-                pageCount={totalPage}
+                pageCount={totalPage ? Math.ceil(rows / limit) : 0}
                 onPageChange={changePage}
                 containerClassName="flex gap-2 items-center"
               />
@@ -382,13 +430,16 @@ const ModalAddLogbook = ({
   handleSelect,
   isError,
   // isSuccess,
+  isLoading,
+  onChangeImage,
+  preview,
 }) => {
   return (
     <Dialog
       size="xs"
       open={open}
       handler={handleOpen}
-      className="bg-transparent shadow-none"
+      className="bg-transparent shadow-none overflow-y-scroll h-[90%]"
     >
       <Card className="mx-auto w-full max-w-[24rem]">
         <CardBody className="flex flex-col gap-4">
@@ -453,9 +504,24 @@ const ModalAddLogbook = ({
             // value={form.kegiatan}
             onChange={(e) => handleChange(e)}
           />
+          <Typography className="-mb-2" variant="h6">
+            Upload gambar
+          </Typography>
+          <Typography className="-mb-2 text-sm" variant="paragraph">
+            Format File : [.png,.jpg,.jpeg]
+          </Typography>
+
+          <FileInput id="default-file-upload" onChange={onChangeImage} />
+          {preview ? (
+            <img
+              className="h-36 w-full rounded-lg object-cover object-center"
+              src={preview}
+              alt="gambar kamu"
+            />
+          ) : ""}
         </CardBody>
         <CardFooter className="pt-0">
-          <Button variant="gradient" onClick={handleCreateData} fullWidth>
+          <Button loading={isLoading} variant="gradient" onClick={handleCreateData} fullWidth>
             Simpan
           </Button>
         </CardFooter>

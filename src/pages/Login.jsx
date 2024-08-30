@@ -31,6 +31,9 @@ export default function Login() {
   }, [user, isSuccess, dispatch, navigate]);
 
   const handleLogin = (e) => {
+    console.log("form", data);
+    console.log('isSuccess', isSuccess)
+    console.log('user', user)
     e.preventDefault();
     dispatch(LoginUser(data));
   };

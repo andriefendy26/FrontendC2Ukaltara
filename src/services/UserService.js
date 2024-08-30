@@ -1,9 +1,10 @@
 import axios from "axios";
+import API_URL from "./Api";
 
 export const getAlltUser = async (keyword, page, limit) => {
   try {
     const response = await axios.get(
-      `http://localhost:3000/users?search_query=${keyword}&page=${page}&limit=${limit}`
+      `${API_URL}/users?search_query=${keyword}&page=${page}&limit=${limit}`
     );
     return response.data;
   } catch (error) {
@@ -13,7 +14,7 @@ export const getAlltUser = async (keyword, page, limit) => {
 
 export const createUser = async (data) => {
   try {
-    const response = await axios.post("http://localhost:3000/users", data);
+    const response = await axios.post(`${API_URL}/users`, data);
     return response;
   } catch (error) {
     return error;
@@ -22,7 +23,7 @@ export const createUser = async (data) => {
 export const updateUserApi = async (editForm) => {
   try {
     const responseApi = await axios.patch(
-      `http://localhost:3000/users/${editForm.id}`,
+      `${API_URL}/users/${editForm.id}`,
       editForm
     );
     return responseApi;
@@ -33,9 +34,7 @@ export const updateUserApi = async (editForm) => {
 
 export const deleteUser = async (params) => {
   try {
-    const response = await axios.delete(
-      `http://localhost:3000/users/${params}`
-    );
+    const response = await axios.delete(`${API_URL}/users/${params}`);
     return response;
   } catch (error) {
     return error;
