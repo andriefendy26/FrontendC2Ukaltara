@@ -3,6 +3,7 @@ import Navbar from "../layout/Navbar";
 import Footers from "../layout/Footer";
 import { useEffect } from "react";
 import aos from "aos";
+import NavbarDaisy from "../layout/NavbarDaisy";
 
 function Layout() {
   useEffect(() => {
@@ -13,7 +14,8 @@ function Layout() {
 
   return (
     <div className="overflow-hidden">
-      <Navbar />
+      {/* <Navbar /> */}
+      <NavbarDaisy></NavbarDaisy>
       <main>
         <Outlet />
       </main>

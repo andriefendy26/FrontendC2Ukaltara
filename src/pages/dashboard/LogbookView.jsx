@@ -29,16 +29,23 @@ import {
   Select,
   Option,
   Alert,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
 } from "@material-tailwind/react";
 import { useLocation, useParams } from "react-router-dom";
 import {
   createLogbook,
+  deleteLogbook,
+  getAllLogbook,
   getAllLogbookByKelID,
-} from "../../../services/LogbookService";
+} from "../../services/LogbookService";
 import ReactPaginate from "react-paginate";
 import { DayPicker } from "react-day-picker";
 import { format } from "date-fns";
 import { FileInput, Label } from "flowbite-react";
+// import { TrashIcon } from "";
+import { TrashIcon } from "lucide-react";
 
 // const TABS = [
 //   {
@@ -55,7 +62,15 @@ import { FileInput, Label } from "flowbite-react";
 //   },
 // ];
 
-const TABLE_HEAD = ["Nama", "NPM", "Jurusan", "Tanggal", "Kegiatan", "Gambar"];
+const TABLE_HEAD = [
+  "Nama",
+  "NPM",
+  "Jurusan",
+  "Tanggal",
+  "Kegiatan",
+  "Gambar",
+  "Action",
+];
 
 const LogbookDetail = () => {
   let { id } = useParams();
@@ -71,7 +86,7 @@ const LogbookDetail = () => {
   const [kelurahan, setKelurahan] = React.useState();
   const [startDate, setStartDate] = React.useState("");
   const [endDate, setEndDate] = React.useState("");
-  const [page, setPage] = React.useState();
+  const [page, setPage] = React.useState(0);
   const [rows, setRows] = React.useState(0);
   const [limit, setLimit] = React.useState(5);
   const [totalPage, setTotalPage] = React.useState(0);
@@ -101,8 +116,8 @@ const LogbookDetail = () => {
   const getData = async () => {
     const startDateConv = converFormatDate(startDate);
     const endDateConv = converFormatDate(endDate);
-    const data = await getAllLogbookByKelID(
-      id,
+    const data = await getAllLogbook(
+      //   id,
       page,
       limit,
       startDateConv,
@@ -110,6 +125,7 @@ const LogbookDetail = () => {
       keyword
     );
     // setKelurahan(data)
+    console.log(data);
     setKelurahan(data.data);
     setPage(data.page);
     setTotalPage(data.totalPages);
@@ -153,7 +169,7 @@ const LogbookDetail = () => {
 
   const handleCreateData = async () => {
     // console.log(form);
-    setIsloading(true)
+    setIsloading(true);
     const formData = new FormData();
     formData.append("file", file);
     formData.append("nama", form.nama);
@@ -168,14 +184,14 @@ const LogbookDetail = () => {
       if (responseApi.status == 401) {
         const message = responseApi.response.data.msg;
         setIsError(message);
-        setIsloading(false)
+        setIsloading(false);
         setTimeout(() => {
           setIsError(null); // Hide error message after 4 seconds
         }, 4000);
       } else if (responseApi.status == 422) {
         const message = responseApi.response.data.msg;
         setIsError(message);
-        setIsloading(false)
+        setIsloading(false);
         setTimeout(() => {
           setIsError(null); // Hide error message after 4 seconds
         }, 4000);
@@ -188,7 +204,7 @@ const LogbookDetail = () => {
         });
         setFile("");
         setPreview("");
-        setIsloading(false)
+        setIsloading(false);
         setOpen((cur) => !cur);
         setIsError(null);
         setIsSuccess(responseApi.msg);
@@ -200,13 +216,58 @@ const LogbookDetail = () => {
       }
       getData();
     } catch (error) {
-      setIsloading(false)
+      setIsloading(false);
       setIsError(error.message);
     }
   };
 
+  // Handle Delete ////
+  const [openDel, setOpenDel] = React.useState({ isOpen: false, id: "" });
+
+  const handleDelete = async () => {
+    const api = await deleteLogbook(openDel.id);
+    console.log(api);
+    getData();
+    setOpenDel({
+      isOpen: !openDel.isOpen,
+      id: "",
+    });
+  };
+
+  const handleOpenDelete = (id) =>
+    setOpenDel({
+      isOpen: !openDel.isOpen,
+      id: id,
+    });
+
   return (
-    <div className="m-10">
+    <Card className="h-screen w-full">
+      <Dialog open={openDel.isOpen} handler={handleOpenDelete}>
+        <DialogHeader>Apakah Anda yakin ingin menghapus item ini?</DialogHeader>
+        <DialogBody>
+          Tindakan ini tidak dapat dibatalkan, dan Anda akan kehilangan semua
+          data terkait. Jika Anda yakin dengan keputusan Anda dan siap untuk
+          melanjutkan, mohon konfirmasi. Kami siap membantu jika Anda memiliki
+          pertanyaan atau membutuhkan bantuan lebih lanjut.
+        </DialogBody>
+        <DialogFooter>
+          <Button
+            variant="text"
+            color="red"
+            onClick={handleOpenDelete}
+            className="mr-1"
+          >
+            <span>Cancel</span>
+          </Button>
+          <Button
+            variant="gradient"
+            color="green"
+            onClick={() => handleDelete()}
+          >
+            <span>Confirm</span>
+          </Button>
+        </DialogFooter>
+      </Dialog>
       {isSuccess && (
         <Alert color="green" className="fixed bottom-0 w-56 right-0 m-4 z-50">
           {isSuccess}.
@@ -225,198 +286,212 @@ const LogbookDetail = () => {
         onChangeImage={Loadimage}
         preview={preview}
       />
-      <div>
-        <Typography variant="h3">{kelurahanName}</Typography>
-        <Card className="h-full w-full">
-          <CardHeader floated={false} shadow={false} className="rounded-none">
-            <div className="mb-8 flex items-center justify-between gap-8">
-              <div>
-                <Typography color="gray" className="mt-1 font-normal">
-                  Lihat semua informasi mengenai kegiatan harian
-                </Typography>
-              </div>
-              <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-                <Button
-                  variant="outlined"
-                  size="sm"
-                  onClick={() => {
-                    // setKelurahanIDFilter(null);
-                    setQuery("");
-                    setKeyword("");
-                    setPage(0);
-                    setStartDate("");
-                    setEndDate("");
-                  }}
-                >
-                  Lihat Semua
-                </Button>
-                <Button
-                  className="flex items-center gap-3"
-                  size="sm"
-                  onClick={handleOpen}
-                >
-                  <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Isi
-                  Logbook
-                </Button>
-              </div>
-            </div>
-            <div className="flex flex-col  justify-between gap-4">
-              <div className="w-full md:w-72">
-                <Input
-                  label="Search"
-                  icon={
-                    <button
-                      className="bg-gray-300 rounded-lg"
-                      onClick={(e) => handleSearch(e)}
-                    >
-                      <MagnifyingGlassIcon className="h-5 w-5" />
-                    </button>
-                  }
-                  onChange={(e) => setQuery(e.target.value)}
-                />
-              </div>
-              <div className="w-full gap-2 md:flex md:flex-col">
-                <Typography color="gray" className="mt-1 font-normal">
-                  Filter berdasarkan tanggal
-                </Typography>
-                <div className="w-full md:w-72">
-                  <DatePicker
-                    date={startDate}
-                    setDate={setStartDate}
-                    label={"Tanggal Start"}
-                  />
-                </div>
-                <div className="w-full md:w-72 mt-2">
-                  <DatePicker
-                    date={endDate}
-                    setDate={setEndDate}
-                    label={"Tanggal End"}
-                  />
-                </div>
-              </div>
-            </div>
-          </CardHeader>
-          <CardBody className="overflow-scroll px-0">
-            <table className="mt-4 w-full min-w-max table-auto text-left">
-              <thead>
-                <tr>
-                  {TABLE_HEAD.map((head) => (
-                    <th
-                      key={head}
-                      className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
-                    >
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal leading-none opacity-70"
-                      >
-                        {head}
-                      </Typography>
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {kelurahan &&
-                  kelurahan.map(
-                    ({ nama, npm, jurusan, tanggal, kegiatan, url }, index) => {
-                      const isLast = index === kelurahan.length - 1;
-                      const classes = isLast
-                        ? "p-4"
-                        : "p-4 border-b border-blue-gray-50";
-
-                      return (
-                        <tr key={index}>
-                          <td className={classes}>
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal"
-                            >
-                              {nama}
-                            </Typography>
-                          </td>
-                          <td className={classes}>
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal"
-                            >
-                              {npm}
-                            </Typography>
-                          </td>
-                          <td className={classes}>
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal"
-                            >
-                              {jurusan}
-                            </Typography>
-                          </td>
-
-                          <td className={classes}>
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal"
-                            >
-                              {converFormatDate(tanggal)}
-                            </Typography>
-                          </td>
-
-                          <td className={classes}>
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal"
-                            >
-                              {kegiatan}
-                            </Typography>
-                          </td>
-                          <td className={classes}>
-                            <img
-                              className="h-36  rounded-lg object-cover object-center"
-                              src={url}
-                              alt="gambar kamu"
-                            />
-                          </td>
-                        </tr>
-                      );
-                    }
-                  )}
-              </tbody>
-            </table>
-          </CardBody>
-          <CardFooter className="flex flex-col gap-1 items-center justify-between border-t border-blue-gray-50 p-4">
-            <Typography
-              variant="small"
-              color="blue-gray"
-              className="font-normal"
-            >
-              Page {rows ? page + 1 : 0} of {totalPage}
+      {/* <Typography variant="h3">{kelurahanName}</Typography> */}
+      <CardHeader floated={false} shadow={false} className="rounded-none">
+        <Typography color="gray" variant="h5" className="mt-1 font-bold">
+          Logbook
+        </Typography>
+        <div className="mb-8 flex items-center justify-between gap-8">
+          <div>
+            <Typography color="gray" className="mt-1 font-normal">
+              Lihat semua informasi mengenai kegiatan harian
             </Typography>
-            <div className="">
-              <ReactPaginate
-                nextLabel={
-                  <Button variant="outlined" size="sm">
-                    Next
-                  </Button>
-                }
-                previousLabel={
-                  <Button variant="outlined" size="sm">
-                    Previous
-                  </Button>
-                }
-                pageCount={totalPage ? Math.ceil(rows / limit) : 0}
-                onPageChange={changePage}
-                containerClassName="flex gap-2 items-center"
+          </div>
+          <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
+            <Button
+              variant="outlined"
+              size="sm"
+              onClick={() => {
+                // setKelurahanIDFilter(null);
+                setQuery("");
+                setKeyword("");
+                setPage(0);
+                setStartDate("");
+                setEndDate("");
+              }}
+            >
+              Lihat Semua
+            </Button>
+            <Button
+              className="flex items-center gap-3"
+              size="sm"
+              onClick={handleOpen}
+            >
+              <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Isi Logbook
+            </Button>
+          </div>
+        </div>
+        <div className="flex flex-col  justify-between gap-4">
+          <div className="w-full md:w-72">
+            <Input
+              label="Search"
+              icon={
+                <button
+                  className="bg-gray-300 rounded-lg"
+                  onClick={(e) => handleSearch(e)}
+                >
+                  <MagnifyingGlassIcon className="h-5 w-5" />
+                </button>
+              }
+              onChange={(e) => setQuery(e.target.value)}
+            />
+          </div>
+          <div className="w-full gap-2 md:flex md:flex-col">
+            <Typography color="gray" className="mt-1 font-normal">
+              Filter berdasarkan tanggal
+            </Typography>
+            <div className="w-full md:w-72">
+              <DatePicker
+                date={startDate}
+                setDate={setStartDate}
+                label={"Tanggal Start"}
               />
             </div>
-          </CardFooter>
-        </Card>
-      </div>
-    </div>
+            <div className="w-full md:w-72 mt-2">
+              <DatePicker
+                date={endDate}
+                setDate={setEndDate}
+                label={"Tanggal End"}
+              />
+            </div>
+          </div>
+        </div>
+      </CardHeader>
+      <CardBody className="overflow-scroll px-0">
+        <table className="mt-4 w-full min-w-max table-auto text-left">
+          <thead>
+            <tr>
+              {TABLE_HEAD.map((head) => (
+                <th
+                  key={head}
+                  className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
+                >
+                  <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="font-normal leading-none opacity-70"
+                  >
+                    {head}
+                  </Typography>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {kelurahan &&
+              kelurahan.map(
+                ({ id, nama, npm, jurusan, tanggal, kegiatan, url }, index) => {
+                  const isLast = index === kelurahan.length - 1;
+                  const classes = isLast
+                    ? "p-4"
+                    : "p-4 border-b border-blue-gray-50";
+
+                  return (
+                    <tr key={index}>
+                      <td className={classes}>
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
+                          {nama}
+                        </Typography>
+                      </td>
+                      <td className={classes}>
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
+                          {npm}
+                        </Typography>
+                      </td>
+                      <td className={classes}>
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
+                          {jurusan}
+                        </Typography>
+                      </td>
+
+                      <td className={classes}>
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
+                          {converFormatDate(tanggal)}
+                        </Typography>
+                      </td>
+
+                      <td className={classes}>
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
+                          {kegiatan}
+                        </Typography>
+                      </td>
+                      <td className={classes}>
+                        <img
+                          className="h-36  rounded-lg object-cover object-center"
+                          src={url}
+                          alt="gambar kamu"
+                        />
+                      </td>
+                      <td className="p-4">
+                        <div className="flex items-center gap-2">
+                          <Tooltip content="Edit User">
+                            <IconButton
+                              variant="text"
+                              // onClick={() => handleEditOpen(data)}
+                            >
+                              <PencilIcon className="h-4 w-4" />
+                            </IconButton>
+                          </Tooltip>
+                          <Tooltip content="Delete User">
+                            <IconButton
+                              variant="text"
+                              onClick={() => handleOpenDelete(id)}
+                            >
+                              <TrashIcon className="h-4 w-4" />
+                            </IconButton>
+                          </Tooltip>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                }
+              )}
+          </tbody>
+        </table>
+      </CardBody>
+      <CardFooter className="flex flex-col gap-1 items-center justify-between border-t border-blue-gray-50 p-4">
+        <Typography variant="small" color="blue-gray" className="font-normal">
+          Page {rows ? page + 1 : 0} of {totalPage}
+        </Typography>
+        <div className="">
+          <ReactPaginate
+            nextLabel={
+              <Button variant="outlined" size="sm">
+                Next
+              </Button>
+            }
+            previousLabel={
+              <Button variant="outlined" size="sm">
+                Previous
+              </Button>
+            }
+            pageCount={totalPage ? Math.ceil(rows / limit) : 0}
+            onPageChange={changePage}
+            containerClassName="flex gap-2 items-center"
+          />
+        </div>
+      </CardFooter>
+    </Card>
   );
 };
 
@@ -517,10 +592,17 @@ const ModalAddLogbook = ({
               src={preview}
               alt="gambar kamu"
             />
-          ) : ""}
+          ) : (
+            ""
+          )}
         </CardBody>
         <CardFooter className="pt-0">
-          <Button loading={isLoading} variant="gradient" onClick={handleCreateData} fullWidth>
+          <Button
+            loading={isLoading}
+            variant="gradient"
+            onClick={handleCreateData}
+            fullWidth
+          >
             Simpan
           </Button>
         </CardFooter>

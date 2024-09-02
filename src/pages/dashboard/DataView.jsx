@@ -27,7 +27,7 @@ import {
   Dialog,
   DialogHeader,
   DialogFooter,
-  DialogBody
+  DialogBody,
 } from "@material-tailwind/react";
 const TABS = [
   {
@@ -333,7 +333,7 @@ export default function DataView() {
 
   return (
     <>
-      <Card className="h-screen w-full px-2 py-5 overflow-scroll">
+      <Card className="h-screen w-full overflow-scroll">
         {/* Delete Modal */}
         <Dialog open={openDel.isOpen} handler={handleOpenDelete}>
           <DialogHeader>
@@ -436,18 +436,19 @@ export default function DataView() {
               <Typography color="gray" className="mt-1 font-normal">
                 Filter berdasarkan kelurahan
               </Typography>
-              <Select
+              <select
+                nama="select select-bordered "
                 label="Pilih kelurahan"
                 value={kelurahan.id}
-                onChange={(e) => handleSelect(e)}
+                onChange={(e) => handleSelect(e.target.value)}
               >
                 {kelurahan &&
                   kelurahan.map((item, i) => (
-                    <Option key={i} value={item.id.toString()}>
+                    <option key={i} value={item.id.toString()}>
                       {item.namaKelurahan}
-                    </Option>
+                    </option>
                   ))}
-              </Select>
+              </select>
             </div>
           </div>
           <div className="my-2 flex flex-col gap-3">

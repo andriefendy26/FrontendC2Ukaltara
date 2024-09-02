@@ -3,14 +3,13 @@ import HeaderJudul from "../components/HeaderJudul";
 import { Typography } from "@material-tailwind/react";
 import probSol from "../assests/problem-solving.png";
 import { Link } from "react-router-dom";
-
 const LogbookLay = () => {
   return (
     <div className="my-10 flex flex-col items-center mx-10 lg:mx-24 xl:mx-60 overflow-hidden">
       <HeaderJudul title="LOGBOOK" />
       <div className="grid gap-4 my-5 grid-cols-1 lg:grid-cols-2">
         <div
-          className="flex justify-center rounded-br-full rounded-t-full bg-primary"
+          className="flex justify-center rounded-br-full rounded-tl-full bg-primary"
           data-aos="fade-right"
         >
           <img src={probSol} className="w-96 lg:w-80 object-cover"></img>
@@ -30,7 +29,10 @@ const LogbookLay = () => {
           </p>
         </div>
       </div>
-      <Link to="/logbook" className="bg-primary  rounded-lg p-2 px-5 mt-2 text-white text-sm hover:bg-primaryhover hover:text-gray-100">
+      <Link
+        to="/logbook"
+        className="bg-primary  rounded-lg p-2 px-5 mt-2 text-white text-sm hover:bg-primaryhover hover:text-gray-100"
+      >
         Selengkapnya
       </Link>
     </div>

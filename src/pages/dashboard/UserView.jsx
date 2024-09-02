@@ -223,7 +223,7 @@ const UserView = () => {
   };
 
   return (
-    <div className="px-2 py-5 w-full overflow-scroll">
+    <div className="w-full overflow-scroll">
       {/* <h1 className="text-2xl mb-5">User Managemen</h1> */}
       {/* Delete Modal */}
       <Dialog open={openDel.isOpen} handler={handleOpenDelete}>
@@ -308,7 +308,7 @@ const UserView = () => {
               value={editForm.roleID.toString()}
               onChange={(e) => handleEditSelect(e, "roleID")}
             >
-              {roles.map((item) => (
+              {roles && roles.map((item) => (
                 <Option key={item.id} value={item.id.toString()}>
                   {item.roleName}
                 </Option>

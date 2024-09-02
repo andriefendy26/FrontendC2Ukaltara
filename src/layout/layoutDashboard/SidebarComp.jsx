@@ -5,10 +5,13 @@ import { IoMenu } from "react-icons/io5";
 import { CiMenuFries } from "react-icons/ci";
 
 import { createContext, useContext } from "react";
+import { Button } from "@material-tailwind/react";
+import { MdExitToApp } from "react-icons/md";
 const SideContext = createContext();
 
-const SidebarHead = ({ children }) => {
+const SidebarHead = ({ children , datauser}) => {
   const [isOpen, setOpen] = useState(false);
+
   return (
     <aside className={`flex flex-col h-screen border shadow-2xl`}>
       <div className={`flex flex-col h-full p-3`}>
@@ -40,16 +43,16 @@ const SidebarHead = ({ children }) => {
         </SideContext.Provider>
       </div>
       <div className={`flex items-center border-t border-gray-300 p-3`}>
-        <span className="rounded-2xl border-white bg-primary text-white border p-3">
-          AE
+        <span className="rounded-lg border-white bg-primary text-white border p-3">
+          {datauser && datauser.nama.split(" ")[0].charAt(0).toUpperCase()}
         </span>
         <span
           className={`overflow-hidden transition-all ${
             isOpen ? "w-52 ml-3" : "w-0"
           }`}
         >
-          <p className={`font-bold`}>Andri Efendy</p>
-          <p className="">johndoe@gmail.com</p>
+          <p className={`font-bold`}>{datauser ? datauser.nama : ''}</p>
+          <p className="">{datauser ? datauser.email : ''}</p>
         </span>
       </div>
     </aside>
@@ -61,7 +64,7 @@ const SideBarItem = ({ nama, icon, to, onClick }) => {
 
   return (
     <NavLink
-      to={to ? to : ""}
+      to={to ? to : null}
       onClick={onClick}
       className={({ isActive, isPending }) =>
         `flex p-3 items-center rounded-lg my-1 hover:bg-gray-300 hover:text-black ${
@@ -81,6 +84,25 @@ const SideBarItem = ({ nama, icon, to, onClick }) => {
   );
 };
 
-export { SideBarItem, SidebarHead };
+const LogoutComp = ({onClick}) => {
+  const { isOpen } = useContext(SideContext);
+  return (
+    <Button
+      onClick={onClick}
+      className={`flex p-3 items-center rounded-lg my-1 hover:bg-gray-300 hover:text-black `}
+    >
+      <MdExitToApp size={20}></MdExitToApp>
+      <p
+        className={`overflow-hidden text-left transition-all  ${
+          isOpen ? "w-52 ml-3" : "w-0"
+        }`}
+      >
+        Logout
+      </p>
+    </Button>
+  );
+};
+
+export { SideBarItem, SidebarHead , LogoutComp};
 
 // export default Sidebar;

@@ -1,13 +1,9 @@
 import React from "react";
-import { Doughnut } from "react-chartjs-2";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import Headchart from "../components/Chart";
 import HeaderJudul from "../components/HeaderJudul";
 
 import teamPres from "../assests/team-presentation.png";
 
 // Register Chart.js components
-ChartJS.register(ArcElement, Tooltip, Legend);
 
 const Pesisir = () => {
   const data = {
@@ -44,10 +40,7 @@ const Pesisir = () => {
     <div className="mt-10 flex flex-col items-center mx-10 lg:mx-24 xl:mx-60 overflow-hidden">
       <HeaderJudul title="Pemberdayaan Pesisir" />
       <div className="grid gap-4 my-5 grid-cols-1 lg:grid-cols-2">
-        <div
-          className="flex mb-5 flex-col items-center "
-          data-aos="fade-right"
-        >
+        <div className="flex mb-5 flex-col items-center " data-aos="fade-right">
           <p className="pt-5 lg:text-lg xl:text-xl ">
             Pemberdayaan pesisir adalah upaya untuk meningkatkan kapasitas dan
             kesejahteraan masyarakat yang tinggal di daerah pesisir, serta
@@ -58,8 +51,11 @@ const Pesisir = () => {
             kemiskinan, dan meningkatkan kualitas hidup mereka.
           </p>
         </div>
-        <div className="flex justify-center rounded-3xl rounded-bl-full rounded-tr-full bg-primary" data-aos="fade-right">
-          <img src={teamPres}  className="w-96 lg:w-80 object-cover"></img>
+        <div
+          className="flex justify-center rounded-3xl rounded-bl-full rounded-tr-full bg-primary"
+          data-aos="fade-right"
+        >
+          <img src={teamPres} className="w-96 lg:w-80 object-cover"></img>
         </div>
       </div>
       {/* <div className="lg:flex lg:flex-row my-5">

@@ -27,6 +27,7 @@ import SettingView from "./pages/dashboard/SettingView";
 import HelpView from "./pages/dashboard/HelpView";
 import Logbook from "./pages/public/LogbookPage/Logbook";
 import LogbookDetail from "./pages/public/LogbookPage/LogbookDetail";
+import LogbookView from "./pages/dashboard/LogbookView";
 
 const router = createBrowserRouter([
   {
@@ -86,6 +87,10 @@ const router = createBrowserRouter([
       {
         path: "berita",
         element: <BeritaView />,
+      },
+      {
+        path: "Logbbokdash",
+        element: <LogbookView />,
       },
       {
         path: "datasampah",

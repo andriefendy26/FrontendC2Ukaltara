@@ -75,7 +75,7 @@ const CarouselCom = () => {
         {data.map((item, i) => (
           <div
             key={i}
-            className="h-full w-full bg-cover bg-center text-white"
+            className="h-full w-full bg-cover bg-center text-white  bg-no-repeat bg-fixed"
             style={{ backgroundImage: `url(${item.gambar})` }}
           >
             {/* Dark overlay */}
