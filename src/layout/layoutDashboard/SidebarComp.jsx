@@ -21,7 +21,7 @@ const SidebarHead = ({ children , datauser}) => {
           }`}
         >
           <span
-            className={`overflow-hidden font-bold flex text-2xl xl:text-4xl transition-all ${
+            className={`overflow-hidden font-bold flex text-xl xl:text-2xl transition-all ${
               isOpen ? "w-52" : "w-0"
             }`}
           >

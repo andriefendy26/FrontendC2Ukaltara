@@ -19,10 +19,10 @@ import { getJenisBerita } from "../../services/BeritaServices";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
 
-const LestariMangrove = () => {
+const PendampinganPesisir = () => {
   const dataHeader = {
-    judul: "Lestari Mangrove",
-    desc: "Pelestarian mangrove memainkan peran krusial dalam menjaga keseimbangan ekosistem pesisir dan melindungi lingkungan kita dari dampak perubahan iklim. Hutan mangrove tidak hanya berfungsi sebagai penyangga alami yang melindungi garis pantai dari erosi dan bencana alam seperti tsunami, tetapi juga sebagai habitat vital bagi berbagai spesies laut dan burung. Dengan akar-akar yang menyebar luas, mangrove menyaring polutan dari air dan mendukung kualitas air yang lebih baik di sekitar mereka. Oleh karena itu, penting bagi kita untuk melakukan upaya pelestarian yang berkelanjutan, seperti rehabilitasi lahan mangrove yang rusak, pengelolaan yang bijaksana, dan meningkatkan kesadaran tentang nilai ekologisnya. Dengan menjaga kesehatan hutan mangrove, kita turut serta dalam melestarikan keanekaragaman hayati dan memastikan manfaat jangka panjang bagi generasi mendatang.",
+    judul: "Pendampingan Pesisir",
+    desc: "Pendampingan pesisir adalah proses dukungan dan bimbingan yang diberikan kepada masyarakat atau kelompok yang tinggal di daerah pesisir untuk membantu mereka dalam mengelola sumber daya, mengatasi masalah, dan mengembangkan kapasitas mereka. Tujuan dari pendampingan pesisir adalah untuk meningkatkan kesejahteraan masyarakat pesisir serta memastikan pengelolaan yang berkelanjutan dan efektif terhadap sumber daya pesisir.",
   };
 
   const [data, setData] = React.useState([]);
@@ -46,7 +46,7 @@ const LestariMangrove = () => {
     <>
       <DetailLayout judul={dataHeader.judul} desc={dataHeader.desc}>
         {/* <CardBerita /> */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  xl:grid-cols-4 gap-4">
           {data.length > 0 ? (
             data.map((item, i) => (
               <BeritaCard
@@ -60,7 +60,7 @@ const LestariMangrove = () => {
               ></BeritaCard>
             ))
           ) : (
-            <h1 className="text-2xl text-gray-400 text-center w-full mt-10">
+            <h1 className="text-2xl text-gray-400 text-center mt-10">
               Belum ada berita
             </h1>
           )}
@@ -77,9 +77,9 @@ function BeritaCard({ judul, deskripsi, gambar, waktu, too, kelurahan }) {
         floated={false}
         shadow={false}
         color="transparent"
-        className="m-0 rounded-none"
+        className="m-0 rounded-none h-56 flex items-center justify-center"
       >
-        <img src={gambar} alt="review" />
+        <img src={gambar} alt="review" className="object-cover w-full h-full" />
       </CardHeader>
       <CardBody>
         <Typography variant="h4" color="blue-gray" className="">
@@ -88,7 +88,7 @@ function BeritaCard({ judul, deskripsi, gambar, waktu, too, kelurahan }) {
         <Typography
           variant="lead"
           color="gray"
-          className="text-sm mt-3 font-normal"
+          className="text-sm lg:text-lg mt-3 font-normal"
         >
           {deskripsi.slice(0, 100) + "..."}
         </Typography>
@@ -104,4 +104,4 @@ function BeritaCard({ judul, deskripsi, gambar, waktu, too, kelurahan }) {
   );
 }
 
-export default LestariMangrove;
+export default PendampinganPesisir;

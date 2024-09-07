@@ -6,6 +6,7 @@ import {
   Card,
   CardBody,
   CardFooter,
+  Button,
 } from "@material-tailwind/react";
 
 export default function Cards(props) {
@@ -32,10 +33,7 @@ export default function Cards(props) {
     //   </div>
     // </div>
     <Card className="mt-6  bg-primary text-white" data-aos={props.aos}>
-      <CardHeader
-        color="blue-white"
-        className="relative border-b border-gray-400 h-56"
-      >
+      <CardHeader className="relative border-b border-gray-400 h-56">
         <img
           src={props.gambar}
           alt="card-image"
@@ -49,7 +47,9 @@ export default function Cards(props) {
         <Typography>{props.desc.substring(0, 120) + "....."}</Typography>
       </CardBody>
       <CardFooter className="pt-0">
-        <Link to={props.too}>Read More</Link>
+        <Link to={props.too}>
+          <Button>Read More</Button>
+        </Link>
       </CardFooter>
     </Card>
     // <div

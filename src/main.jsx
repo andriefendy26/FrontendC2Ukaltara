@@ -10,7 +10,7 @@ axios.defaults.withCredentials = true;
 //halaman untuk pengunjung
 import Home from "./pages/public/Home";
 import DetailAbout from "./pages/public/DetailAboutus";
-import Pendampinganpesisir from "./pages/public/PengabdianPesisir";
+import Pendampinganpesisir from "./pages/public/PendampinganPesisir";
 import LestariMangrove from "./pages/public/LestariMangrove";
 import PengabdianPesisir from "./pages/public/PengabdianPesisir";
 import SosialisasiPesisir from "./pages/public/SosialisasiPesisir";
@@ -28,6 +28,8 @@ import HelpView from "./pages/dashboard/HelpView";
 import Logbook from "./pages/public/LogbookPage/Logbook";
 import LogbookDetail from "./pages/public/LogbookPage/LogbookDetail";
 import LogbookView from "./pages/dashboard/LogbookView";
+import Pemberdayaan from "./pages/public/Pemberdayaan";
+import DetailBerita from "./pages/public/DetailBerita";
 
 const router = createBrowserRouter([
   {
@@ -57,6 +59,14 @@ const router = createBrowserRouter([
       {
         path: "sosialisasipesisir",
         element: <SosialisasiPesisir />,
+      },
+      {
+        path: "pemberdayaanpesisir",
+        element: <Pemberdayaan />,
+      },
+      {
+        path: "detail/:id",
+        element: <DetailBerita />,
       },
       {
         path: "logbook",

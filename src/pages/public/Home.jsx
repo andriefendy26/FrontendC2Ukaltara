@@ -10,6 +10,8 @@ import { useEffect } from "react";
 import AOS from "aos";
 import 'aos/dist/aos.css';
 import LogbookLay from "../../layout/Logbook";
+import HeroScrollDemo from "../../layout/ScrollAnimate";
+import OurTeamAnimate from "../../layout/OurTeamAnimate";
 
 
 const Home = () => {
@@ -17,9 +19,11 @@ const Home = () => {
  
   return (
     <div className="">
-      <Carousel />
-      <Kegiatan />
+      {/* <Carousel /> */}
+      <HeroScrollDemo></HeroScrollDemo>
+      <OurTeamAnimate></OurTeamAnimate>
       <Pesisir />
+      <Kegiatan />
       <LogbookLay></LogbookLay>
       <Galeri />
       <AboutUs />

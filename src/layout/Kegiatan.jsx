@@ -43,7 +43,12 @@ const Kegiatan = () => {
 
   return (
     <div className="flex flex-col items-center mx-12 my-10 overflow-hidden" data-aos="fade-up">
-      <HeaderJudul title="Kegiatan" />
+      {/* <HeaderJudul title="Kegiatan" /> */}
+      <div className="text-center mb-10" data-aos="fade-down">
+        <h1 className="text-4xl lg:text-6xl tracking-wider font-bold mb-2">Kegiatan</h1>
+        <p className="text-sm lg:text-lg tracking-wide">Kegiatan ini melibatkan berbagai pihak, termasuk relawan, organisasi lingkungan, dan pemerintah lokal <br></br> kolaboratif yang mendorong inovasi dan menghasilkan hasil yang luar biasa.</p>
+      </div>
+     
       <div className="grid grid-cols-1 gap-10 md:grid-cols-2 xl:grid-cols-4 lg:32 xl:mx-44">
         {data.map((item, index) => (
           <Card

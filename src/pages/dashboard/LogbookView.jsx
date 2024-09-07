@@ -46,6 +46,7 @@ import { format } from "date-fns";
 import { FileInput, Label } from "flowbite-react";
 // import { TrashIcon } from "";
 import { TrashIcon } from "lucide-react";
+import { useSelector } from "react-redux";
 
 // const TABS = [
 //   {
@@ -74,6 +75,8 @@ const TABLE_HEAD = [
 
 const LogbookDetail = () => {
   let { id } = useParams();
+  //user ident
+  const { user } = useSelector((state) => state.auth);
   const location = useLocation();
   const kelurahanName = location.state?.namaKelurahan || "";
 
@@ -83,7 +86,7 @@ const LogbookDetail = () => {
     setPreview("");
   };
 
-  const [kelurahan, setKelurahan] = React.useState();
+  const [kelurahan, setKelurahan] = React.useState([]);
   const [startDate, setStartDate] = React.useState("");
   const [endDate, setEndDate] = React.useState("");
   const [page, setPage] = React.useState(0);
@@ -95,7 +98,7 @@ const LogbookDetail = () => {
 
   useEffect(() => {
     getData();
-  }, [page, keyword, startDate, endDate]);
+  }, [user, page, keyword, startDate, endDate]);
 
   const converFormatDate = (val) => {
     return val ? format(val, "yyyy-MM-dd") : "";
@@ -117,7 +120,7 @@ const LogbookDetail = () => {
     const startDateConv = converFormatDate(startDate);
     const endDateConv = converFormatDate(endDate);
     const data = await getAllLogbook(
-      //   id,
+      user?.tb_role.roleName == "Super Admin" ? "" : user?.kelurahanID,
       page,
       limit,
       startDateConv,
@@ -241,7 +244,7 @@ const LogbookDetail = () => {
     });
 
   return (
-    <Card className="h-screen w-full">
+    <div className="h-screen w-full overflow-scroll">
       <Dialog open={openDel.isOpen} handler={handleOpenDelete}>
         <DialogHeader>Apakah Anda yakin ingin menghapus item ini?</DialogHeader>
         <DialogBody>
@@ -273,7 +276,8 @@ const LogbookDetail = () => {
           {isSuccess}.
         </Alert>
       )}
-      <ModalAddLogbook
+      <Card className="w-full">
+        {/* <ModalAddLogbook
         open={open}
         handleOpen={handleOpen}
         form={form}
@@ -285,213 +289,220 @@ const LogbookDetail = () => {
         isLoading={isLoading}
         onChangeImage={Loadimage}
         preview={preview}
-      />
-      {/* <Typography variant="h3">{kelurahanName}</Typography> */}
-      <CardHeader floated={false} shadow={false} className="rounded-none">
-        <Typography color="gray" variant="h5" className="mt-1 font-bold">
-          Logbook
-        </Typography>
-        <div className="mb-8 flex items-center justify-between gap-8">
-          <div>
-            <Typography color="gray" className="mt-1 font-normal">
-              Lihat semua informasi mengenai kegiatan harian
-            </Typography>
-          </div>
-          <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-            <Button
-              variant="outlined"
-              size="sm"
-              onClick={() => {
-                // setKelurahanIDFilter(null);
-                setQuery("");
-                setKeyword("");
-                setPage(0);
-                setStartDate("");
-                setEndDate("");
-              }}
-            >
-              Lihat Semua
-            </Button>
-            <Button
+      /> */}
+        {/* <Typography variant="h3">{kelurahanName}</Typography> */}
+        <CardHeader floated={false} shadow={false} className="rounded-none">
+          <Typography color="gray" variant="h5" className="mt-1 font-bold">
+            Logbook
+          </Typography>
+          <div className="mb-8 flex items-center justify-between gap-8">
+            <div>
+              <Typography color="gray" className="mt-1 font-normal">
+                Lihat semua informasi mengenai kegiatan harian
+              </Typography>
+            </div>
+            <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
+              <Button
+                variant="outlined"
+                size="sm"
+                onClick={() => {
+                  // setKelurahanIDFilter(null);
+                  setQuery("");
+                  setKeyword("");
+                  setPage(0);
+                  setStartDate("");
+                  setEndDate("");
+                }}
+              >
+                Lihat Semua
+              </Button>
+              {/* <Button
               className="flex items-center gap-3"
               size="sm"
               onClick={handleOpen}
             >
               <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Isi Logbook
-            </Button>
+            </Button> */}
+            </div>
           </div>
-        </div>
-        <div className="flex flex-col  justify-between gap-4">
-          <div className="w-full md:w-72">
-            <Input
-              label="Search"
-              icon={
-                <button
-                  className="bg-gray-300 rounded-lg"
-                  onClick={(e) => handleSearch(e)}
-                >
-                  <MagnifyingGlassIcon className="h-5 w-5" />
-                </button>
-              }
-              onChange={(e) => setQuery(e.target.value)}
-            />
-          </div>
-          <div className="w-full gap-2 md:flex md:flex-col">
-            <Typography color="gray" className="mt-1 font-normal">
-              Filter berdasarkan tanggal
-            </Typography>
+          <div className="flex flex-col  justify-between gap-4">
             <div className="w-full md:w-72">
-              <DatePicker
-                date={startDate}
-                setDate={setStartDate}
-                label={"Tanggal Start"}
+              <Input
+                label="Search"
+                icon={
+                  <button
+                    className="bg-gray-300 rounded-lg"
+                    onClick={(e) => handleSearch(e)}
+                  >
+                    <MagnifyingGlassIcon className="h-5 w-5" />
+                  </button>
+                }
+                onChange={(e) => setQuery(e.target.value)}
               />
             </div>
-            <div className="w-full md:w-72 mt-2">
-              <DatePicker
-                date={endDate}
-                setDate={setEndDate}
-                label={"Tanggal End"}
-              />
+            <div className="w-full gap-2 md:flex md:flex-col">
+              <Typography color="gray" className="mt-1 font-normal">
+                Filter berdasarkan tanggal
+              </Typography>
+              <div className="w-full md:w-72">
+                <DatePicker
+                  date={startDate}
+                  setDate={setStartDate}
+                  label={"Tanggal Start"}
+                />
+              </div>
+              <div className="w-full md:w-72 mt-2">
+                <DatePicker
+                  date={endDate}
+                  setDate={setEndDate}
+                  label={"Tanggal End"}
+                />
+              </div>
             </div>
           </div>
-        </div>
-      </CardHeader>
-      <CardBody className="overflow-scroll px-0">
-        <table className="mt-4 w-full min-w-max table-auto text-left">
-          <thead>
-            <tr>
-              {TABLE_HEAD.map((head) => (
-                <th
-                  key={head}
-                  className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
-                >
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal leading-none opacity-70"
+        </CardHeader>
+        <CardBody className="overflow-scroll px-0">
+          <table className="mt-4 w-full min-w-max table-auto text-left">
+            <thead>
+              <tr>
+                {TABLE_HEAD.map((head) => (
+                  <th
+                    key={head}
+                    className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
                   >
-                    {head}
-                  </Typography>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {kelurahan &&
-              kelurahan.map(
-                ({ id, nama, npm, jurusan, tanggal, kegiatan, url }, index) => {
-                  const isLast = index === kelurahan.length - 1;
-                  const classes = isLast
-                    ? "p-4"
-                    : "p-4 border-b border-blue-gray-50";
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal leading-none opacity-70"
+                    >
+                      {head}
+                    </Typography>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {kelurahan.length > 0 ? (
+                kelurahan.map(
+                  (
+                    { id, nama, npm, jurusan, tanggal, kegiatan, url },
+                    index
+                  ) => {
+                    const isLast = index === kelurahan.length - 1;
+                    const classes = isLast
+                      ? "p-4"
+                      : "p-4 border-b border-blue-gray-50";
 
-                  return (
-                    <tr key={index}>
-                      <td className={classes}>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          {nama}
-                        </Typography>
-                      </td>
-                      <td className={classes}>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          {npm}
-                        </Typography>
-                      </td>
-                      <td className={classes}>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          {jurusan}
-                        </Typography>
-                      </td>
+                    return (
+                      <tr key={index}>
+                        <td className={classes}>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {nama}
+                          </Typography>
+                        </td>
+                        <td className={classes}>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {npm}
+                          </Typography>
+                        </td>
+                        <td className={classes}>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {jurusan}
+                          </Typography>
+                        </td>
 
-                      <td className={classes}>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          {converFormatDate(tanggal)}
-                        </Typography>
-                      </td>
+                        <td className={classes}>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {converFormatDate(tanggal)}
+                          </Typography>
+                        </td>
 
-                      <td className={classes}>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          {kegiatan}
-                        </Typography>
-                      </td>
-                      <td className={classes}>
-                        <img
-                          className="h-36  rounded-lg object-cover object-center"
-                          src={url}
-                          alt="gambar kamu"
-                        />
-                      </td>
-                      <td className="p-4">
-                        <div className="flex items-center gap-2">
-                          <Tooltip content="Edit User">
+                        <td className={classes}>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {kegiatan}
+                          </Typography>
+                        </td>
+                        <td className={classes}>
+                          <img
+                            className="h-36  rounded-lg object-cover object-center"
+                            src={url}
+                            alt="gambar kamu"
+                          />
+                        </td>
+                        <td className="p-4">
+                          <div className="flex items-center gap-2">
+                            {/* <Tooltip content="Edit User">
                             <IconButton
                               variant="text"
                               // onClick={() => handleEditOpen(data)}
                             >
                               <PencilIcon className="h-4 w-4" />
                             </IconButton>
-                          </Tooltip>
-                          <Tooltip content="Delete User">
-                            <IconButton
-                              variant="text"
-                              onClick={() => handleOpenDelete(id)}
-                            >
-                              <TrashIcon className="h-4 w-4" />
-                            </IconButton>
-                          </Tooltip>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                }
+                          </Tooltip> */}
+                            <Tooltip content="Delete User">
+                              <IconButton
+                                variant="text"
+                                onClick={() => handleOpenDelete(id)}
+                              >
+                                <TrashIcon className="h-4 w-4" />
+                              </IconButton>
+                            </Tooltip>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  }
+                )
+              ) : (
+                <span className="text-center loading loading-spinner loading-lg"></span>
               )}
-          </tbody>
-        </table>
-      </CardBody>
-      <CardFooter className="flex flex-col gap-1 items-center justify-between border-t border-blue-gray-50 p-4">
-        <Typography variant="small" color="blue-gray" className="font-normal">
-          Page {rows ? page + 1 : 0} of {totalPage}
-        </Typography>
-        <div className="">
-          <ReactPaginate
-            nextLabel={
-              <Button variant="outlined" size="sm">
-                Next
-              </Button>
-            }
-            previousLabel={
-              <Button variant="outlined" size="sm">
-                Previous
-              </Button>
-            }
-            pageCount={totalPage ? Math.ceil(rows / limit) : 0}
-            onPageChange={changePage}
-            containerClassName="flex gap-2 items-center"
-          />
-        </div>
-      </CardFooter>
-    </Card>
+            </tbody>
+          </table>
+        </CardBody>
+        <CardFooter className="flex flex-col gap-1 items-center justify-between border-t border-blue-gray-50 p-4">
+          <Typography variant="small" color="blue-gray" className="font-normal">
+            Page {rows ? page + 1 : 0} of {totalPage}
+          </Typography>
+          <div className="">
+            <ReactPaginate
+              nextLabel={
+                <Button variant="outlined" size="sm">
+                  Next
+                </Button>
+              }
+              previousLabel={
+                <Button variant="outlined" size="sm">
+                  Previous
+                </Button>
+              }
+              pageCount={totalPage ? Math.ceil(rows / limit) : 0}
+              onPageChange={changePage}
+              containerClassName="flex gap-2 items-center"
+            />
+          </div>
+        </CardFooter>
+      </Card>
+    </div>
   );
 };
 

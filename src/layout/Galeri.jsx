@@ -31,7 +31,12 @@ const Galeri = () => {
 
   return (
     <div className="mx-10 mt-10 xl:mx-60">
-     <HeaderJudul title="GALERI"/>
+     {/* <HeaderJudul title="Galeri"/> */}
+     <div className="text-center mb-10" data-aos="fade-down">
+        <h1 className="text-4xl lg:text-6xl tracking-wider font-bold mb-2">Galeri</h1>
+        <p className="text-sm lg:text-lg tracking-wide">Setiap foto menceritakan kisah tentang dedikasi, kerja sama, dan dampak positif yang kami capai dalam menjaga kebersihan</p>
+      </div>
+     
       <div className="lg:grid lg:grid-rows-3 xl:grid-rows-2 lg:grid-flow-col lg:gap-8" data-aos="fade-left">
         {data.map(({ imageLink }, index) => (
           <div className="my-2" key={index}>

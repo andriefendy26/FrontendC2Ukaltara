@@ -11,6 +11,14 @@ export const getAlltUser = async (keyword, page, limit) => {
     return error;
   }
 };
+export const getTotalUser = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/users/total`);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
 
 export const createUser = async (data) => {
   try {

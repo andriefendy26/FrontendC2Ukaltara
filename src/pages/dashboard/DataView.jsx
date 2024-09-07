@@ -29,20 +29,6 @@ import {
   DialogFooter,
   DialogBody,
 } from "@material-tailwind/react";
-const TABS = [
-  {
-    label: "All",
-    value: "all",
-  },
-  {
-    label: "Monitored",
-    value: "monitored",
-  },
-  {
-    label: "Unmonitored",
-    value: "unmonitored",
-  },
-];
 
 const TABLE_HEAD = [
   "No",
@@ -55,7 +41,7 @@ const TABLE_HEAD = [
   // "Sampah Alam",
   "Sampah Rumput Laut",
   "Sampah Industri",
-  "Total",
+  "Total (Kg)",
   "Actions",
 ];
 
@@ -81,8 +67,12 @@ import {
   updateData,
   deleteData,
 } from "../../services/DataServices";
+import { useSelector } from "react-redux";
 
 export default function DataView() {
+  //user ident
+  const { user } = useSelector((state) => state.auth);
+
   //penyimpanan data sampah
   const [data, setData] = React.useState();
   const [msg, setMsg] = React.useState();
@@ -110,7 +100,7 @@ export default function DataView() {
   const [startDate, setStartDate] = React.useState("");
   const [endDate, setEndDate] = React.useState("");
   const [kelurahan, setKelurahan] = React.useState([]);
-  const [kelurahanIDFilter, setKelurahanIDFilter] = React.useState([]);
+  const [kelurahanIDFilter, setKelurahanIDFilter] = React.useState();
   const [page, setPage] = React.useState();
   const [totalPage, setTotalPage] = React.useState(0);
   const [rows, setRows] = React.useState(0);
@@ -140,7 +130,9 @@ export default function DataView() {
     const data = await getAllData(
       startDateConv,
       endDateConv,
-      kelurahanIDFilter,
+      user?.tb_role.roleName == "Super Admin"
+        ? kelurahanIDFilter
+        : user?.kelurahanID,
       page,
       limit
     );
@@ -325,82 +317,78 @@ export default function DataView() {
     });
   };
 
-  const handleOpenDelete = (id) =>
+  const handleOpenDelete = (id) => {
     setOpenDel({
       isOpen: !openDel.isOpen,
       id: id,
     });
+    console.log(id);
+  };
 
   return (
-    <>
-      <Card className="h-screen w-full overflow-scroll">
-        {/* Delete Modal */}
-        <Dialog open={openDel.isOpen} handler={handleOpenDelete}>
-          <DialogHeader>
-            Apakah Anda yakin ingin menghapus item ini?
-          </DialogHeader>
-          <DialogBody>
-            Tindakan ini tidak dapat dibatalkan, dan Anda akan kehilangan semua
-            data terkait. Jika Anda yakin dengan keputusan Anda dan siap untuk
-            melanjutkan, mohon konfirmasi. Kami siap membantu jika Anda memiliki
-            pertanyaan atau membutuhkan bantuan lebih lanjut.
-          </DialogBody>
-          <DialogFooter>
-            <Button
-              variant="text"
-              color="red"
-              onClick={handleOpenDelete}
-              className="mr-1"
-            >
-              <span>Cancel</span>
-            </Button>
-            <Button
-              variant="gradient"
-              color="green"
-              onClick={() => handleDelete()}
-            >
-              <span>Confirm</span>
-            </Button>
-          </DialogFooter>
-        </Dialog>
-        <ModalHeader open={open} handleOpen={handleOpen} msg={msg}>
-          <ModalChildren
-            // date={date}
-            // setDate={setDate}
-            handleChange={handleChange}
-            handleSelectAdd={handleSelectAdd}
-            submitData={submitData}
-            form={form}
-            kelurahan={kelurahan}
-            kelurahanId={kelurahan.id}
-            handleEditDate={handleAddDateS}
-            // selectedDate={dateEdit}
-            // msg={msg}
-          ></ModalChildren>
-        </ModalHeader>
+    <div className="w-screen h-screen  overflow-scroll">
+      {/* Delete Modal */}
+      <Dialog open={openDel.isOpen} handler={handleOpenDelete}>
+        <DialogHeader>Apakah Anda yakin ingin menghapus item ini?</DialogHeader>
+        <DialogBody>
+          Tindakan ini tidak dapat dibatalkan, dan Anda akan kehilangan semua
+          data terkait. Jika Anda yakin dengan keputusan Anda dan siap untuk
+          melanjutkan, mohon konfirmasi. Kami siap membantu jika Anda memiliki
+          pertanyaan atau membutuhkan bantuan lebih lanjut.
+        </DialogBody>
+        <DialogFooter>
+          <Button
+            variant="text"
+            color="red"
+            onClick={handleOpenDelete}
+            className="mr-1"
+          >
+            <span>Cancel</span>
+          </Button>
+          <Button
+            variant="gradient"
+            color="green"
+            onClick={() => handleDelete()}
+          >
+            <span>Confirm</span>
+          </Button>
+        </DialogFooter>
+      </Dialog>
 
-        <ModalHeader open={editOpen} handleOpen={setEditOpen} msg={msg}>
-          <ModalChildren
-            // date={date}
-            // setDate={setDate}
-            handleChange={handleEditChange}
-            handleSelectAdd={handleEditSelect}
-            submitData={handleUpdateData}
-            form={editForm}
-            kelurahan={kelurahan}
-            kelurahanId={editForm.kelurahanID}
-            handleEditDate={handleEditDateS}
-            selectedDate={dateEdit}
-            // msg={msg}
-          ></ModalChildren>
-        </ModalHeader>
+      <ModalHeader open={open} handleOpen={handleOpen} msg={msg}>
+        <ModalChildren
+          // date={date}
+          // setDate={setDate}
+          handleChange={handleChange}
+          handleSelectAdd={handleSelectAdd}
+          submitData={submitData}
+          form={form}
+          kelurahan={kelurahan}
+          kelurahanId={kelurahan.id}
+          handleEditDate={handleAddDateS}
+          // selectedDate={dateEdit}
+          // msg={msg}
+        ></ModalChildren>
+      </ModalHeader>
 
-        <CardHeader
-          floated={false}
-          shadow={false}
-          className="rounded-none overflow-y-scroll"
-        >
-          <div className="mb-8 flex items-center justify-between gap-8">
+      <ModalHeader open={editOpen} handleOpen={setEditOpen} msg={msg}>
+        <ModalChildren
+          // date={date}
+          // setDate={setDate}
+          handleChange={handleEditChange}
+          handleSelectAdd={handleEditSelect}
+          submitData={handleUpdateData}
+          form={editForm}
+          kelurahan={kelurahan}
+          kelurahanId={editForm.kelurahanID}
+          handleEditDate={handleEditDateS}
+          selectedDate={dateEdit}
+          // msg={msg}
+        ></ModalChildren>
+      </ModalHeader>
+      <Card className="w-full">
+        <CardHeader floated={false} shadow={false} className="">
+          <div className=" flex items-center justify-between gap-8">
             <div>
               <Typography variant="h5" color="blue-gray">
                 Data Sampah
@@ -427,29 +415,34 @@ export default function DataView() {
                 size="sm"
                 onClick={handleOpen}
               >
-                <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Tambah Data
+                {/* <UserPlusIcon strokeWidth={2} className="h-4 w-4" />  */}
+                Tambah Data
               </Button>
             </div>
           </div>
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row ">
-            <div className="w-full md:w-72">
-              <Typography color="gray" className="mt-1 font-normal">
-                Filter berdasarkan kelurahan
-              </Typography>
-              <select
-                nama="select select-bordered "
-                label="Pilih kelurahan"
-                value={kelurahan.id}
-                onChange={(e) => handleSelect(e.target.value)}
-              >
-                {kelurahan &&
-                  kelurahan.map((item, i) => (
-                    <option key={i} value={item.id.toString()}>
-                      {item.namaKelurahan}
-                    </option>
-                  ))}
-              </select>
-            </div>
+            {user?.tb_role.roleName == "Super Admin" ? (
+              <div className="w-full md:w-72">
+                <Typography color="gray" className="mt-1 font-normal">
+                  Filter berdasarkan kelurahan
+                </Typography>
+                <select
+                  nama="select select-bordered "
+                  label="Pilih kelurahan"
+                  value={kelurahan.id}
+                  onChange={(e) => handleSelect(e.target.value)}
+                >
+                  {kelurahan &&
+                    kelurahan.map((item, i) => (
+                      <option key={i} value={item.id.toString()}>
+                        {item.namaKelurahan}
+                      </option>
+                    ))}
+                </select>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
           <div className="my-2 flex flex-col gap-3">
             <Typography color="gray" className="mt-1 font-normal">
@@ -626,7 +619,7 @@ export default function DataView() {
           </div>
         </CardFooter>
       </Card>
-    </>
+    </div>
   );
 }
 
@@ -715,6 +708,7 @@ const ModalChildren = ({
   // useEffect(() => {
   // console.log(selectedDate);
   // }, [handleEditDate]);
+  const { user } = useSelector((state) => state.auth);
 
   return (
     <div className="">
@@ -725,22 +719,28 @@ const ModalChildren = ({
         <Typography className="font-normal" variant="paragraph" color="gray">
           Lengkapi data di bawah untuk menambah data sampah
         </Typography>
-        <Typography className="-mb-2" variant="h6">
-          Kelurahan
-        </Typography>
-        <Select
-          label="Pilih kelurahan"
-          value={`${kelurahanId}`}
-          onChange={(e) => handleSelectAdd(e, "kelurahanID")}
-          // name="kelurahanID"
-        >
-          {kelurahan &&
-            kelurahan.map((item, i) => (
-              <Option key={i} value={item.id.toString()}>
-                {item.namaKelurahan}
-              </Option>
-            ))}
-        </Select>
+        {user?.tb_role.roleName == "Super Admin" ? (
+          <>
+            <Typography className="-mb-2" variant="h6">
+              Kelurahan
+            </Typography>
+            <Select
+              label="Pilih kelurahan"
+              value={`${kelurahanId}`}
+              onChange={(e) => handleSelectAdd(e, "kelurahanID")}
+              // name="kelurahanID"
+            >
+              {kelurahan &&
+                kelurahan.map((item, i) => (
+                  <Option key={i} value={item.id.toString()}>
+                    {item.namaKelurahan}
+                  </Option>
+                ))}
+            </Select>
+          </>
+        ) : (
+          ""
+        )}
         <Typography className="-mb-2" variant="h6">
           Lokasi
         </Typography>
@@ -785,7 +785,7 @@ const ModalChildren = ({
           value={form.sampahWisata}
           onChange={(e) => handleChange(e, parseFloat(e.target.value))}
           type="number"
-          min="0"
+          min={0}
         />
         <Typography className="-mb-2" variant="h6">
           Sampah Warga
@@ -797,7 +797,7 @@ const ModalChildren = ({
           value={form.sampahWarga}
           onChange={(e) => handleChange(e, parseFloat(e.target.value))}
           type="number"
-          min="0"
+          min={0}
         />
         <Typography className="-mb-2" variant="h6">
           Sampah Rumput Laut
@@ -809,7 +809,7 @@ const ModalChildren = ({
           value={form.sampahRumputLaut}
           onChange={(e) => handleChange(e, parseFloat(e.target.value))}
           type="number"
-          min="0"
+          min={0}
         />
         <Typography className="-mb-2" variant="h6">
           Sampah Industri

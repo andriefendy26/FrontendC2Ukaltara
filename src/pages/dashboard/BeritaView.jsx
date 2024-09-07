@@ -23,6 +23,7 @@ import {
   DialogHeader,
   DialogBody,
   DialogFooter,
+  Textarea,
 } from "@material-tailwind/react";
 import ReactPaginate from "react-paginate";
 import {
@@ -36,6 +37,7 @@ import { getAllKelurahan } from "../../services/KelurahanService";
 import { Datepicker, FileInput } from "flowbite-react";
 import { format } from "date-fns";
 import { TrashIcon } from "lucide-react";
+import { useSelector } from "react-redux";
 
 const TABS = [
   {
@@ -63,6 +65,9 @@ const TABLE_HEAD = [
 ];
 
 const BeritaView = () => {
+  //user ident
+  const { user } = useSelector((state) => state.auth);
+
   //penyimpanan data berita
   const [data, setData] = React.useState([]);
 
@@ -77,7 +82,7 @@ const BeritaView = () => {
   const [page, setPage] = React.useState();
   const [totalPage, setTotalPage] = React.useState(0);
   const [rows, setRows] = React.useState(0);
-  const [limit, setLimit] = React.useState(5);
+  const [limit, setLimit] = React.useState(3);
 
   useEffect(() => {
     getKelurahan();
@@ -85,10 +90,16 @@ const BeritaView = () => {
 
   useEffect(() => {
     handleGetBerita();
-  }, [page, kelurahanIDFilter]);
+  }, [user, page, kelurahanIDFilter]);
 
   const handleGetBerita = async () => {
-    const data = await getAllData(page, limit, kelurahanIDFilter);
+    const data = await getAllData(
+      page,
+      limit,
+      user?.tb_role.roleName == "Super Admin"
+        ? kelurahanIDFilter
+        : user?.kelurahanID
+    );
     setData(data.data);
     setPage(data.page);
     setTotalPage(data.totalPages);
@@ -116,7 +127,7 @@ const BeritaView = () => {
   const [form, setForm] = React.useState({
     judul: "",
     deskripsi: "",
-    kelurahanID: "",
+    kelurahanID: null,
     tanggal: "",
     jenis: "",
   });
@@ -155,6 +166,10 @@ const BeritaView = () => {
     // console.log(converFormatDate(dateEdit));
   };
 
+  const changePage = ({ selected }) => {
+    setPage(selected);
+  };
+
   const handleCreateData = async () => {
     console.log(form);
     setIsloading(true);
@@ -162,9 +177,10 @@ const BeritaView = () => {
     formData.append("file", file);
     formData.append("judul", form.judul);
     formData.append("deskripsi", form.deskripsi);
-    formData.append("kelurahanID", form.kelurahanID);
     formData.append("tanggal", form.tanggal);
     formData.append("jenis", form.jenis);
+    if (form.kelurahanID != null)
+      formData.append("kelurahanID", form.kelurahanID);
 
     try {
       const responseApi = await createBerita(formData);
@@ -240,7 +256,7 @@ const BeritaView = () => {
     id: "",
     judul: "",
     deskripsi: "",
-    kelurahanID: "",
+    kelurahanID: null,
     tanggal: "",
     jenis: "",
   });
@@ -344,7 +360,7 @@ const BeritaView = () => {
     }
   };
   return (
-    <div className="w-screen  ">
+    <div className="w-full h-screen overflow-scroll ">
       {/* Delete Modal */}
       <Dialog open={openDel.isOpen} handler={handleOpenDelete}>
         <DialogHeader>Apakah Anda yakin ingin menghapus item ini?</DialogHeader>
@@ -404,7 +420,7 @@ const BeritaView = () => {
         kelurahan={kelurahan}
         handleAddDate={handleAddDateS}
       />
-      <Card className="h-full w-full ">
+      <Card className="w-full">
         <CardHeader floated={false} shadow={false} className="rounded-none">
           <div className="mb-8 flex items-center justify-between gap-8">
             <div>
@@ -431,29 +447,36 @@ const BeritaView = () => {
                 className="flex items-center gap-3"
                 size="sm"
               >
-                <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Tambah
+                {/* <UserPlusIcon strokeWidth={2} className="h-4 w-4" />  */}
+                Tambah
                 Berita
               </Button>
             </div>
           </div>
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             <div className="w-full md:w-72">
-              <Typography color="gray" className="mt-1 font-normal">
-                Filter berdasarkan kelurahan
-              </Typography>
-              <select
-                label="Pilih kelurahan"
-                className="select select-bordered"
-                value={kelurahan.id}
-                onChange={(e) => handleSelect(e.target.value)}
-              >
-                {kelurahan &&
-                  kelurahan.map((item, i) => (
-                    <option key={i} value={item.id.toString()}>
-                      {item.namaKelurahan}
-                    </option>
-                  ))}
-              </select>
+              {user?.tb_role.roleName == "Super Admin" ? (
+                <>
+                  <Typography color="gray" className="mt-1 font-normal">
+                    Filter berdasarkan kelurahan
+                  </Typography>
+                  <select
+                    label="Pilih kelurahan"
+                    className="select select-bordered"
+                    value={kelurahan.id}
+                    onChange={(e) => handleSelect(e.target.value)}
+                  >
+                    {kelurahan &&
+                      kelurahan.map((item, i) => (
+                        <option key={i} value={item.id.toString()}>
+                          {item.namaKelurahan}
+                        </option>
+                      ))}
+                  </select>
+                </>
+              ) : (
+                ""
+              )}
             </div>
           </div>
         </CardHeader>
@@ -509,15 +532,23 @@ const BeritaView = () => {
                           </Typography>
                         </div>
                       </td>
-                      <td className={`${classes} max-w-[200px] flex flex-wrap`}>
+                      <td className={`${classes}`}>
                         <div className="w-max">
-                          <Typography
+                          {/* <Typography
                             variant="small"
                             color="blue-gray"
                             className="font-normal"
                           >
                             {data.deskripsi}
-                          </Typography>
+                          </Typography> */}
+                          <Textarea
+                            label="Message"
+                            name="deskripsi"
+                            size="lg"
+                            value={data.deskripsi}
+                            disabled
+                            // onChange={(e) => handleChange(e)}
+                          />
                         </div>
                       </td>
                       <td className={classes}>
@@ -587,8 +618,8 @@ const BeritaView = () => {
                   Previous
                 </Button>
               }
-              // pageCount={totalPage}
-              // onPageChange={changePage}
+              pageCount={totalPage}
+              onPageChange={changePage}
               containerClassName="flex gap-2 items-center"
             />
           </div>
@@ -613,6 +644,7 @@ const ModalAddBerita = ({
   kelurahan,
   handleAddDate,
 }) => {
+  const { user } = useSelector((state) => state.auth);
   return (
     <Dialog
       size="xs"
@@ -646,8 +678,16 @@ const ModalAddBerita = ({
           <Typography className="-mb-2" variant="h6">
             Deskripsi
           </Typography>
-          <Input
+          {/* <Input
             label="Deskripsi"
+            name="deskripsi"
+            size="lg"
+            type="area"
+            value={form.deskripsi}
+            onChange={(e) => handleChange(e)}
+          /> */}
+          <Textarea
+            label="Message"
             name="deskripsi"
             size="lg"
             value={form.deskripsi}
@@ -667,24 +707,30 @@ const ModalAddBerita = ({
             <Option value="Sosialisasi Pesisir">Sosialisasi Pesisir</Option>
             <Option value="Lestari Mangrove">Lestari Mangrove</Option>
           </Select>
-          <Typography className="-mb-2" variant="h6">
-            Kelurahan
-          </Typography>
-          <Select
-            label="Pilih kelurahan"
-            nama="kelurahan"
-            value={`${form.kelurahanID}`}
-            onChange={(e) => handleSelect(e, "kelurahanID")}
-            // onChange={(e) => handleSelectAdd(e, "kelurahanID")}
-            // name="kelurahanID"
-          >
-            {kelurahan &&
-              kelurahan.map((item, i) => (
-                <Option key={i} value={item.id.toString()}>
-                  {item.namaKelurahan}
-                </Option>
-              ))}
-          </Select>
+          {user?.tb_role.roleName == "Super Admin" ? (
+            <>
+              <Typography className="-mb-2" variant="h6">
+                Kelurahan
+              </Typography>
+              <Select
+                label="Pilih kelurahan"
+                nama="kelurahan"
+                value={`${form.kelurahanID}`}
+                onChange={(e) => handleSelect(e, "kelurahanID")}
+                // onChange={(e) => handleSelectAdd(e, "kelurahanID")}
+                // name="kelurahanID"
+              >
+                {kelurahan &&
+                  kelurahan.map((item, i) => (
+                    <Option key={i} value={item.id.toString()}>
+                      {item.namaKelurahan}
+                    </Option>
+                  ))}
+              </Select>
+            </>
+          ) : (
+            ""
+          )}
           <Typography className="-mb-2" variant="h6">
             Tanggal
           </Typography>

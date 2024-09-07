@@ -28,6 +28,7 @@ export const getAllLogbookByKelID = async (
   }
 };
 export const getAllLogbook = async (
+  id,
   page,
   limit,
   tanggal_start,
@@ -36,7 +37,7 @@ export const getAllLogbook = async (
 ) => {
   try {
     const response = await axios.get(
-      `${API_URL}/logbook/?page=${page}&limit=${limit}&tanggal_start=${tanggal_start}&tanggal_end=${tanggal_end}&search_query=${search_query}`
+      `${API_URL}/logbook?kelurahanID=${id}&page=${page}&limit=${limit}&tanggal_start=${tanggal_start}&tanggal_end=${tanggal_end}&search_query=${search_query}`
     );
     return response.data;
   } catch (error) {
@@ -44,6 +45,14 @@ export const getAllLogbook = async (
   }
 };
 
+export const getTotalLogbook = async (data) => {
+  try {
+    const response = await axios.get(`${API_URL}/logbook/total`);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
 export const createLogbook = async (data) => {
   try {
     const response = await axios.post(`${API_URL}/logbook`, data);

@@ -2,7 +2,7 @@ import React from "react";
 import {
   SideBarItem,
   SidebarHead,
-  LogoutComp
+  LogoutComp,
 } from "../../layout/layoutDashboard/SidebarComp";
 
 import { MdOutlineSpaceDashboard } from "react-icons/md";
@@ -43,6 +43,11 @@ const Sidebar = ({ setOpenDel, datauser }) => {
         icon={<IoPersonOutline size={20}></IoPersonOutline>}
       />
       <SideBarItem
+        nama="InputData"
+        to="/datasampah"
+        icon={<FaDatabase size={20}></FaDatabase>}
+      />
+      <SideBarItem
         nama="UploadBerita"
         to="/berita"
         icon={<FaRegNewspaper size={20}></FaRegNewspaper>}
@@ -51,11 +56,6 @@ const Sidebar = ({ setOpenDel, datauser }) => {
         nama="Logbook"
         to="/Logbbokdash"
         icon={<FaBookOpen size={20}></FaBookOpen>}
-      />
-      <SideBarItem
-        nama="InputData"
-        to="/datasampah"
-        icon={<FaDatabase size={20}></FaDatabase>}
       />
       {/* <SideBarItem
         nama="Setting"

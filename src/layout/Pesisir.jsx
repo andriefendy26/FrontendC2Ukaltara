@@ -2,6 +2,7 @@ import React from "react";
 import HeaderJudul from "../components/HeaderJudul";
 
 import teamPres from "../assests/team-presentation.png";
+import { Link } from "react-router-dom";
 
 // Register Chart.js components
 
@@ -38,10 +39,12 @@ const Pesisir = () => {
 
   return (
     <div className="mt-10 flex flex-col items-center mx-10 lg:mx-24 xl:mx-60 overflow-hidden">
-      <HeaderJudul title="Pemberdayaan Pesisir" />
       <div className="grid gap-4 my-5 grid-cols-1 lg:grid-cols-2">
-        <div className="flex mb-5 flex-col items-center " data-aos="fade-right">
-          <p className="pt-5 lg:text-lg xl:text-xl ">
+        <div className="flex  mb-5 text-left flex-col " data-aos="fade-right">
+          <h1 className="text-4xl tracking-wider font-bold mb-2">
+            Pemberdayaan Pesisir
+          </h1>
+          <p className="pt-5 lg:text-lg ">
             Pemberdayaan pesisir adalah upaya untuk meningkatkan kapasitas dan
             kesejahteraan masyarakat yang tinggal di daerah pesisir, serta
             menjaga dan memanfaatkan sumber daya pesisir secara berkelanjutan.
@@ -50,6 +53,13 @@ const Pesisir = () => {
             mengelola sumber daya alam mereka dengan efektif, mengurangi
             kemiskinan, dan meningkatkan kualitas hidup mereka.
           </p>
+
+          <Link
+            to="/pemberdayaanpesisir"
+            className="bg-primary  rounded-lg p-2 px-5 mt-2 text-white text-sm hover:bg-primaryhover hover:text-gray-100"
+          >
+            Selengkapnya
+          </Link>
         </div>
         <div
           className="flex justify-center rounded-3xl rounded-bl-full rounded-tr-full bg-primary"
@@ -75,9 +85,6 @@ const Pesisir = () => {
         </div>
         <img src={teamPres} className="w-96"></img>
       </div> */}
-      <button className="bg-primary  rounded-lg p-2 px-5 mt-2 text-white text-sm hover:bg-primaryhover hover:text-gray-100">
-        Selengkapnya
-      </button>
     </div>
   );
 };

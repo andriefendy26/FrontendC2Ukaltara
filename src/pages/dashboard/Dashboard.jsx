@@ -2,12 +2,18 @@ import { Outlet } from "react-router-dom";
 // import Sidebar from "../../layout/layoutDashboard/SidebarComp";
 import Sidebar from "./Sidebar";
 import AOS from "aos";
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { OnLogin, Logout, reset } from "../../features/AuthSlice";
-import { Button, Dialog, DialogBody, DialogFooter, DialogHeader } from "@material-tailwind/react";
+import {
+  Button,
+  Dialog,
+  DialogBody,
+  DialogFooter,
+  DialogHeader,
+} from "@material-tailwind/react";
 
 function Layout() {
   useEffect(() => {
@@ -22,7 +28,7 @@ function Layout() {
 
   useEffect(() => {
     dispatch(OnLogin());
-    console.log(user)
+    console.log(user);
   }, [dispatch]);
 
   useEffect(() => {
@@ -34,7 +40,7 @@ function Layout() {
   const [openDel, setOpenDel] = useState(false);
 
   // const handleOpenDelete = () => setOpenDel((curr) => !curr);
-  
+
   const LogoutAct = () => {
     dispatch(Logout());
     dispatch(reset());
@@ -67,7 +73,6 @@ function Layout() {
         </DialogFooter>
       </Dialog>
       <Sidebar setOpenDel={setOpenDel} datauser={user} />
-      
       <Outlet />
     </div>
   );

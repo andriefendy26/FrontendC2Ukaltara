@@ -13,7 +13,7 @@ const Navbar = () => {
       data-aos="fade-down"
     >
       <div className="flex justify-between">
-        <h1 className="font-bold flex text-xl lg:text-2xl xl:text-3xl">
+        <h1 className="font-bold flex text-xl lg:text-2xl xl:text-4xl">
           <p className="text-primary">C2U</p>Kaltara
         </h1>
         <button className="lg:hidden" onClick={() => SetIsOpen(!isOpen)}>

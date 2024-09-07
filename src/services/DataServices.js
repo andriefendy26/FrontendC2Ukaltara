@@ -18,6 +18,31 @@ export const getAllData = async (
   }
 };
 
+export const getDataLw = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/datalw`);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+export const getTotalDataSampah = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/datatotal`);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+export const getDataTotalByKel = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/datakel`);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const createData = async (data) => {
   try {
     const response = await axios.post(`${API_URL}/data`, data);
@@ -35,7 +60,7 @@ export const updateData = async (data) => {
     return error;
   }
 };
-export const deleteData = async (data) => {
+export const deleteData = async (id) => {
   try {
     const response = await axios.delete(`${API_URL}/data/${id}`);
     return response;

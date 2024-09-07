@@ -34,10 +34,15 @@ import { UserPlusIcon } from "lucide-react";
 import ReactPaginate from "react-paginate";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { useSelector } from "react-redux";
 
 const TABLE_HEAD = ["Nama", "Penempatan", "Role", "Action"];
 
 const UserView = () => {
+  //user ident
+  const { user } = useSelector((state) => state.auth);
+  // const user = useContext(UserContext);
+
   const [open, setOpen] = React.useState(false);
   const [openDel, setOpenDel] = React.useState({ isOpen: false, id: "" });
   const handleOpen = () => {
@@ -64,6 +69,8 @@ const UserView = () => {
   useEffect(() => {
     getKelurahan();
     getRole();
+    // console.log(user?.tb_role.roleName == "Super Admin" ? 'yes' : 'no')
+    console.log(user);
   }, []);
 
   useEffect(() => {
@@ -72,7 +79,7 @@ const UserView = () => {
 
   const getUser = async () => {
     const data = await getAlltUser(keyword, page, limit);
-    console.log(data)
+    console.log(data);
     setData(data.data);
     setPage(data.page);
     setTotalPage(data.totalPages);
@@ -223,7 +230,7 @@ const UserView = () => {
   };
 
   return (
-    <div className="w-full overflow-scroll">
+    <div className="w-full h-screen overflow-scroll">
       {/* <h1 className="text-2xl mb-5">User Managemen</h1> */}
       {/* Delete Modal */}
       <Dialog open={openDel.isOpen} handler={handleOpenDelete}>
@@ -308,11 +315,12 @@ const UserView = () => {
               value={editForm.roleID.toString()}
               onChange={(e) => handleEditSelect(e, "roleID")}
             >
-              {roles && roles.map((item) => (
-                <Option key={item.id} value={item.id.toString()}>
-                  {item.roleName}
-                </Option>
-              ))}
+              {roles &&
+                roles.map((item) => (
+                  <Option key={item.id} value={item.id.toString()}>
+                    {item.roleName}
+                  </Option>
+                ))}
             </Select>
             <Typography className="-mb-2" variant="h6">
               Email
@@ -439,7 +447,7 @@ const UserView = () => {
       </Dialog>
       {/* Batas Modal */}
 
-      <Card className="h-full min-w-full ">
+      <Card className="min-w-full ">
         <CardHeader floated={false} shadow={false} className="rounded-none">
           <div className="mb-8 flex items-center justify-between gap-8">
             <div>
@@ -459,15 +467,20 @@ const UserView = () => {
                   setPage(0);
                 }}
               >
-                view all
+                Lihat Semua
               </Button>
-              <Button
-                onClick={handleOpen}
-                className="flex items-center gap-3"
-                size="sm"
-              >
-                <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add member
-              </Button>
+              {user?.tb_role.roleName == "Super Admin" ? (
+                <Button
+                  onClick={handleOpen}
+                  className="flex items-center gap-3"
+                  size="sm"
+                >
+                  {/* <UserPlusIcon strokeWidth={2} className="h-4 w-4" />  */}
+                  Tambah Anggota
+                </Button>
+              ) : (
+                ""
+              )}
             </div>
           </div>
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
@@ -560,32 +573,36 @@ const UserView = () => {
                             {tb_role.roleName}
                           </Typography>
                         </td>
-                        <td className={`${classes} bg-blue-gray-50/50`}>
-                          <Tooltip content="Edit User">
-                            <IconButton
-                              variant="text"
-                              onClick={() =>
-                                handleEditOpen({
-                                  id,
-                                  nama,
-                                  email,
-                                  tb_kelurahan,
-                                  tb_role,
-                                })
-                              }
-                            >
-                              <PencilIcon className="h-4 w-4" />
-                            </IconButton>
-                          </Tooltip>
-                          <Tooltip content="Delete User">
-                            <IconButton
-                              variant="text"
-                              onClick={() => handleOpenDelete(id)}
-                            >
-                              <TrashIcon className="h-4 w-4" />
-                            </IconButton>
-                          </Tooltip>
-                        </td>
+                        {user?.tb_role.roleName == "Super Admin" ? (
+                          <td className={`${classes} bg-blue-gray-50/50`}>
+                            <Tooltip content="Edit User">
+                              <IconButton
+                                variant="text"
+                                onClick={() =>
+                                  handleEditOpen({
+                                    id,
+                                    nama,
+                                    email,
+                                    tb_kelurahan,
+                                    tb_role,
+                                  })
+                                }
+                              >
+                                <PencilIcon className="h-4 w-4" />
+                              </IconButton>
+                            </Tooltip>
+                            <Tooltip content="Delete User">
+                              <IconButton
+                                variant="text"
+                                onClick={() => handleOpenDelete(id)}
+                              >
+                                <TrashIcon className="h-4 w-4" />
+                              </IconButton>
+                            </Tooltip>
+                          </td>
+                        ) : (
+                          ""
+                        )}
                       </tr>
                     );
                   }
