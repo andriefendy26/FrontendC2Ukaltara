@@ -82,12 +82,12 @@ const CarouselCom = () => {
     setData(data.data);
   };
 
-  const displayData = dataBerita.length > 0 ? dataBerita : data;
+  // const displayData = dataBerita.length > 0 ? dataBerita : data;
 
   return (
     <Carousel>
-      {displayData &&
-        displayData.map((item, i) => (
+      {dataBerita &&
+        dataBerita.map((item, i) => (
           <div
             key={i}
             className="h-full w-full bg-cover bg-center text-white  bg-no-repeat bg-fixed"
@@ -101,10 +101,10 @@ const CarouselCom = () => {
             )}
             {/* Content */}
             <div className="relative z-10 p-6 flex flex-col justify-center  items-start h-full md:p-14 lg:p-24 xl:p-32">
-              <h1 className="font-bold text-xl mb-2 md:text-2xl lg:text-3xl xl:text-4xl">
+              <h1 className="font-bold text-justify text-xl mb-2 md:text-2xl lg:text-3xl xl:text-4xl">
                 {item?.judul}
               </h1>
-              <p className="text-sm my-2 xl:text-lg">
+              <p className="text-sm my-2 text-justify xl:text-lg">
                 {item?.deskripsi.slice(0, 240)}
               </p>
               {item.id ? (

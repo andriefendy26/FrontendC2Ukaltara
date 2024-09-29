@@ -3,6 +3,7 @@ import HeaderJudul from "../components/HeaderJudul";
 
 import teamPres from "../assests/team-presentation.png";
 import { Link } from "react-router-dom";
+import logoIlus from "../assests/Scenes02.svg"
 
 // Register Chart.js components
 
@@ -42,16 +43,15 @@ const Pesisir = () => {
       <div className="grid gap-4 my-5 grid-cols-1 lg:grid-cols-2">
         <div className="flex  mb-5 text-left flex-col " data-aos="fade-right">
           <h1 className="text-4xl tracking-wider font-bold mb-2">
-            Pemberdayaan Pesisir
+            Coastal Clean Up
           </h1>
-          <p className="pt-5 lg:text-lg ">
-            Pemberdayaan pesisir adalah upaya untuk meningkatkan kapasitas dan
-            kesejahteraan masyarakat yang tinggal di daerah pesisir, serta
-            menjaga dan memanfaatkan sumber daya pesisir secara berkelanjutan.
-            Konsep ini melibatkan berbagai aspek, termasuk ekonomi, sosial, dan
-            lingkungan, untuk memastikan bahwa masyarakat pesisir dapat
-            mengelola sumber daya alam mereka dengan efektif, mengurangi
-            kemiskinan, dan meningkatkan kualitas hidup mereka.
+          <p className="pt-5 lg:text-lg text-justify">
+            Coastal clean-up adalah kegiatan yang bertujuan untuk membersihkan
+            pantai dan wilayah pesisir dari sampah dan limbah yang mengganggu
+            ekosistem laut. Kegiatan ini biasanya melibatkan relawan, organisasi
+            lingkungan, dan masyarakat lokal, dan sering diadakan pada hari-hari
+            tertentu secara global, seperti Hari Bersih Pantai Sedunia
+            (International Coastal Cleanup Day).
           </p>
 
           <Link
@@ -62,10 +62,10 @@ const Pesisir = () => {
           </Link>
         </div>
         <div
-          className="flex justify-center rounded-3xl rounded-bl-full rounded-tr-full bg-primary"
+          className="flex justify-center rounded-3xl rounded-bl-full rounded-tr-full"
           data-aos="fade-right"
         >
-          <img src={teamPres} className="w-96 lg:w-80 object-cover"></img>
+          <img src={logoIlus} className="w-96 lg:w-80 object-cover"></img>
         </div>
       </div>
       {/* <div className="lg:flex lg:flex-row my-5">

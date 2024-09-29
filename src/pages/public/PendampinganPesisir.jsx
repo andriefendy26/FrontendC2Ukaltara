@@ -18,6 +18,7 @@ import React, { useEffect } from "react";
 import { getJenisBerita } from "../../services/BeritaServices";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
+import BeritaCard from "../../components/CardBerita";
 
 const PendampinganPesisir = () => {
   const dataHeader = {
@@ -60,7 +61,7 @@ const PendampinganPesisir = () => {
               ></BeritaCard>
             ))
           ) : (
-            <h1 className="text-2xl text-gray-400 text-center mt-10">
+            <h1 className="text-2xl text-gray-400 mt-10">
               Belum ada berita
             </h1>
           )}
@@ -70,38 +71,38 @@ const PendampinganPesisir = () => {
   );
 };
 
-function BeritaCard({ judul, deskripsi, gambar, waktu, too, kelurahan }) {
-  return (
-    <Card className="w-full overflow-hidden">
-      <CardHeader
-        floated={false}
-        shadow={false}
-        color="transparent"
-        className="m-0 rounded-none h-56 flex items-center justify-center"
-      >
-        <img src={gambar} alt="review" className="object-cover w-full h-full" />
-      </CardHeader>
-      <CardBody>
-        <Typography variant="h4" color="blue-gray" className="">
-          {judul}
-        </Typography>
-        <Typography
-          variant="lead"
-          color="gray"
-          className="text-sm lg:text-lg mt-3 font-normal"
-        >
-          {deskripsi.slice(0, 100) + "..."}
-        </Typography>
-      </CardBody>
-      <CardFooter className="flex items-center justify-between">
-        <div className="flex items-center -space-x-3 text-blue-400">
-          <Link to={`/detail/${too}`}>Read More</Link>
-        </div>
-        <div className="flex items-center -space-x-3 ">{kelurahan}</div>
-        <Typography className="font-normal">{waktu}</Typography>
-      </CardFooter>
-    </Card>
-  );
-}
+// function BeritaCard({ judul, deskripsi, gambar, waktu, too, kelurahan }) {
+//   return (
+//     <Card className="w-full overflow-hidden">
+//       <CardHeader
+//         floated={false}
+//         shadow={false}
+//         color="transparent"
+//         className="m-0 rounded-none h-56 flex items-center justify-center"
+//       >
+//         <img src={gambar} alt="review" className="object-cover w-full h-full" />
+//       </CardHeader>
+//       <CardBody>
+//         <Typography variant="h5" color="blue-gray" className="">
+//           {judul}
+//         </Typography>
+//         <Typography
+//           variant="lead"
+//           color="gray"
+//           className="text-sm lg:text-lg mt-3 font-normal"
+//         >
+//           {deskripsi.slice(0, 100) + "..."}
+//         </Typography>
+//       </CardBody>
+//       <CardFooter className="flex items-center justify-between">
+//         <div className="flex items-center -space-x-3 text-blue-400">
+//           <Link to={`/detail/${too}`}>Read More</Link>
+//         </div>
+//         <div className="flex items-center -space-x-3 ">{kelurahan}</div>
+//         <Typography className="font-normal">{waktu}</Typography>
+//       </CardFooter>
+//     </Card>
+//   );
+// }
 
 export default PendampinganPesisir;

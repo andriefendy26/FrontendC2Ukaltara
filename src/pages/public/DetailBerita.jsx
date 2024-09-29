@@ -24,23 +24,29 @@ const DetailBerita = () => {
     return val ? format(val, "yyyy-MM-dd") : "";
     // return date
   };
-
+  
   return (
     <div className="">
-      <div className="m-10 md:mx-40 lg:mx-60 xl:mx-80">
+      <div className="m-10 md:mx-32 lg:mx-52 xl:mx-72">
         <div className="mb-5">
-          <Typography variant="h4" className="text-4xl mb-3 font-bold">
+          <Typography variant="h4" className="text-2xl mb-3 font-bold">
             {data?.judul}
           </Typography>
-          <Typography variant="h6" className="text-sm tracking-widest font-bold">
+          <Typography
+            variant="h6"
+            className="text-sm tracking-widest font-bold"
+          >
             {converFormatDate(data?.tanggal)} / {data?.jenis} /{" "}
             {data?.tb_kelurahan.namaKelurahan}
           </Typography>
         </div>
-        <img src={data?.url}></img>
-        <Typography variant="paragraph" className="mt-5 lg:text-xl">
-          {data?.deskripsi}
-        </Typography>
+        <img src={data?.url} className="md:float-left w-full md:max-w-[50%] object-cover h-96 lg:mr-10 lg:mb-10 mr-5 mb-5"></img>
+        <p className="mt-5 lg:text-xl text-justify">
+          {/* {data?.deskripsi} */}
+          {data?.deskripsi.split('\n').map((paragraph, index) => (
+            <p key={index} className="mb-4">{paragraph}</p>
+          ))}
+        </p>
       </div>
     </div>
   );

@@ -30,6 +30,7 @@ import LogbookDetail from "./pages/public/LogbookPage/LogbookDetail";
 import LogbookView from "./pages/dashboard/LogbookView";
 import Pemberdayaan from "./pages/public/Pemberdayaan";
 import DetailBerita from "./pages/public/DetailBerita";
+import NotFound from "./components/Notfound";
 
 const router = createBrowserRouter([
   {
@@ -75,6 +76,10 @@ const router = createBrowserRouter([
       {
         path: "logbook/:id",
         element: <LogbookDetail />,
+      },
+      {
+        path: "*", // Notfound Route
+        element: <NotFound />,
       },
     ],
   },

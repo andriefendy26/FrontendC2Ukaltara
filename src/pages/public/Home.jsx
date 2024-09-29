@@ -21,12 +21,12 @@ const Home = () => {
     <div className="">
       {/* <Carousel /> */}
       <HeroScrollDemo></HeroScrollDemo>
-      <OurTeamAnimate></OurTeamAnimate>
       <Pesisir />
       <Kegiatan />
-      <LogbookLay></LogbookLay>
+      {/* <LogbookLay></LogbookLay> */}
       <Galeri />
       <AboutUs />
+      <OurTeamAnimate></OurTeamAnimate>
     </div>
   );
 };

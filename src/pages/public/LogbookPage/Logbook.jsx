@@ -32,7 +32,7 @@ const Logbook = () => {
         </Typography>
         <Typography variant="paragraph" color="blue-gray" className="mb-2">
           Untuk para peserta MBKM silahkan untuk mengisi logbook sesuai
-          penempatan masing masing
+          penempatan masing masing dan mengupload foto selfi
         </Typography>
         <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4x">
           {kelurahan &&
@@ -47,14 +47,14 @@ const Logbook = () => {
             ))}
         </div>
       </div>
-      <div className="mt-10">
+      {/* <div className="mt-10">
         <Typography variant="h3" className="mb-3">
           Berita Terkini
         </Typography>
         <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4 ">
           <Typography variant="paragraph">Belum ada berita</Typography>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

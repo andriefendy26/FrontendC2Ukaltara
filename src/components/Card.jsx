@@ -44,7 +44,7 @@ export default function Cards(props) {
         <Typography variant="h5" color="white" className="mb-2">
           {props.title}
         </Typography>
-        <Typography>{props.desc.substring(0, 120) + "....."}</Typography>
+        <Typography className="text-justify">{props.desc.substring(0, 120) + "....."}</Typography>
       </CardBody>
       <CardFooter className="pt-0">
         <Link to={props.too}>

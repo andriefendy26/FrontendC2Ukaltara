@@ -6,7 +6,7 @@ const DetailLayout = ({ judul, desc, children }) => {
       <div className="">
         <h1 className="text-2xl font-bold lg:text-3xl" data-aos="fade-right">{judul}</h1>
         <div className="w-80 h-[1px] mb-5 bg-black" data-aos="fade-right"></div>
-        <p className="lg:text-xl" data-aos="fade-up">{desc}</p>
+        <p className="lg:text-xl text-justify" data-aos="fade-up">{desc}</p>
       </div>
       <div className="mt-5">
         <h1 className="text-2xl font-bold lg:text-3xl" data-aos="fade-right">BERITA</h1>

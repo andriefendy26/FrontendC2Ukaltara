@@ -32,6 +32,7 @@ import {
   DialogHeader,
   DialogBody,
   DialogFooter,
+  Textarea,
 } from "@material-tailwind/react";
 import { useLocation, useParams } from "react-router-dom";
 import {
@@ -434,13 +435,21 @@ const LogbookDetail = () => {
                         </td>
 
                         <td className={classes}>
-                          <Typography
+                          {/* <Typography
                             variant="small"
                             color="blue-gray"
                             className="font-normal"
                           >
                             {kegiatan}
-                          </Typography>
+                          </Typography> */}
+                          <Textarea
+                            label="Message"
+                            name="deskripsi"
+                            size="lg"
+                            value={kegiatan}
+                            disabled
+                            // onChange={(e) => handleChange(e)}
+                          />
                         </td>
                         <td className={classes}>
                           <img

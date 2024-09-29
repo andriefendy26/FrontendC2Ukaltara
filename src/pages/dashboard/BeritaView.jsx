@@ -173,55 +173,66 @@ const BeritaView = () => {
   const handleCreateData = async () => {
     console.log(form);
     setIsloading(true);
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("judul", form.judul);
-    formData.append("deskripsi", form.deskripsi);
-    formData.append("tanggal", form.tanggal);
-    formData.append("jenis", form.jenis);
-    if (form.kelurahanID != null)
-      formData.append("kelurahanID", form.kelurahanID);
 
-    try {
-      const responseApi = await createBerita(formData);
-      // console.log(responseApi);
-      if (responseApi.status == 401) {
-        const message = responseApi.response.data.msg;
-        setIsError(message);
-        setIsloading(false);
-        setTimeout(() => {
-          setIsError(null); // Hide error message after 4 seconds
-        }, 4000);
-      } else if (responseApi.status == 422) {
-        const message = responseApi.response.data.msg;
-        setIsError(message);
-        setIsloading(false);
-        setTimeout(() => {
-          setIsError(null); // Hide error message after 4 seconds
-        }, 4000);
-      } else {
-        setForm({
-          nama: "",
-          npm: "",
-          jurusan: "",
-          kegiatan: "",
-        });
-        setFile("");
-        setPreview("");
-        setIsloading(false);
-        setOpen((cur) => !cur);
-        setIsError(null);
-        setIsSuccess(responseApi.msg);
-        // console.log(responseApi);
-        setTimeout(() => {
-          setIsSuccess(null); // Hide error message after 4 seconds
-        }, 4000);
-        handleGetBerita();
-      }
-      handleGetBerita();
-    } catch (error) {
+    const wordCount = form.deskripsi.trim().split(/\s+/).length;
+
+    if (wordCount < 200) {
+      setIsError("Input must be at least 200 words.");
       setIsloading(false);
-      setIsError(error.message);
+      setTimeout(() => {
+        setIsError(null); // Hide error message after 4 seconds
+      }, 4000);
+    } else {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("judul", form.judul);
+      formData.append("deskripsi", form.deskripsi);
+      formData.append("tanggal", form.tanggal);
+      formData.append("jenis", form.jenis);
+      if (form.kelurahanID != null)
+        formData.append("kelurahanID", form.kelurahanID);
+
+      try {
+        const responseApi = await createBerita(formData);
+        // console.log(responseApi);
+        if (responseApi.status == 401) {
+          const message = responseApi.response.data.msg;
+          setIsError(message);
+          setIsloading(false);
+          setTimeout(() => {
+            setIsError(null); // Hide error message after 4 seconds
+          }, 4000);
+        } else if (responseApi.status == 422) {
+          const message = responseApi.response.data.msg;
+          setIsError(message);
+          setIsloading(false);
+          setTimeout(() => {
+            setIsError(null); // Hide error message after 4 seconds
+          }, 4000);
+        } else {
+          setForm({
+            nama: "",
+            npm: "",
+            jurusan: "",
+            kegiatan: "",
+          });
+          setFile("");
+          setPreview("");
+          setIsloading(false);
+          setOpen((cur) => !cur);
+          setIsError(null);
+          setIsSuccess(responseApi.msg);
+          // console.log(responseApi);
+          setTimeout(() => {
+            setIsSuccess(null); // Hide error message after 4 seconds
+          }, 4000);
+          handleGetBerita();
+        }
+        handleGetBerita();
+      } catch (error) {
+        setIsloading(false);
+        setIsError(error.message);
+      }
     }
   };
   const converFormatDate = (val) => {
@@ -313,7 +324,7 @@ const BeritaView = () => {
     const formData = new FormData();
     formData.append("file", fileEdit);
     formData.append("judul", formEdit.judul);
-    formData.append("deskripsi", formEdit.deskripsi);
+    formData.append("deskripsi", `${formEdit.deskripsi}`);
     formData.append("kelurahanID", formEdit.kelurahanID);
     formData.append("tanggal", formEdit.tanggal);
     formData.append("jenis", formEdit.jenis);
@@ -448,8 +459,7 @@ const BeritaView = () => {
                 size="sm"
               >
                 {/* <UserPlusIcon strokeWidth={2} className="h-4 w-4" />  */}
-                Tambah
-                Berita
+                Tambah Berita
               </Button>
             </div>
           </div>
@@ -523,13 +533,21 @@ const BeritaView = () => {
                       </td>
                       <td className={classes}>
                         <div className="w-max">
-                          <Typography
+                          {/* <Typography
                             variant="small"
                             color="blue-gray"
                             className="font-normal"
                           >
                             {data.judul}
-                          </Typography>
+                          </Typography> */}
+                          <Textarea
+                            label="Message"
+                            name="deskripsi"
+                            size="lg"
+                            value={data.judul}
+                            disabled
+                            // onChange={(e) => handleChange(e)}
+                          />
                         </div>
                       </td>
                       <td className={`${classes}`}>

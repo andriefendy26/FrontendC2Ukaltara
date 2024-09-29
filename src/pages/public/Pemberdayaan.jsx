@@ -28,7 +28,6 @@ import {
   PopoverContent,
 } from "@material-tailwind/react";
 import { DayPicker } from "react-day-picker";
-
 import {
   getAllData,
   getDataLw,
@@ -283,15 +282,14 @@ const Pemberdayaan = () => {
   return (
     <div className="m-10">
       <div className="mb-10">
-        <h1 className="text-2xl font-semibold mb-2">Pemberdayaan Pesisir</h1>
+        <h1 className="text-2xl font-semibold mb-2">Coastal Clean Up</h1>
         <p className="">
-          Pemberdayaan pesisir adalah upaya untuk meningkatkan kapasitas dan
-          kesejahteraan masyarakat yang tinggal di daerah pesisir, serta menjaga
-          dan memanfaatkan sumber daya pesisir secara berkelanjutan. Konsep ini
-          melibatkan berbagai aspek, termasuk ekonomi, sosial, dan lingkungan,
-          untuk memastikan bahwa masyarakat pesisir dapat mengelola sumber daya
-          alam mereka dengan efektif, mengurangi kemiskinan, dan meningkatkan
-          kualitas hidup mereka.
+          Coastal clean-up adalah kegiatan yang bertujuan untuk membersihkan
+          pantai dan wilayah pesisir dari sampah dan limbah yang mengganggu
+          ekosistem laut. Kegiatan ini biasanya melibatkan relawan, organisasi
+          lingkungan, dan masyarakat lokal, dan sering diadakan pada hari-hari
+          tertentu secara global, seperti Hari Bersih Pantai Sedunia
+          (International Coastal Cleanup Day).
         </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 mb-4">

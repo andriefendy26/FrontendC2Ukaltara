@@ -49,7 +49,7 @@ const Kegiatan = () => {
         <p className="text-sm lg:text-lg tracking-wide">Kegiatan ini melibatkan berbagai pihak, termasuk relawan, organisasi lingkungan, dan pemerintah lokal <br></br> kolaboratif yang mendorong inovasi dan menghasilkan hasil yang luar biasa.</p>
       </div>
      
-      <div className="grid grid-cols-1 gap-10 md:grid-cols-2 xl:grid-cols-4 lg:32 xl:mx-44">
+      <div className="grid grid-cols-1 gap-10 md:grid-cols-2 2xl:grid-cols-4 lg:32 xl:mx-44">
         {data.map((item, index) => (
           <Card
             key={index}

@@ -153,7 +153,7 @@ const LogbookDetail = () => {
 
   const handleCreateData = async () => {
     // console.log(form);
-    setIsloading(true)
+    setIsloading(true);
     const formData = new FormData();
     formData.append("file", file);
     formData.append("nama", form.nama);
@@ -168,14 +168,14 @@ const LogbookDetail = () => {
       if (responseApi.status == 401) {
         const message = responseApi.response.data.msg;
         setIsError(message);
-        setIsloading(false)
+        setIsloading(false);
         setTimeout(() => {
           setIsError(null); // Hide error message after 4 seconds
         }, 4000);
       } else if (responseApi.status == 422) {
         const message = responseApi.response.data.msg;
         setIsError(message);
-        setIsloading(false)
+        setIsloading(false);
         setTimeout(() => {
           setIsError(null); // Hide error message after 4 seconds
         }, 4000);
@@ -188,7 +188,7 @@ const LogbookDetail = () => {
         });
         setFile("");
         setPreview("");
-        setIsloading(false)
+        setIsloading(false);
         setOpen((cur) => !cur);
         setIsError(null);
         setIsSuccess(responseApi.msg);
@@ -200,9 +200,29 @@ const LogbookDetail = () => {
       }
       getData();
     } catch (error) {
-      setIsloading(false)
+      setIsloading(false);
       setIsError(error.message);
     }
+  };
+
+  const ModalImage = (isOpen, image) => {
+    return (
+      <dialog id={isOpen} className="modal">
+        <div className="modal-box w-11/12 max-w-5xl">
+          <img
+            className="h-36  rounded-lg object-cover object-center"
+            src={image}
+            alt="gambar kamu"
+          />
+          <div className="modal-action">
+            <form method="dialog">
+              {/* if there is a button, it will close the modal */}
+              <button className="btn">Close</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
+    );
   };
 
   return (
@@ -212,6 +232,7 @@ const LogbookDetail = () => {
           {isSuccess}.
         </Alert>
       )}
+
       <ModalAddLogbook
         open={open}
         handleOpen={handleOpen}
@@ -375,11 +396,13 @@ const LogbookDetail = () => {
                             </Typography>
                           </td>
                           <td className={classes}>
-                            <img
-                              className="h-36  rounded-lg object-cover object-center"
-                              src={url}
-                              alt="gambar kamu"
-                            />
+                            <button onClick={() => ModalImage('my_modal_4', url)}>
+                              <img
+                                className="h-36  rounded-lg object-cover object-center"
+                                src={url}
+                                alt="gambar kamu"
+                              />
+                            </button>
                           </td>
                         </tr>
                       );
@@ -517,10 +540,17 @@ const ModalAddLogbook = ({
               src={preview}
               alt="gambar kamu"
             />
-          ) : ""}
+          ) : (
+            ""
+          )}
         </CardBody>
         <CardFooter className="pt-0">
-          <Button loading={isLoading} variant="gradient" onClick={handleCreateData} fullWidth>
+          <Button
+            loading={isLoading}
+            variant="gradient"
+            onClick={handleCreateData}
+            fullWidth
+          >
             Simpan
           </Button>
         </CardFooter>
