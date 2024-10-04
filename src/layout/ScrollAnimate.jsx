@@ -3,6 +3,7 @@ import { ContainerScroll } from "../components/container-scroll-animation";
 // import Image from "next/image";
 import CarouselCom from "./Carousl";
 import assestubt from "../assests/assestubt.png"
+import Logo from "../../public/logo.png"
 
 export default function HeroScrollDemo() {
   return (
@@ -17,6 +18,7 @@ export default function HeroScrollDemo() {
                 <span className="text-primary">C2U</span>
                 Kaltara
               </span>
+              {/* <img src={Logo} className="w-[50%]"></img> */}
             </h1>
           </>
         }

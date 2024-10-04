@@ -12,6 +12,7 @@ import 'aos/dist/aos.css';
 import LogbookLay from "../../layout/Logbook";
 import HeroScrollDemo from "../../layout/ScrollAnimate";
 import OurTeamAnimate from "../../layout/OurTeamAnimate";
+import Sosmedemded from "../../layout/Sosmedemded";
 
 
 const Home = () => {
@@ -21,6 +22,7 @@ const Home = () => {
     <div className="">
       {/* <Carousel /> */}
       <HeroScrollDemo></HeroScrollDemo>
+      <Sosmedemded></Sosmedemded>
       <Pesisir />
       <Kegiatan />
       {/* <LogbookLay></LogbookLay> */}
