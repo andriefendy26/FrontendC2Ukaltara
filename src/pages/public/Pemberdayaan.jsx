@@ -60,8 +60,9 @@ const Pemberdayaan = () => {
   });
 
   React.useEffect(() => {
-    handleGetDataLw();
+    // handleGetDataLw();
     handleGetDataTotalByKel();
+    handleGetData();
     // handleGetTotalsampah();
     // handleGetTotalLogbook();
     // handleGetTotalBerita();
@@ -73,26 +74,38 @@ const Pemberdayaan = () => {
     // return date
   };
 
-  const handleGetDataLw = async () => {
-    try {
-      const response = await getDataLw();
-      const data = response.data; // Sesuaikan dengan struktur data Anda
+  // const handleGetDataLw = async () => {
+  //   try {
+  //     const response = await getDataLw();
+  //     const data = response.data; // Sesuaikan dengan struktur data Anda
 
-      // Memproses data untuk chart
-      const seriesData = data.map((item) => item.totalSampah); // Menyesuaikan dengan format data
-      const categoriesData = data.map((item) => converFormatDate(item.tanggal)); // Menyesuaikan dengan format data
-      setChartData({
-        series: [{ name: "Sampah", data: seriesData }],
-        categories: categoriesData,
-      });
+  //     // Memproses data untuk chart
+  //     const seriesData = data.map((item) => item.totalSampah); // Menyesuaikan dengan format data
+  //     const categoriesData = data.map((item) => converFormatDate(item.tanggal)); // Menyesuaikan dengan format data
+  //     setChartData({
+  //       series: [{ name: "Sampah", data: seriesData }],
+  //       categories: categoriesData,
+  //     });
 
-      console.log(data);
-      console.log(seriesData);
-      console.log(categoriesData);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
+  //     console.log(data);
+  //     console.log(seriesData);
+  //     console.log(categoriesData);
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   }
+  // };
+
+  const handleGetData = async () => {
+    const respon = await getAllData("", "", "", 0, 7);
+    const data = respon.data;
+    const seriesData = data.map((item) => item.totalsampah);
+    const categoriesData = data.map((item) => converFormatDate(item.tanggal));
+    setChartData({
+      series: [{ name: "Sampah", data: seriesData }],
+      categories: categoriesData,
+    });
   };
+
   const handleGetDataTotalByKel = async () => {
     try {
       const response = await getDataTotalByKel();
@@ -295,9 +308,9 @@ const Pemberdayaan = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 mb-4">
         <ChartComp
           icon={<FaDatabase className="h-6 w-6"></FaDatabase>}
-          header={"Data sampah 7 hari terakhir"}
+          header={"7 data sampah terbaru"}
           deskripsi={
-            "Data sampah di bawah mendeskripsikan total data sampah yang di peroleh 7 hari terakhri"
+            "Data sampah di bawah mendeskripsikan total data sampah yang di peroleh"
           }
         >
           <Chart

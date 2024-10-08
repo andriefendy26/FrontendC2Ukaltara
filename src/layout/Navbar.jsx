@@ -3,6 +3,8 @@ import { BsX } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { Button } from "@material-tailwind/react";
+import Logo from "../../public/logo.png"
+
 
 const Navbar = () => {
   const [isOpen, SetIsOpen] = useState(false);
@@ -16,6 +18,7 @@ const Navbar = () => {
         <h1 className="font-bold flex text-xl lg:text-2xl xl:text-4xl">
           <p className="text-primary">C2U</p>Kaltara
         </h1>
+        <img className="w-[40%] my-5" src={Logo}></img>
         <button className="lg:hidden" onClick={() => SetIsOpen(!isOpen)}>
           {isOpen ? (
             <BsX size={30} />

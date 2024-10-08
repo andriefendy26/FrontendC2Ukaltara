@@ -26,11 +26,11 @@ const Sosmedemded = () => {
     <div className="mt-10 flex flex-col items-center mx-10 lg:mx-24 xl:mx-60 overflow-hidden">
       <h1 className="text-4xl tracking-wider font-bold mb-2">Sosial Media</h1>
       <div>
-        <div class=" grid grid-cols-5">
+        <div class=" grid grid-cols-5 mb-5">
           <div class="object-center">
             <img
               src={profile.profile_picture_url}
-              class="rounded-full w-32 h-32 p-5"
+              class="rounded-full w-32 h-32 p-5 object-cover"
             />
           </div>
 

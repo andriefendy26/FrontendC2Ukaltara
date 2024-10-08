@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Logo from "../../public/logo.png"
 
 const NavbarDaisy = () => {
   return (
@@ -38,9 +39,10 @@ const NavbarDaisy = () => {
           </ul>
         </div>
         <Link to="/" className="btn btn-ghost">
-          <h1 className="font-bold flex text-xl lg:text-2xl xl:text-4xl">
+          {/* <h1 className="font-bold flex text-xl lg:text-2xl xl:text-4xl">
             <p className="text-primary">C2U</p>Kaltara
-          </h1>
+          </h1> */}
+          <img className="w-24" src={Logo}></img>
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">

@@ -7,7 +7,8 @@ import {
   BsTwitter,
 } from "react-icons/bs";
 
-import gambarlogo from "../assests/logo.png";
+// import gambarlogo from "../assests/logo.png";
+import gambarlogo from "../../public/logo.png"
 
 const Footers = () => {
   return (

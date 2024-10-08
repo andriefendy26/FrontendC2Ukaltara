@@ -13,6 +13,7 @@ import {
   getDataLw,
   getDataTotalByKel,
   getTotalDataSampah,
+  getAllData,
 } from "../../services/DataServices";
 import { format } from "date-fns";
 import { getTotalLogbook } from "../../services/LogbookService";
@@ -35,13 +36,30 @@ const dashboardView = () => {
   });
 
   React.useEffect(() => {
-    handleGetDataLw();
+    // handleGetDataLw();
     handleGetDataTotalByKel();
     handleGetTotalsampah();
     handleGetTotalLogbook();
     handleGetTotalBerita();
     handleGetTotalUsers();
+    handleGetData();
   }, []);
+
+  const converFormatDate = (val) => {
+    return val ? format(val, "yyyy-MM-dd") : "";
+    // return date
+  };
+
+  const handleGetData = async () => {
+    const respon = await getAllData("", "", "", 0, 7);
+    const data = respon.data;
+    const seriesData = data.map((item) => item.totalsampah);
+    const categoriesData = data.map((item) => converFormatDate(item.tanggal));
+    setChartData({
+      series: [{ name: "Sampah", data: seriesData }],
+      categories: categoriesData,
+    });
+  };
 
   const handleGetTotalsampah = async () => {
     const data = await getTotalDataSampah();
@@ -63,31 +81,26 @@ const dashboardView = () => {
     setTotalUsers(data.totalUsersCount);
   };
 
-  const converFormatDate = (val) => {
-    return val ? format(val, "yyyy-MM-dd") : "";
-    // return date
-  };
+  // const handleGetDataLw = async () => {
+  //   try {
+  //     const response = await getDataLw();
+  //     const data = response.data; // Sesuaikan dengan struktur data Anda
 
-  const handleGetDataLw = async () => {
-    try {
-      const response = await getDataLw();
-      const data = response.data; // Sesuaikan dengan struktur data Anda
+  //     // Memproses data untuk chart
+  //     const seriesData = data.map((item) => item.totalSampah); // Menyesuaikan dengan format data
+  //     const categoriesData = data.map((item) => converFormatDate(item.tanggal)); // Menyesuaikan dengan format data
+  //     setChartData({
+  //       series: [{ name: "Sampah", data: seriesData }],
+  //       categories: categoriesData,
+  //     });
 
-      // Memproses data untuk chart
-      const seriesData = data.map((item) => item.totalSampah); // Menyesuaikan dengan format data
-      const categoriesData = data.map((item) => converFormatDate(item.tanggal)); // Menyesuaikan dengan format data
-      setChartData({
-        series: [{ name: "Sampah", data: seriesData }],
-        categories: categoriesData,
-      });
-
-      console.log(data);
-      console.log(seriesData);
-      console.log(categoriesData);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  //     console.log(data);
+  //     console.log(seriesData);
+  //     console.log(categoriesData);
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   }
+  // };
 
   const handleGetDataTotalByKel = async () => {
     try {
@@ -317,9 +330,9 @@ const dashboardView = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <ChartComp
           icon={<FaDatabase className="h-6 w-6"></FaDatabase>}
-          header={"Data sampah 7 hari terakhir"}
+          header={"7 data sampah terbaru"}
           deskripsi={
-            "Data sampah di bawah mendeskripsikan total data sampah yang di peroleh 7 hari terakhri"
+            "Data sampah di bawah mendeskripsikan total data sampah yang di peroleh"
           }
         >
           <Chart
@@ -336,9 +349,9 @@ const dashboardView = () => {
 
         <ChartComp
           icon={<FaDatabase className="h-6 w-6"></FaDatabase>}
-          header={"Data sampah 7 hari terakhir"}
+          header={"7 data sampah terbaru"}
           deskripsi={
-            "Data sampah di bawah mendeskripsikan total data sampah yang di peroleh  peroleh 7 hari terakhri"
+            "Data sampah di bawah mendeskripsikan total data sampah yang di peroleh "
           }
         >
           <Chart
@@ -352,6 +365,7 @@ const dashboardView = () => {
             series={chartDataLastWeek && chartDataLastWeek.series}
           />
         </ChartComp>
+        
         <Card>
           <CardHeader
             floated={false}
