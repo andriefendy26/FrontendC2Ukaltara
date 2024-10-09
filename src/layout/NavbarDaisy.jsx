@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Logo from "../../public/logo.png"
+import Logo from "../../public/logo.png";
 
 const NavbarDaisy = () => {
   return (
@@ -38,12 +38,8 @@ const NavbarDaisy = () => {
             </li>
           </ul>
         </div>
-        <Link to="/" className="btn btn-ghost">
-          {/* <h1 className="font-bold flex text-xl lg:text-2xl xl:text-4xl">
-            <p className="text-primary">C2U</p>Kaltara
-          </h1> */}
-          <img className="w-24" src={Logo}></img>
-        </Link>
+
+        <img className="w-14 object-center" src={Logo}></img>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal text-lg px-1">
@@ -59,7 +55,12 @@ const NavbarDaisy = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <Link to="/login" className="btn btn-active btn-neutral btn-sm lg:btn-md">Login</Link>
+        <Link
+          to="/login"
+          className="btn btn-active btn-neutral btn-sm lg:btn-md"
+        >
+          Login
+        </Link>
       </div>
     </div>
   );

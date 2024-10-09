@@ -11,6 +11,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LoginUser, reset } from "../features/AuthSlice";
+import Logo from "../../public/logo.png";
 
 export default function Login() {
   const [data, setData] = useState({
@@ -32,8 +33,8 @@ export default function Login() {
 
   const handleLogin = (e) => {
     console.log("form", data);
-    console.log('isSuccess', isSuccess)
-    console.log('user', user)
+    console.log("isSuccess", isSuccess);
+    console.log("user", user);
     e.preventDefault();
     dispatch(LoginUser(data));
   };
@@ -41,14 +42,10 @@ export default function Login() {
   return (
     <div className="flex h-screen items-center justify-center">
       <Card color="transparent" shadow={false}>
-        <div className="text-center">
-          <Typography variant="h2">
-            <span className="text-primary">C2U</span>Kaltara
-          </Typography>
+        <div className="flex flex-col justify-center items-center ">
+          <img className="w-[50%] md:w-[35%] lg:w-[30%] my-5" src={Logo}></img>
           <Typography variant="lead">Selamat datang </Typography>
           <Typography variant="lead">di sistem informasi C2UKaltara</Typography>
-        </div>
-
         <form className="mt-8 mb-2 w-80 max-w-screen-lg border-gray-300 border p-8 rounded-xl sm:w-96">
           <p className="text-center mb-3">
             Silahkan login untuk masuk ke aplikasi
@@ -103,6 +100,8 @@ export default function Login() {
             Login
           </Button>
         </form>
+        </div>
+
       </Card>
     </div>
   );

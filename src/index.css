@@ -3,3 +3,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.card-galeri {
+  position: relative;
+}
+
+.card-galeri::after {
+  content: attr(data-title); /* Mengambil konten dari atribut data-title */
+  position: absolute; /* Atur posisi konten */
+  bottom: 10px; /* Sesuaikan posisi sesuai kebutuhan */
+  left: 10px; /* Sesuaikan posisi sesuai kebutuhan */
+  color: white; /* Atur warna teks */
+  z-index: 1000;
+  
+}
+
+.my-2:hover img {
+  transform: scale(2); /* Zoom gambar saat di-hover */
+}
+.my-2:hover {
+  transform: scale(1.1); /* Zoom gambar saat di-hover */
+}

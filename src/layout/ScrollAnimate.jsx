@@ -7,7 +7,7 @@ import Logo from "../../public/logo.png"
 
 export default function HeroScrollDemo() {
   return (
-    <div className="flex flex-col overflow-hidden pt-20 p-10">
+    <div className="flex flex-col overflow-hidden py-36 p-10">
       <ContainerScroll
         titleComponent={
           <>
@@ -15,7 +15,7 @@ export default function HeroScrollDemo() {
               <img src={assestubt}></img>
               Selamat datang di aplikasi <br />
 
-              <img className="w-[40%] my-5" src={Logo}></img>
+              <img className="w-[50%] md:w-[35%] lg:w-[30%] my-5" src={Logo}></img>
               {/* <span className="text-4xl md:text-[6rem] font-bold mt-1 leading-none">
                 <span className="text-primary">C2U</span>
                 Kaltara

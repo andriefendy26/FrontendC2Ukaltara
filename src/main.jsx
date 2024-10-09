@@ -31,6 +31,7 @@ import LogbookView from "./pages/dashboard/LogbookView";
 import Pemberdayaan from "./pages/public/Pemberdayaan";
 import DetailBerita from "./pages/public/DetailBerita";
 import NotFound from "./components/Notfound";
+import GaleriDetail from "./layout/GaleriDetail";
 
 const router = createBrowserRouter([
   {
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
       {
         path: "pemberdayaanpesisir",
         element: <Pemberdayaan />,
+      },
+      {
+        path: "galeri/:kel",
+        element: <GaleriDetail />,
       },
       {
         path: "detail/:id",
