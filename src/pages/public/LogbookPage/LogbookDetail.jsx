@@ -98,7 +98,10 @@ const LogbookDetail = () => {
     setKeyword(query);
   };
 
+  const [loadingData, setLoadingData] = React.useState();
+
   const getData = async () => {
+    setLoadingData(true);
     const startDateConv = converFormatDate(startDate);
     const endDateConv = converFormatDate(endDate);
     const data = await getAllLogbookByKelID(
@@ -114,6 +117,7 @@ const LogbookDetail = () => {
     setPage(data.page);
     setTotalPage(data.totalPages);
     setRows(data.totalRows);
+    setLoadingData(false);
   };
 
   //handle add data
@@ -271,14 +275,14 @@ const LogbookDetail = () => {
                 >
                   Lihat Semua
                 </Button>
-                <Button
+                {/* <Button
                   className="flex items-center gap-3"
                   size="sm"
                   onClick={handleOpen}
                 >
                   <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Isi
                   Logbook
-                </Button>
+                </Button> */}
               </div>
             </div>
             <div className="flex flex-col  justify-between gap-4">
@@ -337,78 +341,87 @@ const LogbookDetail = () => {
                   ))}
                 </tr>
               </thead>
-              <tbody>
-                {kelurahan &&
-                  kelurahan.map(
-                    ({ nama, npm, jurusan, tanggal, kegiatan, url }, index) => {
-                      const isLast = index === kelurahan.length - 1;
-                      const classes = isLast
-                        ? "p-4"
-                        : "p-4 border-b border-blue-gray-50";
+              {loadingData ? (
+                <span className="loading loading-ring loading-lg"></span>
+              ) : (
+                <tbody>
+                  {kelurahan &&
+                    kelurahan.map(
+                      (
+                        { nama, npm, jurusan, tanggal, kegiatan, url },
+                        index
+                      ) => {
+                        const isLast = index === kelurahan.length - 1;
+                        const classes = isLast
+                          ? "p-4"
+                          : "p-4 border-b border-blue-gray-50";
 
-                      return (
-                        <tr key={index}>
-                          <td className={classes}>
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal"
-                            >
-                              {nama}
-                            </Typography>
-                          </td>
-                          <td className={classes}>
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal"
-                            >
-                              {npm}
-                            </Typography>
-                          </td>
-                          <td className={classes}>
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal"
-                            >
-                              {jurusan}
-                            </Typography>
-                          </td>
+                        return (
+                          <tr key={index}>
+                            <td className={classes}>
+                              <Typography
+                                variant="small"
+                                color="blue-gray"
+                                className="font-normal"
+                              >
+                                {nama}
+                              </Typography>
+                            </td>
+                            <td className={classes}>
+                              <Typography
+                                variant="small"
+                                color="blue-gray"
+                                className="font-normal"
+                              >
+                                {npm}
+                              </Typography>
+                            </td>
+                            <td className={classes}>
+                              <Typography
+                                variant="small"
+                                color="blue-gray"
+                                className="font-normal"
+                              >
+                                {jurusan}
+                              </Typography>
+                            </td>
 
-                          <td className={classes}>
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal"
-                            >
-                              {converFormatDate(tanggal)}
-                            </Typography>
-                          </td>
+                            <td className={classes}>
+                              <Typography
+                                variant="small"
+                                color="blue-gray"
+                                className="font-normal"
+                              >
+                                {converFormatDate(tanggal)}
+                              </Typography>
+                            </td>
 
-                          <td className={classes}>
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal"
-                            >
-                              {kegiatan}
-                            </Typography>
-                          </td>
-                          <td className={classes}>
-                            <button onClick={() => ModalImage('my_modal_4', url)}>
-                              <img
-                                className="h-36  rounded-lg object-cover object-center"
-                                src={url}
-                                alt="gambar kamu"
-                              />
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    }
-                  )}
-              </tbody>
+                            <td className={classes}>
+                              <Typography
+                                variant="small"
+                                color="blue-gray"
+                                className="font-normal"
+                              >
+                                {kegiatan}
+                              </Typography>
+                            </td>
+                            <td className={classes}>
+                              <button
+                                onClick={() => ModalImage("my_modal_4", url)}
+                              >
+                                <img
+                                  className="h-36  rounded-lg object-cover object-center"
+                                  src={url}
+                                  alt="gambar kamu"
+                                />
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      }
+                    )}
+                </tbody>
+              )}
             </table>
           </CardBody>
           <CardFooter className="flex flex-col gap-1 items-center justify-between border-t border-blue-gray-50 p-4">

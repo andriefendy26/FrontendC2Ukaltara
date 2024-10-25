@@ -9,7 +9,7 @@ import { Button } from "@material-tailwind/react";
 import { MdExitToApp } from "react-icons/md";
 const SideContext = createContext();
 
-const SidebarHead = ({ children , datauser}) => {
+const SidebarHead = ({ children, datauser }) => {
   const [isOpen, setOpen] = useState(false);
 
   return (
@@ -43,16 +43,27 @@ const SidebarHead = ({ children , datauser}) => {
         </SideContext.Provider>
       </div>
       <div className={`flex items-center border-t border-gray-300 p-3`}>
-        <span className="rounded-lg border-white bg-primary text-white border p-3">
+        {datauser && datauser?.url == null ? (
+          <span className="rounded-xl border-white bg-primary text-white border p-3">
+            {datauser?.nama.split(" ")[0].charAt(0).toUpperCase()}
+          </span>
+        ) : (
+          <img
+            className="object-cover w-10 h-10 p-1 rounded-full ring-1 ring-black"
+            src={datauser?.url}
+            alt={datauser?.nama.split(" ")[0].charAt(0).toUpperCase()}
+          />
+        )}
+        {/* <span className="rounded-lg border-white bg-primary text-white border p-3">
           {datauser && datauser.nama.split(" ")[0].charAt(0).toUpperCase()}
-        </span>
+        </span> */}
         <span
           className={`overflow-hidden transition-all ${
             isOpen ? "w-52 ml-3" : "w-0"
           }`}
         >
-          <p className={`font-bold`}>{datauser ? datauser.nama : ''}</p>
-          <p className="">{datauser ? datauser.email : ''}</p>
+          <p className={`font-bold`}>{datauser ? datauser.nama : ""}</p>
+          <p className="">{datauser ? datauser.email : ""}</p>
         </span>
       </div>
     </aside>
@@ -84,7 +95,7 @@ const SideBarItem = ({ nama, icon, to, onClick }) => {
   );
 };
 
-const LogoutComp = ({onClick}) => {
+const LogoutComp = ({ onClick }) => {
   const { isOpen } = useContext(SideContext);
   return (
     <Button
@@ -103,6 +114,6 @@ const LogoutComp = ({onClick}) => {
   );
 };
 
-export { SideBarItem, SidebarHead , LogoutComp};
+export { SideBarItem, SidebarHead, LogoutComp };
 
 // export default Sidebar;

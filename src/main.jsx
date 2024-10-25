@@ -32,6 +32,8 @@ import Pemberdayaan from "./pages/public/Pemberdayaan";
 import DetailBerita from "./pages/public/DetailBerita";
 import NotFound from "./components/Notfound";
 import GaleriDetail from "./layout/GaleriDetail";
+import Register from "./pages/Register";
+import ProfileView from "./pages/dashboard/ProfileView";
 
 const router = createBrowserRouter([
   {
@@ -93,6 +95,14 @@ const router = createBrowserRouter([
     element: <Login />,
   },
   {
+    path: "register",
+    element: <Register />,
+  },
+  { 
+    path: "pesan", 
+    element: <>sadsd</> 
+  },
+  {
     path: "/",
     element: <Dashboard />,
     children: [
@@ -115,6 +125,10 @@ const router = createBrowserRouter([
       {
         path: "datasampah",
         element: <DataView />,
+      },
+      {
+        path: "profile",
+        element: <ProfileView />,
       },
       {
         path: "setting",

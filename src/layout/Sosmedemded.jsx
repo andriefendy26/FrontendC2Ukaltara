@@ -61,11 +61,11 @@ const Sosmedemded = () => {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 gap-2">
           {data &&
-            data.slice(0, 3).map((data, i) => (
+            data.slice(0, 4).map((data, i) => (
             //   <img key={i} src={data.media_url}></img>
-              <InstagramEmbed url={data.permalink} />
+              <InstagramEmbed key={i} url={data.permalink} />
             ))}
         </div>
       </div>

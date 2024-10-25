@@ -24,6 +24,7 @@ import {
   getAlltUser,
   deleteUser,
   updateUserApi,
+  Accessible,
 } from "../../services/UserService";
 import {
   getAllKelurahan,
@@ -35,8 +36,17 @@ import ReactPaginate from "react-paginate";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
 
-const TABLE_HEAD = ["Nama", "Penempatan", "Role", "Action"];
+const TABLE_HEAD = [
+  "Nama",
+  "Penempatan",
+  "Jurusan",
+  "NPM",
+  "Role",
+  "Status",
+  "Action",
+];
 
 const UserView = () => {
   //user ident
@@ -55,6 +65,7 @@ const UserView = () => {
     password: "",
     roleID: "",
     kelurahanID: "",
+    jurusan: "",
   });
   const [isError, setIsError] = React.useState();
   const [kelurahan, setKelurahan] = React.useState([]);
@@ -75,15 +86,23 @@ const UserView = () => {
 
   useEffect(() => {
     getUser();
-  }, [page, keyword]);
+  }, [user, page, keyword]);
 
+  const [loadingData, setLoadingData] = React.useState();
   const getUser = async () => {
-    const data = await getAlltUser(keyword, page, limit);
+    setLoadingData(true);
+    const data = await getAlltUser(
+      keyword,
+      page,
+      limit,
+      user.roleID == 3 ? "" : user?.kelurahanID
+    );
     console.log(data);
     setData(data.data);
     setPage(data.page);
     setTotalPage(data.totalPages);
     setRows(data.totalRows);
+    setLoadingData(false);
   };
 
   const changePage = ({ selected }) => {
@@ -100,12 +119,13 @@ const UserView = () => {
   const tambahUser = async () => {
     try {
       const responseApi = await createUser(form);
-      // console.log(response);
+      console.log(responseApi);
       if (responseApi.status == 200) {
         setForm({
           nama: "",
           email: "",
           password: "",
+          jurusan: "",
           roleID: "",
           kelurahanID: "",
         });
@@ -151,10 +171,9 @@ const UserView = () => {
   };
 
   const handleSelect = (e, name) => {
-    // console.log(e);
     setForm((prev) => ({
       ...prev,
-      [name]: Number(e),
+      [name]: e,
     }));
   };
 
@@ -180,6 +199,7 @@ const UserView = () => {
     password: "",
     roleID: "",
     kelurahanID: "",
+    jurusan: "",
   });
 
   const handleEditOpen = (user) => {
@@ -187,6 +207,7 @@ const UserView = () => {
       id: user.id,
       nama: user.nama,
       email: user.email,
+      juruan: user.jurusan,
       password: "", // Password is typically not shown or editable for security reasons
       roleID: user.tb_role.id,
       kelurahanID: user.tb_kelurahan.id,
@@ -204,7 +225,7 @@ const UserView = () => {
   const handleEditSelect = (e, name) => {
     setEditForm((prev) => ({
       ...prev,
-      [name]: Number(e),
+      [name]: e,
     }));
   };
 
@@ -226,6 +247,19 @@ const UserView = () => {
       setTimeout(() => {
         setIsError(null);
       }, 4000);
+    }
+  };
+
+  const handleAcc = async (id, request) => {
+    const res = await Accessible(id, request ? true : false);
+    console.log(res);
+    if (res.status == 200) {
+      getUser();
+      Swal.fire({
+        title: res.data.status,
+        text: res.data.message,
+        icon: "success",
+      });
     }
   };
 
@@ -283,6 +317,8 @@ const UserView = () => {
                 {isError}
               </Typography>
             )}
+
+            {/* Edit Nama */}
             <Typography className="-mb-2" variant="h6">
               Nama
             </Typography>
@@ -293,13 +329,15 @@ const UserView = () => {
               value={editForm.nama}
               onChange={handleEditChange}
             />
+
+            {/* Edit Kelurahan */}
             <Typography className="-mb-2" variant="h6">
               Kelurahan
             </Typography>
             <Select
               label="Pilih kelurahan"
               value={editForm.kelurahanID.toString()}
-              onChange={(e) => handleEditSelect(e, "kelurahanID")}
+              onChange={(e) => handleEditSelect(Number(e), "kelurahanID")}
             >
               {kelurahan.map((item) => (
                 <Option key={item.id} value={item.id.toString()}>
@@ -307,21 +345,48 @@ const UserView = () => {
                 </Option>
               ))}
             </Select>
+
+            {/*Edit Jurusan */}
             <Typography className="-mb-2" variant="h6">
-              Role
+              Jurusan
             </Typography>
             <Select
-              label="Pilih role"
-              value={editForm.roleID.toString()}
-              onChange={(e) => handleEditSelect(e, "roleID")}
+              label="Pilih Jurusan"
+              name="jurusan"
+              value={editForm.jurusan}
+              onChange={(e) => handleEditSelect(e, "jurusan")}
             >
-              {roles &&
-                roles.map((item) => (
-                  <Option key={item.id} value={item.id.toString()}>
-                    {item.roleName}
-                  </Option>
-                ))}
+              <Option value="Aquakultur">Aquakultur</Option>
+              <Option value="Teknologi Hasil Perikanan">
+                Teknologi Hasil Perikanan
+              </Option>
+              <Option value="Teknik Komputer">Teknik Komputer</Option>
+              <Option value="Manajemen Sumberdaya Perairan">
+                Manajemen Sumberdaya Perairan
+              </Option>
             </Select>
+            {user?.tb_role.roleName == "Super Admin" ? (
+              <>
+                {/* Role */}
+                <Typography className="-mb-2" variant="h6">
+                  Role
+                </Typography>
+                <Select
+                  label="Pilih role"
+                  value={editForm.roleID.toString()}
+                  onChange={(e) => handleEditSelect(Number(e), "roleID")}
+                >
+                  {roles &&
+                    roles.map((item) => (
+                      <Option key={item.id} value={item.id.toString()}>
+                        {item.roleName}
+                      </Option>
+                    ))}
+                </Select>
+              </>
+            ) : (
+              <></>
+            )}
             <Typography className="-mb-2" variant="h6">
               Email
             </Typography>
@@ -391,7 +456,7 @@ const UserView = () => {
             <Select
               label="Pilih kelurahan"
               value={kelurahan.id}
-              onChange={(e) => handleSelect(e, "kelurahanID")}
+              onChange={(e) => handleSelect(Number(e), "kelurahanID")}
             >
               {kelurahan &&
                 kelurahan.map((item, i) => (
@@ -400,6 +465,26 @@ const UserView = () => {
                   </Option>
                 ))}
             </Select>
+
+            <Typography className="-mb-2" variant="h6">
+              Jurusan
+            </Typography>
+            <Select
+              label="Pilih Jurusan"
+              name="jurusan"
+              // value={form.jurusan}
+              onChange={(e) => handleSelect(e, "jurusan")}
+            >
+              <Option value="Aquakultur">Aquakultur</Option>
+              <Option value="Teknologi Hasil Perikanan">
+                Teknologi Hasil Perikanan
+              </Option>
+              <Option value="Teknik Komputer">Teknik Komputer</Option>
+              <Option value="Manajemen Sumberdaya Perairan">
+                Manajemen Sumberdaya Perairan
+              </Option>
+            </Select>
+
             <Typography className="-mb-2" variant="h6">
               Role
             </Typography>
@@ -407,7 +492,7 @@ const UserView = () => {
             <Select
               label="Pilih role"
               value={roles.id}
-              onChange={(e) => handleSelect(e, "roleID")}
+              onChange={(e) => handleSelect(Number(e), "roleID")}
             >
               {roles &&
                 roles.map((item, i) => (
@@ -520,94 +605,170 @@ const UserView = () => {
                 ))}
               </tr>
             </thead>
-            <tbody>
-              {data &&
-                data.map(
-                  ({ id, nama, email, tb_kelurahan, tb_role }, index) => {
-                    const isLast = index === data.length - 1;
-                    const classes = isLast
-                      ? "p-4"
-                      : "p-4 border-b border-blue-gray-50";
+            {loadingData ? (
+              <span className="loading loading-ring loading-lg"></span>
+            ) : (
+              <tbody>
+                {data &&
+                  data.map(
+                    (
+                      {
+                        id,
+                        nama,
+                        email,
+                        url,
+                        jurusan,
+                        NPM,
+                        status,
+                        tb_kelurahan,
+                        tb_role,
+                      },
+                      index
+                    ) => {
+                      const isLast = index === data.length - 1;
+                      const classes = isLast
+                        ? "p-4"
+                        : "p-4 border-b border-blue-gray-50";
 
-                    return (
-                      <tr key={index}>
-                        <td className={classes}>
-                          <div className="flex items-center gap-3">
-                            {/* <Avatar src={""} alt={nama.slice(2)} size="sm" /> */}
-                            <span className="rounded-xl border-white bg-primary text-white border p-3">
-                              {nama.split(" ")[0].charAt(0).toUpperCase()}
-                            </span>
-                            <div className="flex flex-col">
-                              <Typography
-                                variant="small"
-                                color="blue-gray"
-                                className="font-normal"
-                              >
-                                {nama}
-                              </Typography>
-                              <Typography
-                                variant="small"
-                                color="blue-gray"
-                                className="font-normal opacity-70"
-                              >
-                                {email}
-                              </Typography>
+                      return (
+                        <tr key={index}>
+                          <td className={classes}>
+                            <div className="flex items-center gap-3">
+                              {/* <Avatar src={""} alt={nama.slice(2)} size="sm" /> */}
+                              {url == null ? (
+                                <span className="rounded-xl border-white bg-primary text-white border p-3">
+                                  {nama.split(" ")[0].charAt(0).toUpperCase()}
+                                </span>
+                              ) : (
+                                <img
+                                  className="object-cover w-10 h-10 p-1 rounded-full ring-1 ring-black"
+                                  src={url}
+                                  alt={user?.nama
+                                    .split(" ")[0]
+                                    .charAt(0)
+                                    .toUpperCase()}
+                                />
+                              )}
+                              <div className="flex flex-col">
+                                <Typography
+                                  variant="small"
+                                  color="blue-gray"
+                                  className="font-normal"
+                                >
+                                  {nama}
+                                </Typography>
+                                <Typography
+                                  variant="small"
+                                  color="blue-gray"
+                                  className="font-normal opacity-70"
+                                >
+                                  {email}
+                                </Typography>
+                              </div>
                             </div>
-                          </div>
-                        </td>
-                        <td className={`${classes} bg-blue-gray-50/50`}>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal"
-                          >
-                            {tb_kelurahan.namaKelurahan}
-                          </Typography>
-                        </td>
-                        <td className={classes}>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal"
-                          >
-                            {tb_role.roleName}
-                          </Typography>
-                        </td>
-                        {user?.tb_role.roleName == "Super Admin" ? (
-                          <td className={`${classes} bg-blue-gray-50/50`}>
-                            <Tooltip content="Edit User">
-                              <IconButton
-                                variant="text"
-                                onClick={() =>
-                                  handleEditOpen({
-                                    id,
-                                    nama,
-                                    email,
-                                    tb_kelurahan,
-                                    tb_role,
-                                  })
-                                }
-                              >
-                                <PencilIcon className="h-4 w-4" />
-                              </IconButton>
-                            </Tooltip>
-                            <Tooltip content="Delete User">
-                              <IconButton
-                                variant="text"
-                                onClick={() => handleOpenDelete(id)}
-                              >
-                                <TrashIcon className="h-4 w-4" />
-                              </IconButton>
-                            </Tooltip>
                           </td>
-                        ) : (
-                          ""
-                        )}
-                      </tr>
-                    );
-                  }
-                )}
-            </tbody>
+                          <td className={`${classes} bg-blue-gray-50/50`}>
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal"
+                            >
+                              {tb_kelurahan.namaKelurahan}
+                            </Typography>
+                          </td>
+                          <td className={`${classes}`}>
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal"
+                            >
+                              {jurusan}
+                            </Typography>
+                          </td>
+                          <td className={`${classes}`}>
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal"
+                            >
+                              {NPM ? NPM : "Belum Mengisi NPM"}
+                            </Typography>
+                          </td>
+
+                          <td className={`${classes} bg-blue-gray-50/50`}>
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal"
+                            >
+                              {tb_role.roleName}
+                            </Typography>
+                          </td>
+                          <td className={classes}>
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="font-normal"
+                            >
+                              {status ? (
+                                "Accessible"
+                              ) : (
+                                <div>
+                                  <Button
+                                    color="red"
+                                    className="mr-2"
+                                    onClick={() => handleAcc(id, false)}
+                                  >
+                                    Tolak
+                                  </Button>
+                                  <Button
+                                    color="green"
+                                    onClick={() => handleAcc(id, true)}
+                                  >
+                                    {" "}
+                                    Terima
+                                  </Button>
+                                </div>
+                              )}
+                            </Typography>
+                          </td>
+                          {user?.tb_role.roleName == "Super Admin" ||
+                          "Admin" ? (
+                            <td className={`${classes} bg-blue-gray-50/50`}>
+                              <Tooltip content="Edit User">
+                                <IconButton
+                                  variant="text"
+                                  onClick={() =>
+                                    handleEditOpen({
+                                      id,
+                                      nama,
+                                      email,
+                                      tb_kelurahan,
+                                      tb_role,
+                                    })
+                                  }
+                                >
+                                  <PencilIcon className="h-4 w-4" />
+                                </IconButton>
+                              </Tooltip>
+                              <Tooltip content="Delete User">
+                                <IconButton
+                                  variant="text"
+                                  onClick={() => handleOpenDelete(id)}
+                                >
+                                  <TrashIcon className="h-4 w-4" />
+                                </IconButton>
+                              </Tooltip>
+                            </td>
+                          ) : (
+                            ""
+                          )}
+                        </tr>
+                      );
+                    }
+                  )}
+              </tbody>
+            )}
           </table>
         </CardBody>
         <CardFooter className="flex flex-col gap-1 items-center justify-between border-t border-blue-gray-50 p-4">

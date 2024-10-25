@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   SideBarItem,
   SidebarHead,
@@ -12,7 +12,7 @@ import { FaDatabase } from "react-icons/fa";
 import { MdOutlineLiveHelp } from "react-icons/md";
 import { IoMdSettings } from "react-icons/io";
 import { MdExitToApp } from "react-icons/md";
-import { FaBookOpen } from "react-icons/fa";
+import { FaBookOpen, FaUser } from "react-icons/fa";
 
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -30,6 +30,12 @@ import { createContext, useContext } from "react";
 
 const Sidebar = ({ setOpenDel, datauser }) => {
   // const { isOpen } = useContext(SideContext);
+
+  const { user } = useSelector((state) => state.auth);
+  useEffect(() => {
+    console.log("sidebar", user);
+  }, [user]);
+
   return (
     <SidebarHead datauser={datauser}>
       <SideBarItem
@@ -37,25 +43,39 @@ const Sidebar = ({ setOpenDel, datauser }) => {
         to="/dashboard"
         icon={<MdOutlineSpaceDashboard size={20}></MdOutlineSpaceDashboard>}
       />
-      <SideBarItem
-        nama="Users"
-        to="/users"
-        icon={<IoPersonOutline size={20}></IoPersonOutline>}
-      />
-      <SideBarItem
-        nama="InputData"
-        to="/datasampah"
-        icon={<FaDatabase size={20}></FaDatabase>}
-      />
-      <SideBarItem
-        nama="UploadBerita"
-        to="/berita"
-        icon={<FaRegNewspaper size={20}></FaRegNewspaper>}
-      />
+
+      {/* Conditionally render InputData based on roleID */}
+      {user && user.roleID != 4 && (
+        <SideBarItem
+          nama="Users"
+          to="/users"
+          icon={<IoPersonOutline size={20}></IoPersonOutline>}
+        />
+      )}
+      {user && user.roleID != 4 && (
+        <SideBarItem
+          nama="InputData"
+          to="/datasampah"
+          icon={<FaDatabase size={20} />}
+        />
+      )}
+      {user && user.roleID != 4 && (
+        <SideBarItem
+          nama="UploadBerita"
+          to="/berita"
+          icon={<FaRegNewspaper size={20}></FaRegNewspaper>}
+        />
+      )}
+
       <SideBarItem
         nama="Logbook"
         to="/Logbbokdash"
         icon={<FaBookOpen size={20}></FaBookOpen>}
+      />
+      <SideBarItem
+        nama="Profile"
+        to="/profile"
+        icon={<FaUser size={20}></FaUser>}
       />
       {/* <SideBarItem
         nama="Setting"

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import {
@@ -117,7 +117,10 @@ const LogbookDetail = () => {
     setKeyword(query);
   };
 
+
+  const[loadingData, setloadingData] = useState();
   const getData = async () => {
+    setloadingData(true);
     const startDateConv = converFormatDate(startDate);
     const endDateConv = converFormatDate(endDate);
     const data = await getAllLogbook(
@@ -134,6 +137,7 @@ const LogbookDetail = () => {
     setPage(data.page);
     setTotalPage(data.totalPages);
     setRows(data.totalRows);
+    setloadingData(false);
   };
 
   //handle add data
@@ -176,11 +180,11 @@ const LogbookDetail = () => {
     setIsloading(true);
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("nama", form.nama);
-    formData.append("npm", form.npm);
-    formData.append("jurusan", form.jurusan);
+    formData.append("nama", user.nama);
+    formData.append("npm", user.npm);
+    formData.append("jurusan", user.jurusan);
     formData.append("kegiatan", form.kegiatan);
-    formData.append("kelurahanID", id);
+    formData.append("kelurahanID", user.tb_kelurahan.id);
 
     try {
       const responseApi = await createLogbook(formData);
@@ -244,6 +248,26 @@ const LogbookDetail = () => {
       id: id,
     });
 
+  const ModalImage = (isOpen, image) => {
+    return (
+      <dialog id={isOpen} className="modal">
+        <div className="modal-box w-11/12 max-w-5xl">
+          <img
+            className="h-36  rounded-lg object-cover object-center"
+            src={image}
+            alt="gambar kamu"
+          />
+          <div className="modal-action">
+            <form method="dialog">
+              {/* if there is a button, it will close the modal */}
+              <button className="btn">Close</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
+    );
+  };
+
   return (
     <div className="h-screen w-full overflow-scroll">
       <Dialog open={openDel.isOpen} handler={handleOpenDelete}>
@@ -278,7 +302,7 @@ const LogbookDetail = () => {
         </Alert>
       )}
       <Card className="w-full">
-        {/* <ModalAddLogbook
+        <ModalAddLogbook
         open={open}
         handleOpen={handleOpen}
         form={form}
@@ -290,7 +314,7 @@ const LogbookDetail = () => {
         isLoading={isLoading}
         onChangeImage={Loadimage}
         preview={preview}
-      /> */}
+      />
         {/* <Typography variant="h3">{kelurahanName}</Typography> */}
         <CardHeader floated={false} shadow={false} className="rounded-none">
           <Typography color="gray" variant="h5" className="mt-1 font-bold">
@@ -317,13 +341,13 @@ const LogbookDetail = () => {
               >
                 Lihat Semua
               </Button>
-              {/* <Button
-              className="flex items-center gap-3"
-              size="sm"
-              onClick={handleOpen}
-            >
-              <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Isi Logbook
-            </Button> */}
+              <Button
+                className="flex items-center gap-3"
+                size="sm"
+                onClick={handleOpen}
+              >
+                <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Isi Logbook
+              </Button>
             </div>
           </div>
           <div className="flex flex-col  justify-between gap-4">
@@ -363,6 +387,7 @@ const LogbookDetail = () => {
           </div>
         </CardHeader>
         <CardBody className="overflow-scroll px-0">
+          
           <table className="mt-4 w-full min-w-max table-auto text-left">
             <thead>
               <tr>
@@ -382,6 +407,9 @@ const LogbookDetail = () => {
                 ))}
               </tr>
             </thead>
+            {
+              loadingData ? <span className="loading loading-ring loading-lg"></span> : (
+
             <tbody>
               {kelurahan.length > 0 ? (
                 kelurahan.map(
@@ -468,7 +496,10 @@ const LogbookDetail = () => {
                               <PencilIcon className="h-4 w-4" />
                             </IconButton>
                           </Tooltip> */}
-                            <Tooltip content="Delete User">
+                          {
+                            user && user?.roleID != 4 ? (
+
+                            <Tooltip content="Delete Data">
                               <IconButton
                                 variant="text"
                                 onClick={() => handleOpenDelete(id)}
@@ -476,6 +507,9 @@ const LogbookDetail = () => {
                                 <TrashIcon className="h-4 w-4" />
                               </IconButton>
                             </Tooltip>
+
+                            ) : null
+                          }
                           </div>
                         </td>
                       </tr>
@@ -483,9 +517,11 @@ const LogbookDetail = () => {
                   }
                 )
               ) : (
-                <span className="text-center loading loading-spinner loading-lg"></span>
+                <span className="text-center">Data masih kosong</span>
               )}
             </tbody>
+              )
+            }
           </table>
         </CardBody>
         <CardFooter className="flex flex-col gap-1 items-center justify-between border-t border-blue-gray-50 p-4">
@@ -550,7 +586,7 @@ const ModalAddLogbook = ({
             </Alert>
           )}
 
-          <Typography className="-mb-2" variant="h6">
+          {/* <Typography className="-mb-2" variant="h6">
             Nama
           </Typography>
           <Input
@@ -586,7 +622,7 @@ const ModalAddLogbook = ({
             <Option value="Manajemen Sumberdaya Perairan">
               Manajemen Sumberdaya Perairan
             </Option>
-          </Select>
+          </Select> */}
 
           <Typography className="-mb-2" variant="h6">
             Kegiatan

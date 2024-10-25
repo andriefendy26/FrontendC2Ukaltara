@@ -7,9 +7,10 @@ import {
   Button,
   Typography,
 } from "@material-tailwind/react";
+import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
 
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LoginUser, reset } from "../features/AuthSlice";
 import Logo from "../../public/logo.png";
 
@@ -18,6 +19,8 @@ export default function Login() {
     email: "",
     password: "",
   });
+  const [passwordShown, setPasswordShown] = useState(false);
+  const togglePasswordVisiblity = () => setPasswordShown((cur) => !cur);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -32,34 +35,49 @@ export default function Login() {
   }, [user, isSuccess, dispatch, navigate]);
 
   const handleLogin = (e) => {
-    console.log("form", data);
-    console.log("isSuccess", isSuccess);
-    console.log("user", user);
+
+    // console.log("form", data);
+    // console.log("isSuccess", isSuccess);
+    // console.log("user", user);
     e.preventDefault();
     dispatch(LoginUser(data));
   };
 
   return (
-    <div className="flex h-screen items-center justify-center">
-      <Card color="transparent" shadow={false}>
-        <div className="flex flex-col justify-center items-center ">
-          <img className="w-[50%] md:w-[35%] lg:w-[30%] my-5" src={Logo}></img>
-          <Typography variant="lead">Selamat datang </Typography>
-          <Typography variant="lead">di sistem informasi C2UKaltara</Typography>
-        <form className="mt-8 mb-2 w-80 max-w-screen-lg border-gray-300 border p-8 rounded-xl sm:w-96">
-          <p className="text-center mb-3">
-            Silahkan login untuk masuk ke aplikasi
-          </p>
-          <div className="mb-1 flex flex-col gap-6">
-            <Typography variant="lead" color="blue-gray" className="-mb-3">
-              Email
-            </Typography>
+    <section className="grid text-center w-screen h-screen items-center p-8 ">
+      <div>
+        <div className="flex justify-center my-5">
+          <img className="w-32 h-32 object-contain" src={Logo} alt="Logo" />
+        </div>
+        <Typography variant="h3" color="blue-gray" className="">
+          Selamat datang
+        </Typography>
+        <Typography className="my-3 text-gray-600 font-normal text-[18px]">
+          di sistem informasi C2Ukaltara
+        </Typography>
+        <Typography className="mb-16 text-gray-600 font-normal text-[18px]">
+          Silahkan Masukkan Email dan password
+        </Typography>
+        <form action="#" className="mx-auto max-w-[24rem] text-left">
+          <div className="mb-6">
+            <label htmlFor="email">
+              <Typography
+                variant="small"
+                className="mb-2 block font-medium text-gray-900"
+              >
+                Your Email
+              </Typography>
+            </label>
             <Input
+              id="email"
+              color="gray"
               size="lg"
+              type="email"
+              name="email"
               placeholder="name@mail.com"
-              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+              className="w-full placeholder:opacity-100 focus:border-t-primary border-t-blue-gray-200"
               labelProps={{
-                className: "before:content-none after:content-none",
+                className: "hidden",
               }}
               onChange={(e) =>
                 setData((prevData) => ({
@@ -68,16 +86,22 @@ export default function Login() {
                 }))
               }
             />
-            <Typography variant="h6" color="blue-gray" className="-mb-3">
-              Password
-            </Typography>
+          </div>
+       
+          <div className="mb-6">
+            <label htmlFor="password">
+              <Typography
+                variant="small"
+                className="mb-2 block font-medium text-gray-900"
+              >
+                Password
+              </Typography>
+            </label>
             <Input
-              type="password"
               size="lg"
               placeholder="********"
-              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
               labelProps={{
-                className: "before:content-none after:content-none",
+                className: "hidden",
               }}
               onChange={(e) =>
                 setData((prevData) => ({
@@ -85,24 +109,57 @@ export default function Login() {
                   password: e.target.value,
                 }))
               }
+              className="w-full placeholder:opacity-100 focus:border-t-primary border-t-blue-gray-200"
+              type={passwordShown ? "text" : "password"}
+              icon={
+                <i onClick={togglePasswordVisiblity}>
+                  {passwordShown ? (
+                    <EyeIcon className="h-5 w-5" />
+                  ) : (
+                    <EyeSlashIcon className="h-5 w-5" />
+                  )}
+                </i>
+              }
             />
+            {isError && (
+              <Typography variant="h6" color="red" className="mt-3">
+                {message}
+              </Typography>
+            )}
           </div>
-          {isError && (
-            <Typography variant="h6" color="red" className="mt-3">
-              {message}
-            </Typography>
-          )}
           <Button
-            loading={isLoading}
             onClick={(e) => handleLogin(e)}
-            className="w-full mt-5"
+            color="gray"
+            size="lg"
+            className="mt-6"
+            fullWidth
           >
-            Login
+            log in
           </Button>
-        </form>
-        </div>
+          {/* <div className="!mt-4 flex justify-end">
+            <Typography
+              as="a"
+              href="#"
+              color="blue-gray"
+              variant="small"
+              className="font-medium"
+            >
+              Forgot password
+            </Typography>
+          </div> */}
 
-      </Card>
-    </div>
+          <Typography
+            variant="small"
+            color="gray"
+            className="!mt-4 text-center font-normal"
+          >
+            Belum punya akun?{" "}
+            <Link to="/register" className="font-medium text-gray-900">
+              Buat akun
+            </Link>
+          </Typography>
+        </form>
+      </div>
+    </section>
   );
 }

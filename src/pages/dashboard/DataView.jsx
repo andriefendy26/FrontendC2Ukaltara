@@ -124,7 +124,9 @@ export default function DataView() {
     setKelurahanIDFilter(Number(e));
   };
 
+  const [loadingData, setloadingData] = React.useState();
   const getData = async () => {
+    setloadingData(true);
     const startDateConv = converFormatDate(startDate);
     const endDateConv = converFormatDate(endDate);
     const data = await getAllData(
@@ -140,6 +142,7 @@ export default function DataView() {
     setPage(data.page);
     setTotalPage(data.totalPages);
     setRows(data.totalRows);
+    setloadingData(false);
   };
 
   const changePage = ({ selected }) => {
@@ -444,7 +447,7 @@ export default function DataView() {
               ""
             )}
           </div>
-          <div className="my-2 flex flex-col gap-3">
+          <div className="flex flex-col gap-3 mb-3">
             <Typography color="gray" className="mt-1 font-normal">
               Filter berdasarkan tanggal
             </Typography>
@@ -484,116 +487,120 @@ export default function DataView() {
                 ))}
               </tr>
             </thead>
-            <tbody>
-              {data &&
-                data.map((data, index) => {
-                  return (
-                    <tr key={index}>
-                      <td className="p-4">
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-bold"
-                        >
-                          {index + 1}
-                        </Typography>
-                      </td>
-                      <td className="p-4">
-                        <Typography
-                          variant="small"
-                          className="font-normal text-gray-600"
-                        >
-                          {data.tb_kelurahan.namaKelurahan}
-                        </Typography>
-                      </td>
-                      <td className="p-4">
-                        <Typography
-                          variant="small"
-                          className="font-normal text-gray-600"
-                        >
-                          {data.lokasi}
-                        </Typography>
-                      </td>
-                      <td className="p-4">
-                        <Typography
-                          variant="small"
-                          className="font-normal text-gray-600"
-                        >
-                          {data.tanggal}
-                        </Typography>
-                      </td>
-                      <td className="p-4">
-                        <Typography
-                          variant="small"
-                          className="font-normal text-gray-600"
-                        >
-                          {data.partisipan}
-                        </Typography>
-                      </td>
-                      <td className="p-4">
-                        <Typography
-                          variant="small"
-                          className="font-normal text-gray-600"
-                        >
-                          {data.sampahwisata}
-                        </Typography>
-                      </td>
-                      <td className="p-4">
-                        <Typography
-                          variant="small"
-                          className="font-normal text-gray-600"
-                        >
-                          {data.sampahwarga}
-                        </Typography>
-                      </td>
-                      <td className="p-4">
-                        <Typography
-                          variant="small"
-                          className="font-normal text-gray-600"
-                        >
-                          {data.sampahrumputlaut}
-                        </Typography>
-                      </td>
-                      <td className="p-4">
-                        <Typography
-                          variant="small"
-                          className="font-normal text-gray-600"
-                        >
-                          {data.sampahindustri}
-                        </Typography>
-                      </td>
-                      <td className="p-4">
-                        <Typography
-                          variant="small"
-                          className="font-normal text-gray-600"
-                        >
-                          {data.totalsampah}
-                        </Typography>
-                      </td>
-                      <td className="p-4">
-                        <div className="flex items-center gap-2">
-                          <Tooltip content="Edit User">
-                            <IconButton
-                              variant="text"
-                              onClick={() => handleEditOpen(data)}
-                            >
-                              <PencilIcon className="h-4 w-4" />
-                            </IconButton>
-                          </Tooltip>
-                          <Tooltip content="Delete User">
-                            <IconButton
-                              variant="text"
-                              onClick={() => handleOpenDelete(data.id)}
-                            >
-                              <TrashIcon className="h-4 w-4" />
-                            </IconButton>
-                          </Tooltip>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
-            </tbody>
+            {loadingData ? (
+              <span className="loading loading-ring loading-lg"></span>
+            ) : (
+              <tbody>
+                {data &&
+                  data.map((data, index) => {
+                    return (
+                      <tr key={index}>
+                        <td className="p-4">
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-bold"
+                          >
+                            {index + 1}
+                          </Typography>
+                        </td>
+                        <td className="p-4">
+                          <Typography
+                            variant="small"
+                            className="font-normal text-gray-600"
+                          >
+                            {data.tb_kelurahan.namaKelurahan}
+                          </Typography>
+                        </td>
+                        <td className="p-4">
+                          <Typography
+                            variant="small"
+                            className="font-normal text-gray-600"
+                          >
+                            {data.lokasi}
+                          </Typography>
+                        </td>
+                        <td className="p-4">
+                          <Typography
+                            variant="small"
+                            className="font-normal text-gray-600"
+                          >
+                            {data.tanggal}
+                          </Typography>
+                        </td>
+                        <td className="p-4">
+                          <Typography
+                            variant="small"
+                            className="font-normal text-gray-600"
+                          >
+                            {data.partisipan}
+                          </Typography>
+                        </td>
+                        <td className="p-4">
+                          <Typography
+                            variant="small"
+                            className="font-normal text-gray-600"
+                          >
+                            {data.sampahwisata}
+                          </Typography>
+                        </td>
+                        <td className="p-4">
+                          <Typography
+                            variant="small"
+                            className="font-normal text-gray-600"
+                          >
+                            {data.sampahwarga}
+                          </Typography>
+                        </td>
+                        <td className="p-4">
+                          <Typography
+                            variant="small"
+                            className="font-normal text-gray-600"
+                          >
+                            {data.sampahrumputlaut}
+                          </Typography>
+                        </td>
+                        <td className="p-4">
+                          <Typography
+                            variant="small"
+                            className="font-normal text-gray-600"
+                          >
+                            {data.sampahindustri}
+                          </Typography>
+                        </td>
+                        <td className="p-4">
+                          <Typography
+                            variant="small"
+                            className="font-normal text-gray-600"
+                          >
+                            {data.totalsampah}
+                          </Typography>
+                        </td>
+                        <td className="p-4">
+                          <div className="flex items-center gap-2">
+                            <Tooltip content="Edit User">
+                              <IconButton
+                                variant="text"
+                                onClick={() => handleEditOpen(data)}
+                              >
+                                <PencilIcon className="h-4 w-4" />
+                              </IconButton>
+                            </Tooltip>
+                            <Tooltip content="Delete User">
+                              <IconButton
+                                variant="text"
+                                onClick={() => handleOpenDelete(data.id)}
+                              >
+                                <TrashIcon className="h-4 w-4" />
+                              </IconButton>
+                            </Tooltip>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+              </tbody>
+            )}
           </table>
         </CardBody>
         <CardFooter className="flex flex-col gap-1 items-center justify-between border-t border-blue-gray-50 p-4">
